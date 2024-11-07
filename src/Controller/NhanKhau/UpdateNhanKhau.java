@@ -1,63 +1,14 @@
 package Controller.NhanKhau;
 
-import Controller.NhanKhauContrller;
-import Models.NhanKhauModel;
-import Service.NhanKhauService;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-import java.util.List;
-
 public class UpdateNhanKhau {
-    @FXML
-    private TableColumn<NhanKhauModel, String> colMaNhanKhau;
-    @FXML
-    private TableColumn<NhanKhauModel, String> colTen;
-    @FXML
-    private TableColumn<NhanKhauModel, String> colTuoi;
-    @FXML
-    private TableColumn<NhanKhauModel, String> colCMND;
-    @FXML
-    private TableColumn<NhanKhauModel, String> colSDT;
-    @FXML
-    private TableColumn<NhanKhauModel, String> colMaHo;
-    @FXML
-    private TableView<NhanKhauModel> tvNhanKhau;
-    @FXML
-    private TextField tfSearch;
-    @FXML
-    private ComboBox<String> cbChooseSearch;
+    private int maNhanKhau;
+    private TextField tfMaNhanKhau;
+    private TextField tfTuoi;
+    private TextField tfTenNhanKhau;
+    private TextField tfSoDienThoai;
+    private TextField tfSoCMND;
 
-    private ObservableList<NhanKhauModel> listValueTableView;
-
-    private List<NhanKhauModel> listNhanKhau;
-
-public TableView<NhanKhauModel> getTvNhanKhau() {
-    return tvNhanKhau;
-}
-
-public void showNhanKhau() {
-
-}
-
-public void searchNhanKhau() {
-
-}
-
-public void addNhanKhau() {
-
-}
-
-public void delNhanKhau() {
-
-}
-
-public void updateNhanKhau() {
-
-}
 
 }
