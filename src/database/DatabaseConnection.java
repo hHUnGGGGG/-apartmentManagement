@@ -18,7 +18,7 @@ public class DatabaseConnection {
 				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
 				// Cấu hình URL kết nối
-				String url = "jdbc:sqlserver://TU_HOANG:1433;databaseName=QLThuPhi";
+				String url = "jdbc:sqlserver://TU_HOANG\\\\TIEN123TIEN123:1433;databaseName=QLThuPhi;encrypt=true;trustServerCertificate=true";
 				String userName = "sa";
 				String passWord = "0181";
 
