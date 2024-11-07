@@ -46,7 +46,7 @@ public class AddNhanKhau {
         }
 
         //Kiem tra ID them moi co trung voi ID da ton tai hay khong
-        List<NhanKhauModel> listNhanKhauModels = new NhanKhauService().getListNhanKhau();
+        //List<NhanKhauModel> listNhanKhauModels = new NhanKhauService().getListNhanKhau();
 
 
     }
