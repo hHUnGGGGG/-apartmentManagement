@@ -15,12 +15,12 @@ public class DatabaseConnection {
 		if (connection == null) {
 			try {
 				// Đăng ký driver
-				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				Class.forName("com.mysql.cj.jdbc.Driver");
 
 				// Cấu hình URL kết nối
-				String url = "jdbc:sqlserver://TU_HOANG\\\\TIEN123TIEN123:1433;databaseName=QLThuPhi;encrypt=true;trustServerCertificate=true";
-				String userName = "sa";
-				String passWord = "0181";
+				String url = "jdbc:mysql://junction.proxy.rlwy.net:28148/railway";
+				String userName = "root";
+				String passWord = "jQzbKmtEvgouzjJBSdTLSCKtOyxATYRU";
 
 				// Tạo kết nối
 				connection = DriverManager.getConnection(url, userName, passWord);
