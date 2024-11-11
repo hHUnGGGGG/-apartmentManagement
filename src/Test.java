@@ -1,4 +1,3 @@
-
 import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,11 +14,10 @@ public class Test {
 		System.out.println("A");
 		Connection conn = DatabaseConnection.getConnection();
 		String sql = "SELECT *  FROM HOKHAU ";
-		abcd
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
-
+			
 			System.out.println("A");
 			while(resultSet.next()) {
 				System.out.println("Mã chủ hộ: " + resultSet.getInt("MACHUHO") );
