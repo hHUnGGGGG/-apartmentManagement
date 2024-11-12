@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class NhanKhauContrller {
+public class NhanKhauController {
     @FXML
     private TableColumn<NhanKhauModel, String> colMaNhanKhau;
     @FXML

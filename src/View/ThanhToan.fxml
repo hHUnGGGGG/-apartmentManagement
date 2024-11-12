@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.ThanhToanController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="265.0" prefWidth="867.0">
+            <children>
+                <TableView layoutX="33.0" layoutY="51.0" prefHeight="200.0" prefWidth="801.0">
+                    <columns>
+                        <TableColumn fx:id="MaPhiNCol" prefWidth="147.33334350585938" text="Mã Phí" />
+                        <TableColumn fx:id="MaHK3Col" prefWidth="159.33331298828125" text="Mã Hộ Khẩu" />
+                        <TableColumn fx:id="NgayNopCol" prefWidth="194.6666259765625" text="Thời Gian" />
+                        <TableColumn fx:id="PThucCol" prefWidth="305.3333740234375" text="Phương Thức" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="NopSear" layoutX="33.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" />
+            </children>
+        </AnchorPane>
+        <Label layoutX="49.0" layoutY="298.0" text="Mã Hộ Khẩu">
+            <font>
+                <Font name="Tahoma" size="14.0" />
+            </font>
+        </Label>
+        <Button fx:id="BtnAdd4" layoutX="646.0" layoutY="468.0" mnemonicParsing="false" text="Thêm" />
+        <Button fx:id="BtnEdit4" layoutX="595.0" layoutY="468.0" mnemonicParsing="false" text="Sửa" />
+        <Button fx:id="Btndlt4" layoutX="541.0" layoutY="468.0" mnemonicParsing="false" text="Xóa" />
+        <Label layoutX="513.0" layoutY="298.0" text="Phương Thức">
+            <font>
+                <Font name="Tahoma" size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="MaHKNop" layoutX="179.0" layoutY="294.0" prefHeight="25.0" prefWidth="237.0" />
+        <MenuButton fx:id="PThucNop" layoutX="630.0" layoutY="294.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="173.0" text="Phương Thức">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Tiền mặt" />
+                <MenuItem mnemonicParsing="false" text="Chuyển Khoản" />
+            </items>
+        </MenuButton>
+        <Label layoutX="49.0" layoutY="339.0" text="Mã Phí">
+            <font>
+                <Font name="Tahoma" size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="MaPhiNop" layoutX="179.0" layoutY="335.0" prefHeight="25.0" prefWidth="237.0" />
+    </children>
+</AnchorPane>
