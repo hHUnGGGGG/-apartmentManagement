@@ -12,7 +12,7 @@ public class AddHokhau {
     @FXML
     private TextField tfDiaChi;
     @FXML
-    private TextField tfHMaChuHo;
+    private TextField tfMaChuHo;
     @FXML
     private TextField tfTenChuHo;
     @FXML
