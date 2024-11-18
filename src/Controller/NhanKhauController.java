@@ -1,65 +1,67 @@
 package Controller;
 
-import Models.NhanKhauModel;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class NhanKhauController {
+public class NhanKhauController implements Initializable {
+
     @FXML
-    private TableColumn<NhanKhauModel, String> colMaNhanKhau;
+    private Label AgeText;
+
     @FXML
-    private TableColumn<NhanKhauModel, String> colTen;
+    private Button BtnAddNK;
+
     @FXML
-    private TableColumn<NhanKhauModel, String> colTuoi;
+    private Button BtnDltNK;
+
     @FXML
-    private TableColumn<NhanKhauModel, String> colCMND;
+    private Button BtnEditNK;
+
     @FXML
-    private TableColumn<NhanKhauModel, String> colSDT;
+    private TableColumn<?, ?> CCCol;
+
     @FXML
-    private TableColumn<NhanKhauModel, String> colMaHo;
+    private TableColumn<?, ?> MaNKCol;
+
     @FXML
-    private TableView<NhanKhauModel> tvNhanKhau;
+    private TableColumn<?, ?> MaNopCol1;
+
     @FXML
-    private TextField tfSearch;
+    private TableColumn<?, ?> NKAgeCol;
+
     @FXML
-    private ComboBox<String> cbChooseSearch;
+    private TableColumn<?, ?> NKNameCol;
 
-    private ObservableList<NhanKhauModel> listValueTableView;
-    private List<NhanKhauModel> listNhanKhau;
+    @FXML
+    private TableColumn<?, ?> NKPhoneCol;
 
-    public TableView<NhanKhauModel> getTvNhanKhau() {
-        return tvNhanKhau;
-    }
+    @FXML
+    private TextField NKSear;
 
-    public void showNhanKhau() {
+    @FXML
+    private TextField PhoneText;
 
-    }
+    @FXML
+    private TextField tfCCCD;
 
-    public void searchNhanKhau() {
+    @FXML
+    private Label tfMaHK;
 
-    }
+    @FXML
+    private TextField tfSDT;
 
-    public void addNhanKhau() {
+    @FXML
+    private TextField tfTen;
 
-    }
-
-    public void delNhanKhau() {
-
-    }
-
-    public void updateNhanKhau() {
-
-    }
-
-    public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 }
