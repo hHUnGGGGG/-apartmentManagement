@@ -6,10 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -20,26 +17,10 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     @FXML
-    private Button closeBtn;
-
-    @FXML
     private Button loginBtn;
-
-    @FXML
-    private AnchorPane main_form;
-
-    @FXML
-    private PasswordField password;
-
-    @FXML
-    private TextField username;
 
     private double x;
     private double y;
-
-    public void Close(){
-        System.exit(0);
-    }
 
     public void Login() throws IOException {
         loginBtn.getScene().getWindow().hide();
@@ -61,6 +42,12 @@ public class LoginController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void Close(){
+        System.exit(0);
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

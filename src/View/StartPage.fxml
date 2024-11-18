@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StartPageController">
+    <children>
+        <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <AnchorPane layoutY="1.0" prefHeight="400.0" prefWidth="300.0" styleClass="left-form" stylesheets="@loginDesign.css">
+                    <children>
+                        <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="99.0" layoutY="153.0" size="8em" />
+                        <Label layoutX="26.0" layoutY="177.0" text="Phần mềm quản lý chung cư" textFill="WHITE">
+                            <font>
+                                <Font name="Tahoma" size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="signupLb" layoutX="91.0" layoutY="267.0" text="Chưa có tài khoản?" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="signupBtn" layoutX="100.0" layoutY="295.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="100.0" styleClass="switch-btn" stylesheets="@loginDesign.css" text="Đăng Ký" textFill="WHITE" />
+                  <Label fx:id="loginLb" layoutX="98.0" layoutY="267.0" text="Đã có tài khoản?" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="Tahoma" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="loginBtn" layoutX="100.0" layoutY="295.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="100.0" styleClass="switch-btn" stylesheets="@loginDesign.css" text="Đăng Nhập" textFill="WHITE" visible="false" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="loginPane" layoutX="300.0" prefHeight="400.0" prefWidth="300.0" styleClass="right-form" stylesheets="@loginDesign.css">
+                    <fx:include source="Login.fxml" />
+                </AnchorPane>
+            <AnchorPane fx:id="SignUpPane" layoutX="300.0" prefHeight="400.0" prefWidth="300.0" styleClass="right-form" stylesheets="@loginDesign.css" visible="false">
+               <fx:include source="DangKy.fxml" />
+            </AnchorPane>
+
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

@@ -57,3 +57,15 @@ and open the template in the editor.
 .login-btn:hover{
     -fx-background-color:linear-gradient(to bottom, #21a7ae,#368981);
 }
+
+.switch-btn{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+    -fx-font-family:"Arial";
+    -fx-font-size:14px;
+    -fx-text-fill:#fff;
+
+}
+.switch-btn:hover{
+    -fx-background-color:#368981;
+}
