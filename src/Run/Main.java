@@ -9,18 +9,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+
 public class Main extends Application {
     private double x;
     private double y;
     @Override
-    public void start(Stage primaryStage) {
-        Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/View/ThanhToan.fxml"));
         Scene scene = new Scene(root);
 
         root.setOnMousePressed((MouseEvent event) ->{

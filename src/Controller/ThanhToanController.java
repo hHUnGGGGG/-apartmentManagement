@@ -40,13 +40,13 @@ public class ThanhToanController implements Initializable {
     private TableColumn<?, ?> PThucCol;
 
     @FXML
-    private ChoiceBox PThucNop;
+    private MenuButton PThucNop;
 
     private String[] pthuc = {"Tiền mặt","Chuyển Khoản"};
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        boolean b = PThucNop.getItems().addAll(pthuc);
+        //boolean b = PThucNop.getItems().addAll(pthuc);
     }
 }

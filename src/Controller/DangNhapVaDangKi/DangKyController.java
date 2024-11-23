@@ -1,4 +1,4 @@
-package Controller;
+package Controller.DangNhapVaDangKi;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,22 +29,6 @@ public class DangKyController implements Initializable {
 
     @FXML
     private TextField username;
-
-    private Alert alert;
-
-    public void SignUp(){
-        alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
-        alert.setHeaderText(null);
-        alert.setContentText("Đăng ký thành công");
-        alert.showAndWait();
-    }
-
-    public void Close(){
-        System.exit(0);
-    }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
