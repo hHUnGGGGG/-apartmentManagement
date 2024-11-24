@@ -12,9 +12,9 @@ public class TruyVanDataBaseService {
         Connection conn = DatabaseConnection.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
-        //DatabaseConnection.closeConnection();
         return resultSet;
     }
+
     public void closeDatabase () {
         DatabaseConnection.closeConnection();
     }
