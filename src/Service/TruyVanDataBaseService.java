@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TruyVanDataBaseService {
-    public ResultSet TruyVanDatabase(String sql) throws SQLException {
+    public static ResultSet TruyVanDatabase(String sql) throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
