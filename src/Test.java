@@ -11,9 +11,14 @@ import database.DatabaseConnection;
 
 public class Test {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args)  {
 		DangKiService dangKiService = new DangKiService();
-		dangKiService.CheckAcc("131");
-	}
+        try {
+            dangKiService.LuuVaoDatabase("0124", "adc");
+			dangKiService.CheckAcc("132");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
