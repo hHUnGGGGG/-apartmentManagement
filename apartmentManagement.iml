@@ -8,16 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="mssql-jdbc-12.8.1.jre11-sources" level="project" />
-    <orderEntry type="library" name="mssql-jdbc-12.8.1.jre11" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="mysql-connector-j-9.1.0" level="project" />
+    <orderEntry type="library" name="fontawesomefx-8.2" level="project" />
   </component>
 </module>
