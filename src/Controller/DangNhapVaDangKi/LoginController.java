@@ -1,55 +1,59 @@
 package Controller.DangNhapVaDangKi;
 
+import Service.LoginService;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.scene.control.*;
+import javafx.event.ActionEvent;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+public class LoginController  {
 
-public class LoginController implements Initializable {
+    @FXML
+    private TextField username;
+
+    @FXML
+    private PasswordField passwordhide;
+
+    @FXML
+    private TextField passwordshow;
+
+    @FXML
+    private CheckBox showPasswordCheckbox;
+
+    @FXML
+    private Button dangKyBtn;
 
     @FXML
     private Button loginBtn;
 
-    private double x;
-    private double y;
-
-    public void Login() throws IOException {
-        loginBtn.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("../View/Dashboard.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-
-        root.setOnMousePressed((MouseEvent event) ->{
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-
-        root.setOnMouseDragged((MouseEvent event) ->{
-            stage.setX(event.getScreenX() - x);
-            stage.setY(event.getScreenY() - y);
-        });
-
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setScene(scene);
-        stage.show();
+    private LoginService loginService = new LoginService();
+    @FXML
+    public void initialize(){
+        passwordshow.textProperty().bindBidirectional(passwordhide.textProperty());
+    }
+    public void Login(ActionEvent event) throws SQLException {
+        loginService.ChuyenSangDashBoard(username, passwordhide, loginBtn);
     }
 
-    public void Close(){
+    @FXML
+    public void Close(ActionEvent actionEvent){
         System.exit(0);
     }
 
+    @FXML
+    private void togglePasswordVisibility(){
+        if (showPasswordCheckbox.isSelected()) {
+            passwordshow.setVisible(true);
+            passwordhide.setVisible(false);
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+        } else {
+            passwordhide.setVisible(true);
+            passwordshow.setVisible(false);
+        }
+    }
 
+    @FXML
+    void ChuyenSangDangKy(ActionEvent event) {
+        loginService.ChuyenSangDangKy(dangKyBtn);
     }
 }
