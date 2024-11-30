@@ -1,5 +1,6 @@
 package Run;
 
+import database.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +24,8 @@ public class Main extends Application {
     private double y;
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/DangKy.fxml"));
+        DatabaseConnection.getConnection();
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
         Scene scene = new Scene(root);
 
         root.setOnMousePressed((MouseEvent event) ->{
@@ -44,7 +46,6 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {

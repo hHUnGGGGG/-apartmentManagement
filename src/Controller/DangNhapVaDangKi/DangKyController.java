@@ -4,11 +4,9 @@ import Service.DangKiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -41,7 +39,8 @@ public class DangKyController implements Initializable {
         try {
             dangKiService.LuuVaoDatabase(username.getText(), password.getText());
             if (dangKiService.CheckPass(password.getText(), password1.getText())) {
-                dangKiService.DangKiThanhCong(signupBtn);
+                dangKiService.DangKiThanhCong();
+                dangKiService.ChuyenVeLogin(signupBtn);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -49,6 +48,6 @@ public class DangKyController implements Initializable {
     }
 
     public void Close(ActionEvent event) {
-        dangKiService.DangKiThanhCong(signupBtn);
+        dangKiService.ChuyenVeLogin(signupBtn);
     }
 }

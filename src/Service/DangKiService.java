@@ -52,7 +52,6 @@ public class DangKiService {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.executeUpdate();
         }
-        truyVan.closeDatabase();
     }
 
     public boolean CheckPass(String pass1, String pass2) {
@@ -63,8 +62,11 @@ public class DangKiService {
         return true;
     }
 
-    public void DangKiThanhCong(Button signUp) {
+    public void DangKiThanhCong() {
         setAlert("Đăng ký thành công vui lòng đăng nhập lại");
+    }
+
+    public void ChuyenVeLogin(Button signUp) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/View/Login.fxml"));
             Parent root = loader.load();
@@ -98,6 +100,5 @@ public class DangKiService {
             e.printStackTrace();
         }
     }
-
 
 }
