@@ -30,7 +30,7 @@ public class KhoanThuModel {
         this.soTien = soTien;
         this.loaiKhoanThu = loaiKhoanThu;
     }
-
+//a
     public int getMaKhoanThu() {
         return maKhoanThu;
     }
