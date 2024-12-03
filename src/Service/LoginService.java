@@ -80,39 +80,4 @@ public class LoginService {
             showAlert(Alert.AlertType.ERROR,"Lỗi","Tài khoản hoặc mật khẩu không tồn tại");
         }
     }
-
-    public void ChuyenSangDangKy(Button dangKy) {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/View/DangKy.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-
-            // Thay đổi scene
-            Stage stage = (Stage) dangKy.getScene().getWindow();
-            stage.close();
-
-            Stage newStage = new Stage();
-            root.setOnMousePressed((MouseEvent event) ->{
-                x = event.getSceneX();
-                y = event.getSceneY();
-            });
-
-            root.setOnMouseDragged((MouseEvent event) ->{
-                newStage.setX(event.getScreenX() - x);
-                newStage.setY(event.getScreenY() - y);
-                newStage.setOpacity(.8);
-            });
-
-            root.setOnMouseReleased((MouseEvent event) ->{
-                newStage.setOpacity(1);
-            });
-            DangKyController dangKyController = loader.getController();
-            newStage.setScene(scene);
-            newStage.initStyle(StageStyle.TRANSPARENT);
-            newStage.show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

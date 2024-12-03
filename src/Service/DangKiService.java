@@ -1,7 +1,9 @@
 package Service;
 
 import Controller.DangNhapVaDangKi.LoginController;
+import Controller.StartPageController;
 import Run.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +24,7 @@ import java.sql.SQLException;
 public class DangKiService {
     private double x;
     private double y;
+    private StartPageController stController;
     private void setAlert(String s){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Message");
@@ -68,7 +72,7 @@ public class DangKiService {
 
     public void ChuyenVeLogin(Button signUp) {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/View/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/View/StartPage.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
@@ -91,7 +95,7 @@ public class DangKiService {
             root.setOnMouseReleased((MouseEvent event) ->{
                 newStage.setOpacity(1);
             });
-            LoginController loginController = loader.getController();
+            StartPageController startPageController = loader.getController();
             newStage.setScene(scene);
             newStage.initStyle(StageStyle.TRANSPARENT);
             newStage.show();

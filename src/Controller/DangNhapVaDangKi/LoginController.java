@@ -21,9 +21,6 @@ public class LoginController  {
     private CheckBox showPasswordCheckbox;
 
     @FXML
-    private Button dangKyBtn;
-
-    @FXML
     private Button loginBtn;
 
     private LoginService loginService = new LoginService();
@@ -50,10 +47,5 @@ public class LoginController  {
             passwordhide.setVisible(true);
             passwordshow.setVisible(false);
         }
-    }
-
-    @FXML
-    void ChuyenSangDangKy(ActionEvent event) {
-        loginService.ChuyenSangDangKy(dangKyBtn);
     }
 }

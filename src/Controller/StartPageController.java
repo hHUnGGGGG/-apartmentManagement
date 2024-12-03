@@ -32,12 +32,6 @@ public class StartPageController implements Initializable {
     @FXML
     private AnchorPane SignUpPane;
 
-    @FXML
-    private PasswordField password;
-
-    @FXML
-    private TextField username;
-
     public void switchForm(ActionEvent event) {
         if (event.getSource()==signupBtn){
             loginPane.setVisible(false);
