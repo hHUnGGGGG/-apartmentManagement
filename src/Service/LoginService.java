@@ -3,6 +3,7 @@ package Service;
 import Controller.DangNhapVaDangKi.DangKyController;
 import Controller.DashboardController;
 import Run.Main;
+import database.DatabaseConnection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

@@ -8,6 +8,27 @@ public class KhoanThuModel {
     private double soTien;
     private String loaiKhoanThu;
     private Date hanNop;
+    private int maHoKhau;
+    private int thangNop;
+
+    public KhoanThuModel(String tenKhoanThu, double soTien, String loaiKhoanThu, Date hanNop, int maHoKhau, int thangNop) {
+        this.tenKhoanThu = tenKhoanThu;
+        this.soTien = soTien;
+        this.loaiKhoanThu = loaiKhoanThu;
+        this.hanNop = hanNop;
+        this.maHoKhau = maHoKhau;
+        this.thangNop = thangNop;
+    }
+
+    public KhoanThuModel(int maKhoanThu, String tenKhoanThu, double soTien, String loaiKhoanThu, Date hanNop, int maHoKhau, int thangNop) {
+        this.maKhoanThu = maKhoanThu;
+        this.tenKhoanThu = tenKhoanThu;
+        this.soTien = soTien;
+        this.loaiKhoanThu = loaiKhoanThu;
+        this.hanNop = hanNop;
+        this.maHoKhau = maHoKhau;
+        this.thangNop = thangNop;
+    }
 
     public KhoanThuModel(String tenKhoanThu, double soTien, String loaiKhoanThu, Date hanNop) {
         this.tenKhoanThu = tenKhoanThu;
@@ -63,6 +84,7 @@ public class KhoanThuModel {
         this.loaiKhoanThu = loaiKhoanThu;
     }
 
+
     public Date getHanNop() {
         return hanNop;
     }
@@ -71,4 +93,19 @@ public class KhoanThuModel {
         this.hanNop = hanNop;
     }
 
+    public int getMaHoKhau() {
+        return maHoKhau;
+    }
+
+    public void setMaHoKhau(int maHoKhau) {
+        this.maHoKhau = maHoKhau;
+    }
+
+    public int getThangNop() {
+        return thangNop;
+    }
+
+    public void setThangNop(int thangNop) {
+        this.thangNop = thangNop;
+    }
 }

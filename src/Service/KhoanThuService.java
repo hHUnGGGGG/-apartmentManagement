@@ -5,21 +5,26 @@ import database.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class KhoanThuService {
     private List<KhoanThuModel> danhSachKhoanThu;
-
+    private Connection conn;
     public KhoanThuService() {
         this.danhSachKhoanThu = new ArrayList<>();
+        DatabaseConnection.closeConnection();
+        this.conn = DatabaseConnection.getConnection();
     }
+
+
 
     // Thêm khoản thu mới
     public boolean themKhoanThu(KhoanThuModel khoanThu) {
-        String sql = "INSERT INTO PHI ( TENPHI, LOAIPHI, DONGIA, HANNOP) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO PHI ( TENPHI, LOAIPHI, DONGIA, HANNOP, MAHOKHAU, THANGNOP) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 
@@ -27,13 +32,21 @@ public class KhoanThuService {
             stmt.setDouble(3, khoanThu.getSoTien());
             stmt.setString(2, khoanThu.getLoaiKhoanThu());
             stmt.setDate(4, new java.sql.Date(khoanThu.getHanNop().getTime())); // Chuyển đổi Date sang SQL Date
+            stmt.setInt(5,khoanThu.getMaHoKhau());
+            stmt.setInt(6,khoanThu.getThangNop());
 
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Đã thêm khoản thu thành công!");
+             //   DatabaseConnection.closeConnection();
                 return true;
+
             }
-            else return false;
+            else {
+             //   DatabaseConnection.closeConnection();
+                return false;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -45,12 +58,13 @@ public class KhoanThuService {
     public boolean xoaKhoanThu(int maKhoanThu) {
         String sql = "DELETE FROM PHI WHERE MAPHI = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (//Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, maKhoanThu);
 
             int rowsDeleted = stmt.executeUpdate();
+         //   DatabaseConnection.closeConnection();
             if (rowsDeleted > 0) {
                 System.out.println("Đã xóa khoản thu thành công!");
                 return true;
@@ -66,17 +80,21 @@ public class KhoanThuService {
 
     // Sửa khoản thu theo mã
     public boolean suaKhoanThu(KhoanThuModel khoanThu) {
-        String sql = "UPDATE PHI SET TENPHI = ?, DONGIA = ?, LOAIPHI = ? WHERE MAPHI = ?";
+        String sql = "UPDATE PHI SET TENPHI = ?, DONGIA = ?, LOAIPHI = ?, HANNOP = ?, MAHOKHAU = ?, THANGNOP = ? WHERE MAPHI = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (//Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, khoanThu.getTenKhoanThu());
             stmt.setDouble(2, khoanThu.getSoTien());
             stmt.setString(3, khoanThu.getLoaiKhoanThu());
-            stmt.setInt(4, khoanThu.getMaKhoanThu());
+            stmt.setDate(4, new java.sql.Date(khoanThu.getHanNop().getTime()));
+            stmt.setInt(5,khoanThu.getMaHoKhau());
+            stmt.setInt(6, khoanThu.getThangNop());
+            stmt.setInt(7, khoanThu.getMaKhoanThu());
 
             int rowsUpdated = stmt.executeUpdate();
+           // DatabaseConnection.closeConnection();
             if (rowsUpdated > 0) {
                 System.out.println("Đã sửa khoản thu thành công!");
                 return true;
@@ -93,7 +111,7 @@ public class KhoanThuService {
         String sql = "SELECT * FROM PHI WHERE MAPHI = ?";
         KhoanThuModel khoanThu = null;
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (//Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, maKhoanThu);
@@ -107,7 +125,7 @@ public class KhoanThuService {
                 khoanThu = new KhoanThuModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop);
             }
 
-            DatabaseConnection.closeConnection();
+           // DatabaseConnection.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -120,7 +138,7 @@ public class KhoanThuService {
         tenPhi="%"+tenPhi+"%";
         String sql="SELECT * FROM PHI WHERE LOWER(TENPHI) LIKE LOWER(?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (//Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1,tenPhi);
@@ -132,7 +150,10 @@ public class KhoanThuService {
                 double soTien = rs.getDouble("DONGIA");
                 String loaiKhoanThu = rs.getString("LOAIPHI");
                 Date hanNop = rs.getDate("HANNOP");
-                result.add(new KhoanThuModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop));
+                int maHoKhau= rs.getInt("MAHOKHAU");
+                int thangNop= rs.getInt("THANGNOP");
+
+                result.add(new KhoanThuModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop, maHoKhau, thangNop));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,20 +185,24 @@ public class KhoanThuService {
         List<KhoanThuModel> danhSach = new ArrayList<>();
         String sql = "SELECT * FROM PHI";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (//Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
 
+             ResultSet rs = stmt.executeQuery(sql)) {
+            System.out.println("aabc");
             while (rs.next()) {
                 int maKhoanThu = rs.getInt("MAPHI");
                 String tenKhoanThu = rs.getString("TENPHI");
                 double soTien = rs.getDouble("DONGIA");
                 String loaiKhoanThu = rs.getString("LOAIPHI");
                 Date hanNop = rs.getDate("HANNOP");
-                danhSach.add(new KhoanThuModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop));
+                int maHoKhau= rs.getInt("MAHOKHAU");
+                int thangNop= rs.getInt("THANGNOP");
+
+                danhSach.add(new KhoanThuModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop,maHoKhau, thangNop));
             }
 
-            DatabaseConnection.closeConnection();
+           // DatabaseConnection.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -24,8 +24,8 @@ public class Main extends Application {
     private double y;
     @Override
     public void start(Stage primaryStage) throws IOException {
-        DatabaseConnection.getConnection();
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+       // DatabaseConnection.getConnection();
+        Parent root = FXMLLoader.load(getClass().getResource("/View/StartPage.fxml"));
         Scene scene = new Scene(root);
 
         root.setOnMousePressed((MouseEvent event) ->{

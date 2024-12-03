@@ -113,18 +113,21 @@ public class KhoanPhiController implements Initializable {
             double donGia = Double.parseDouble(DonGiatf.getText());
             String loaiPhi = LoaiPhitf.getText();
             int maHoKhau = Integer.parseInt(MaHKtf2.getText());
-            String thangNop = ThangNoptf.getText();
+            int thangNop = Integer.parseInt(ThangNoptf.getText());
             Date hanNop = Date.from(HanNoptf.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()); // chuyển từ LocalDate sang Date
 
-            KhoanThuModel khoanPhi = new KhoanThuModel(maPhi, tenPhi, donGia, loaiPhi, hanNop);
+            KhoanThuModel khoanPhi = new KhoanThuModel( tenPhi, donGia, loaiPhi, hanNop, maHoKhau, thangNop);
             if (khoanThuService.themKhoanThu(khoanPhi)) {
                 danhSachKhoanPhi.add(khoanPhi); // Thêm vào danh sách hiển thị
+            //    danhSachKhoanPhi = FXCollections.observableArrayList(khoanThuService.layDanhSachKhoanThu());
+                loadData();
                 clearFields();
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm khoản phí thành công!");
             } else {
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Mã khoản phí đã tồn tại!");
             }
         } catch (NumberFormatException e) {
+            e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Dữ liệu nhập không hợp lệ!");
         }
     }
@@ -152,12 +155,12 @@ public class KhoanPhiController implements Initializable {
                 selectedPhi.setTenKhoanThu(TenPhitf.getText());
                 selectedPhi.setSoTien(Double.parseDouble(DonGiatf.getText()));
                 selectedPhi.setLoaiKhoanThu(LoaiPhitf.getText());
-            //    selectedPhi.setMaHoKhau(Integer.parseInt(MaHKtf2.getText()));
-            //    selectedPhi.setThangNop(ThangNoptf.getText());
+                selectedPhi.setMaHoKhau(Integer.parseInt(MaHKtf2.getText()));
+                selectedPhi.setThangNop(Integer.parseInt(ThangNoptf.getText()));
                 selectedPhi.setHanNop(Date.from(HanNoptf.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
                 if (khoanThuService.suaKhoanThu(selectedPhi)) {
-                    PhiTable.refresh(); // Làm mới bảng
+                    loadData(); // Làm mới bảng
                     showAlert(Alert.AlertType.INFORMATION, "Thành công", "Sửa khoản phí thành công!");
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Thất bại", "Sửa khoản phí thất bại!");
