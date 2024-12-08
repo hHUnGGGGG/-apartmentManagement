@@ -5,47 +5,49 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-	private static Connection connection = null;
 
-	// Constructor private để không cho phép tạo đối tượng
-	private DatabaseConnection() {}
 
-	// Trả về một connection
-	public static Connection getConnection() {
-		if (connection == null) {
-			try {
-				// Đăng ký driver
-				Class.forName("com.mysql.cj.jdbc.Driver");
+	private static DatabaseConnection instance = null;//thuộc tính có kiểu dữ liệu là chính nó
+	private static final String URL = "jdbc:mysql://junction.proxy.rlwy.net:28148/railway";
+	private static final String USER ="root";
+	private static final String PASSWORD = "jQzbKmtEvgouzjJBSdTLSCKtOyxATYRU";
 
-				// Cấu hình URL kết nối
-				String url = "jdbc:mysql://junction.proxy.rlwy.net:28148/railway";
-				String userName = "root";
-				String passWord = "jQzbKmtEvgouzjJBSdTLSCKtOyxATYRU";
+	//kết nối csdl
+	private Connection connection;//
 
-				// Tạo kết nối
-				connection = DriverManager.getConnection(url, userName, passWord);
-				System.out.println("Kết nối thành công");
-			} catch (ClassNotFoundException e) {
-				System.err.println("Driver không tìm thấy: " + e.getMessage());
-			} catch (SQLException e) {
-				System.err.println("Kết nối thất bại: " + e.getMessage());
-			}
-		} else {
-			System.out.println("Kết nối đã tồn tại");
+	//Constructor riêng tư để tránh việc tạo đối tượng ngoài class này
+	private DatabaseConnection(){
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			System.out.println("Connected successfully!");
+		}catch (ClassNotFoundException | SQLException e){
+			e.printStackTrace();
 		}
+	}
+
+	//phương thức để lấy/tạo đối tượng kết nối (databaseconnector) , từ đó tạo ra connection duy nhất
+	//chỉ cần gọi 1 lần trong chương trình
+	public static DatabaseConnection getInstance(){
+		if(instance==null){//nếu chưa có thì tạo
+			instance = new DatabaseConnection();
+		}
+		return instance;//trả về instance
+	}
+
+	//phương thức lấy kết nối(Connection)
+	//phải gọi getInstance trước
+	public Connection getConnection(){
 		return connection;
 	}
 
-	// Ngắt kết nối đến server
-	public static void closeConnection() {
-		if (connection != null) {
-			try {
+	public void closeConnection(){
+		try {
+			if (connection != null && !connection.isClosed()){
 				connection.close();
-				connection = null; // Đặt lại kết nối thành null sau khi đóng
-				System.out.println("Đã ngắt kết nối");
-			} catch (SQLException e) {
-				System.err.println("Lỗi khi ngắt kết nối: " + e.getMessage());
 			}
+		} catch (SQLException e){
+			e.printStackTrace();
 		}
 	}
 }

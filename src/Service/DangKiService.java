@@ -52,7 +52,7 @@ public class DangKiService {
         TruyVanDataBaseService truyVan = new TruyVanDataBaseService();
         if(dangKiService.CheckAcc(TaiKhoan)) {
             String sql = "INSERT INTO TAIKHOAN (TENTAIKHOAN, MATKHAU) VALUES ('" + TaiKhoan + "'" + ", '" + MatKhau + "')";
-            Connection conn = DatabaseConnection.getConnection();
+            Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.executeUpdate();
         }

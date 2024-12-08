@@ -14,8 +14,7 @@ public class KhoanThuService {
     private Connection conn;
     public KhoanThuService() {
         this.danhSachKhoanThu = new ArrayList<>();
-        DatabaseConnection.closeConnection();
-        this.conn = DatabaseConnection.getConnection();
+        this.conn = DatabaseConnection.getInstance().getConnection();
     }
 
 
