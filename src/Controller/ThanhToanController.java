@@ -10,25 +10,19 @@ import java.util.ResourceBundle;
 public class ThanhToanController implements Initializable {
 
     @FXML
-    private Button BtnAdd4;
+    private Button BtnCf;
 
     @FXML
-    private Button BtnEdit4;
+    private TableColumn<?, ?> DonGiaCol;
 
     @FXML
-    private Button Btndlt4;
+    private TableColumn<?, ?> LoaiPhiCol;
 
     @FXML
     private TableColumn<?, ?> MaHK3Col;
 
     @FXML
-    private TextField MaHKNop;
-
-    @FXML
-    private TableColumn<?, ?> MaPhiNCol;
-
-    @FXML
-    private TextField MaPhiNop;
+    private TableColumn<?, ?> MaPhiCol;
 
     @FXML
     private TableColumn<?, ?> NgayNopCol;
@@ -37,16 +31,13 @@ public class ThanhToanController implements Initializable {
     private TextField NopSear;
 
     @FXML
-    private TableColumn<?, ?> PThucCol;
+    private TableColumn<?, ?> TThaiCol;
 
     @FXML
-    private MenuButton PThucNop;
-
-    private String[] pthuc = {"Tiền mặt","Chuyển Khoản"};
-
+    private TableColumn<?, ?> TenPhiCol;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //boolean b = PThucNop.getItems().addAll(pthuc);
+
     }
 }
