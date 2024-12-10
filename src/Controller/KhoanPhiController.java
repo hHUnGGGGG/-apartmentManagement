@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.time.ZoneId;
@@ -26,6 +27,12 @@ public class KhoanPhiController implements Initializable {
 
     @FXML
     private Button BtnEditPhi;
+
+    @FXML
+    private Button BtnAdd;
+
+    @FXML
+    private Button BtnSave;
 
     @FXML
     private TableColumn<?, ?> DonGiaCol;
@@ -71,8 +78,25 @@ public class KhoanPhiController implements Initializable {
 
     @FXML
     private TextField ThangNoptf;
+
     @FXML
     private TableView<KhoanThuModel> PhiTable;
+
+    @FXML
+    private AnchorPane AddPane;
+
+    @FXML
+    private AnchorPane KPTablePane;
+
+    public void switchForm(ActionEvent event){
+        if (event.getSource()==BtnAddPhi || event.getSource()==BtnEditPhi){
+            AddPane.setVisible(true);
+            KPTablePane.setVisible(false);
+        }else if (event.getSource()==BtnSave){
+            AddPane.setVisible(false);
+            KPTablePane.setVisible(true);
+        }
+    }
 
     private KhoanThuService khoanThuService = new KhoanThuService(); // Service để làm việc với dữ liệu
 
@@ -93,7 +117,7 @@ public class KhoanPhiController implements Initializable {
         loadData();
 
         // Thêm sự kiện cho nút
-        BtnAddPhi.setOnAction(this::handleAddPhi);
+        BtnAdd.setOnAction(this::handleAddPhi);
         BtnDltPhi.setOnAction(this::handleDeletePhi);
         BtnEditPhi.setOnAction(this::handleEditPhi);
         KTSear.setOnKeyReleased(event -> handleSearch());
