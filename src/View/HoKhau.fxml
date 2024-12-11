@@ -76,18 +76,25 @@
                         <Font name="Tahoma" size="14.0" />
                      </font>
                   </Label>
-                  <DatePicker layoutX="660.0" layoutY="40.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                  <DatePicker fx:id="NSinh" layoutX="660.0" layoutY="40.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
                   <CheckBox fx:id="TVangCheck" layoutX="550.0" layoutY="164.0" mnemonicParsing="false" text="Tạm Vắng" />
                   <Button fx:id="BtnAddTV" layoutX="407.0" layoutY="220.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
+                  <Label fx:id="QHeText" layoutX="550.0" layoutY="104.0" text="Quan Hệ">
+                     <font>
+                        <Font name="Tahoma" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfQHe" layoutX="659.0" layoutY="100.0" prefHeight="25.0" prefWidth="175.0" promptText="Quan hệ với chủ hộ" styleClass="shadow" />
                </children>
             </AnchorPane>
             <TableView fx:id="ThanhVienTable" layoutX="14.0" layoutY="269.0" prefHeight="200.0" prefWidth="855.0">
               <columns>
                 <TableColumn fx:id="TenTVCol" prefWidth="259.33332347869873" text="Tên" />
-                <TableColumn fx:id="SdtTVCol" prefWidth="160.66668701171875" text="SĐT" />
-                  <TableColumn fx:id="CCTVCol" prefWidth="188.66665649414062" text="CCCD" />
-                  <TableColumn fx:id="NSinhTVCol" prefWidth="147.33331298828125" text="Ngày Sinh" />
-                  <TableColumn fx:id="TVangCol" prefWidth="101.33334350585938" text="Tạm Vắng" />
+                <TableColumn fx:id="SdtTVCol" prefWidth="122.66665649414062" text="SĐT" />
+                  <TableColumn fx:id="QheTVCol" prefWidth="92.00003051757812" text="Quan Hệ" />
+                  <TableColumn fx:id="CCTVCol" prefWidth="169.33340454101562" text="CCCD" />
+                  <TableColumn fx:id="NSinhTVCol" prefWidth="112.0" text="Ngày Sinh" />
+                  <TableColumn fx:id="TVangCol" prefWidth="96.0" text="Tạm Vắng" />
               </columns>
             </TableView>
          </children>

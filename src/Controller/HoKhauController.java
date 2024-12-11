@@ -60,13 +60,13 @@ public class HoKhauController implements Initializable {
     private Label MaCHlb;
 
     @FXML
+    private Label QHeText;
+
+    @FXML
     private TableColumn<?, ?> MaHKCol;
 
     @FXML
     private Label MaHKlb;
-
-    @FXML
-    private TextField PhoneText;
 
     @FXML
     private TableColumn<?, ?> SDTCol;
@@ -93,6 +93,9 @@ public class HoKhauController implements Initializable {
     private TableColumn<?, ?> TenTVCol;
 
     @FXML
+    private TableColumn<?, ?> QheTVCol;
+
+    @FXML
     private TableView<?> ThanhVienTable;
 
     @FXML
@@ -105,13 +108,13 @@ public class HoKhauController implements Initializable {
     private TextField tfCCCD;
 
     @FXML
-    private Label tfMaHK;
-
-    @FXML
     private TextField tfSDT;
 
     @FXML
     private TextField tfTen;
+
+    @FXML
+    private TextField tfQHe;
 
     public void switchForm(ActionEvent event){
         if (event.getSource()==BtnAddHK || event.getSource()==BtnEditHK || event.getSource()==BtnDltHK){
