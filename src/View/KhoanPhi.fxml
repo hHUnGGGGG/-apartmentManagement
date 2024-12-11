@@ -39,33 +39,68 @@
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <TextField fx:id="ThangNoptf" layoutX="633.0" layoutY="58.0" prefWidth="175.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <TextField fx:id="ThangNoptf" layoutX="633.0" layoutY="58.0" prefWidth="175.0" promptText="Tháng nộp" styleClass="shadow" stylesheets="@dashboardDesign.css" />
               <Label layoutX="60.0" layoutY="62.0" text="Tên Phí">
                   <font>
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <TextField fx:id="TenPhitf" layoutX="158.0" layoutY="58.0" prefHeight="25.0" prefWidth="237.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <TextField fx:id="TenPhitf" layoutX="158.0" layoutY="58.0" prefHeight="25.0" prefWidth="237.0" promptText="Tên phí" styleClass="shadow" stylesheets="@dashboardDesign.css" />
               <Label layoutX="510.0" layoutY="122.0" text="Hạn Nộp">
                   <font>
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <DatePicker fx:id="HanNoptf" layoutX="633.0" layoutY="118.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <DatePicker fx:id="HanNoptf" layoutX="633.0" layoutY="118.0" promptText="Hạn nộp" styleClass="shadow" stylesheets="@dashboardDesign.css" />
               <Label layoutX="60.0" layoutY="183.0" text="Đơn Giá">
                   <font>
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <TextField fx:id="DonGiatf" layoutX="158.0" layoutY="179.0" prefHeight="25.0" prefWidth="237.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <TextField fx:id="DonGiatf" layoutX="158.0" layoutY="179.0" prefHeight="25.0" prefWidth="237.0" promptText="Đơn giá" styleClass="shadow" stylesheets="@dashboardDesign.css" />
               <Label layoutX="60.0" layoutY="122.0" text="Loại Phí">
                   <font>
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <TextField fx:id="LoaiPhitf" layoutX="158.0" layoutY="118.0" prefHeight="25.0" prefWidth="237.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <TextField fx:id="LoaiPhitf" layoutX="158.0" layoutY="118.0" prefHeight="25.0" prefWidth="237.0" promptText="Loại phí" styleClass="shadow" stylesheets="@dashboardDesign.css" />
             <Button fx:id="BtnAdd" layoutX="369.0" layoutY="352.0" mnemonicParsing="false" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
             <Button fx:id="BtnSave" layoutX="522.0" layoutY="352.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Lưu" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="EditPane" prefHeight="520.0" prefWidth="870.0" visible="false">
+         <children>
+            <Label layoutX="510.0" layoutY="62.0" text="Tháng Nộp">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ThangNoptf1" layoutX="633.0" layoutY="58.0" prefWidth="175.0" promptText="Tháng nộp" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label layoutX="60.0" layoutY="62.0" text="Tên Phí">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TenPhitf1" layoutX="158.0" layoutY="58.0" prefHeight="25.0" prefWidth="237.0" promptText="Tên phí" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label layoutX="510.0" layoutY="122.0" text="Hạn Nộp">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="HanNoptf1" layoutX="633.0" layoutY="118.0" promptText="Hạn nộp" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label layoutX="60.0" layoutY="183.0" text="Đơn Giá">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="DonGiatf1" layoutX="158.0" layoutY="179.0" prefHeight="25.0" prefWidth="237.0" promptText="Đơn giá" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label layoutX="60.0" layoutY="122.0" text="Loại Phí">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="LoaiPhitf1" layoutX="158.0" layoutY="118.0" prefHeight="25.0" prefWidth="237.0" promptText="Loại phí" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Button fx:id="BtnSave1" layoutX="413.0" layoutY="351.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Lưu" />
          </children>
       </AnchorPane>
     </children>

@@ -35,16 +35,25 @@ public class KhoanPhiController implements Initializable {
     private Button BtnSave;
 
     @FXML
+    private Button BtnSave1;
+
+    @FXML
     private TableColumn<?, ?> DonGiaCol;
 
     @FXML
     private TextField DonGiatf;
 
     @FXML
+    private TextField DonGiatf1;
+
+    @FXML
     private TableColumn<?, ?> HanNopCol;
 
     @FXML
     private DatePicker HanNoptf;
+
+    @FXML
+    private DatePicker HanNoptf1;
 
     @FXML
     private TextField KTSear;
@@ -54,6 +63,9 @@ public class KhoanPhiController implements Initializable {
 
     @FXML
     private TextField LoaiPhitf;
+
+    @FXML
+    private TextField LoaiPhitf1;
 
     @FXML
     private TableColumn<?, ?> MaHKCol2;
@@ -74,10 +86,16 @@ public class KhoanPhiController implements Initializable {
     private TextField TenPhitf;
 
     @FXML
+    private TextField TenPhitf1;
+
+    @FXML
     private TableColumn<?, ?> ThangNopCol;
 
     @FXML
     private TextField ThangNoptf;
+
+    @FXML
+    private TextField ThangNoptf1;
 
     @FXML
     private TableView<KhoanThuModel> PhiTable;
@@ -86,15 +104,29 @@ public class KhoanPhiController implements Initializable {
     private AnchorPane AddPane;
 
     @FXML
+    private AnchorPane EditPane;
+
+    @FXML
     private AnchorPane KPTablePane;
 
     public void switchForm(ActionEvent event){
-        if (event.getSource()==BtnAddPhi || event.getSource()==BtnEditPhi){
+        if (event.getSource()==BtnAddPhi){
             AddPane.setVisible(true);
             KPTablePane.setVisible(false);
-        }else if (event.getSource()==BtnSave){
+            EditPane.setVisible(false);
+        }else if (event.getSource()==BtnSave || event.getSource()==BtnSave1){
             AddPane.setVisible(false);
             KPTablePane.setVisible(true);
+            EditPane.setVisible(false);
+        }else if (event.getSource()==BtnEditPhi){
+            KhoanThuModel selectedPhi = PhiTable.getSelectionModel().getSelectedItem();
+            if (selectedPhi != null) {
+                AddPane.setVisible(false);
+                KPTablePane.setVisible(false);
+                EditPane.setVisible(true);
+            }else {
+                showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn khoản phí cần sửa!");
+            }
         }
     }
 
@@ -119,7 +151,8 @@ public class KhoanPhiController implements Initializable {
         // Thêm sự kiện cho nút
         BtnAdd.setOnAction(this::handleAddPhi);
         BtnDltPhi.setOnAction(this::handleDeletePhi);
-        BtnEditPhi.setOnAction(this::handleEditPhi);
+        //BtnEditPhi.setOnAction(this::handleEditPhi);
+        BtnSave1.setOnAction(this::handleEditPhi);
         KTSear.setOnKeyReleased(event -> handleSearch());
     }
 
@@ -173,27 +206,23 @@ public class KhoanPhiController implements Initializable {
 
     // Xử lý sửa khoản phí
     private void handleEditPhi(ActionEvent event) {
-        KhoanThuModel selectedPhi = PhiTable.getSelectionModel().getSelectedItem();
-        if (selectedPhi != null) {
-            try {
-                selectedPhi.setTenKhoanThu(TenPhitf.getText());
-                selectedPhi.setSoTien(Double.parseDouble(DonGiatf.getText()));
-                selectedPhi.setLoaiKhoanThu(LoaiPhitf.getText());
-                selectedPhi.setMaHoKhau(Integer.parseInt(MaHKtf2.getText()));
-                selectedPhi.setThangNop(Integer.parseInt(ThangNoptf.getText()));
-                selectedPhi.setHanNop(Date.from(HanNoptf.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        try {
+            KhoanThuModel selectedPhi = PhiTable.getSelectionModel().getSelectedItem();
+            selectedPhi.setTenKhoanThu(TenPhitf1.getText());
+            selectedPhi.setSoTien(Double.parseDouble(DonGiatf1.getText()));
+            selectedPhi.setLoaiKhoanThu(LoaiPhitf1.getText());
+            selectedPhi.setMaHoKhau(Integer.parseInt(MaHKtf2.getText()));
+            selectedPhi.setThangNop(Integer.parseInt(ThangNoptf1.getText()));
+            selectedPhi.setHanNop(Date.from(HanNoptf1.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-                if (khoanThuService.suaKhoanThu(selectedPhi)) {
-                    loadData(); // Làm mới bảng
-                    showAlert(Alert.AlertType.INFORMATION, "Thành công", "Sửa khoản phí thành công!");
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "Thất bại", "Sửa khoản phí thất bại!");
-                }
-            } catch (NumberFormatException e) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Dữ liệu nhập không hợp lệ!");
+            if (khoanThuService.suaKhoanThu(selectedPhi)) {
+                loadData(); // Làm mới bảng
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Sửa khoản phí thành công!");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Thất bại", "Sửa khoản phí thất bại!");
             }
-        } else {
-            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn khoản phí cần sửa!");
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Dữ liệu nhập không hợp lệ!");
         }
     }
 
