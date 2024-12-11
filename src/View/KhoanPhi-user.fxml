@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="520.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.KhoanPhiUserController">
+    <children>
+        <AnchorPane fx:id="KPTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css">
+            <children>
+                <TableView fx:id="PhiTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                    <columns>
+                        <TableColumn fx:id="MaPhiCol" prefWidth="67.33331298828125" text="Mã Phí" />
+                        <TableColumn fx:id="TenPhiCol" prefWidth="140.66668701171875" text="Tên Phí" />
+                        <TableColumn fx:id="HanNopCol" prefWidth="106.0" text="Hạn Nộp" />
+                        <TableColumn fx:id="ThangNopCol" prefWidth="107.33328247070312" text="Tháng Nộp" />
+                        <TableColumn fx:id="LoaiPhiCol" prefWidth="178.00009155273438" text="Loại Phí" />
+                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="143.33331298828125" text="Đơn giá" />
+                        <TableColumn fx:id="MaHKCol2" minWidth="0.0" prefWidth="108.66668701171875" text="Mã Hộ Khẩu" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="KTSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
+            <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

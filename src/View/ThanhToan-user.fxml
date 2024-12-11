@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ThanhToanUserController">
+    <children>
+        <AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css">
+            <children>
+                <TableView layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                    <columns>
+                        <TableColumn fx:id="MaPhiCol" prefWidth="57.333346366882324" text="Mã Phí" />
+                  <TableColumn fx:id="TenPhiCol" prefWidth="107.33330535888672" text="Tên Phí" />
+                        <TableColumn fx:id="MaHK3Col" prefWidth="93.99998474121094" text="Mã Hộ Khẩu" />
+                  <TableColumn fx:id="TenCHCol" prefWidth="120.66668701171875" text="Tên Chủ Hộ" />
+                  <TableColumn fx:id="LoaiPhiCol" prefWidth="102.66668701171875" text="Loại Phí" />
+                  <TableColumn fx:id="DonGiaCol" prefWidth="128.66671752929688" text="Đơn Giá" />
+                        <TableColumn fx:id="NgayNopCol" prefWidth="113.3333740234375" text="Thời Gian" />
+                        <TableColumn fx:id="TThaiCol" prefWidth="126.0" text="Trạng Thái" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="NopSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
+            <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
+              <Button fx:id="BtnCf" layoutX="587.0" layoutY="468.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Đã thanh toán" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

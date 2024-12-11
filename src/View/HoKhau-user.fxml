@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HoKhauUserController">
+
+    <children>
+      <AnchorPane fx:id="CHTablePane" prefHeight="520.0" prefWidth="870.0">
+         <children>
+                <TextField fx:id="HokhauSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
+            <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
+            <TableView fx:id="ThanhVienTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+              <columns>
+                <TableColumn fx:id="TenTVCol" prefWidth="259.33332347869873" text="Tên" />
+                <TableColumn fx:id="SdtTVCol" prefWidth="122.66665649414062" text="SĐT" />
+                  <TableColumn fx:id="QheTVCol" prefWidth="92.00003051757812" text="Quan Hệ" />
+                  <TableColumn fx:id="CCTVCol" prefWidth="169.33340454101562" text="CCCD" />
+                  <TableColumn fx:id="NSinhTVCol" prefWidth="112.0" text="Ngày Sinh" />
+                  <TableColumn fx:id="TVangCol" prefWidth="96.0" text="Tạm Vắng" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>
