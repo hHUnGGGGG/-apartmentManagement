@@ -36,6 +36,9 @@ public class ThanhToanController implements Initializable {
     @FXML
     private TableColumn<?, ?> TenPhiCol;
 
+    @FXML
+    private TableColumn<?, ?> TenCHCol;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

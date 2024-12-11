@@ -13,13 +13,14 @@
             <children>
                 <TableView layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
-                        <TableColumn fx:id="MaPhiCol" prefWidth="82.00000286102295" text="Mã Phí" />
-                  <TableColumn fx:id="TenPhiCol" prefWidth="114.6666488647461" text="Tên Phí" />
-                        <TableColumn fx:id="MaHK3Col" prefWidth="92.66667175292969" text="Mã Hộ Khẩu" />
-                  <TableColumn fx:id="LoaiPhiCol" prefWidth="131.33334350585938" text="Loại Phí" />
-                  <TableColumn fx:id="DonGiaCol" prefWidth="131.33334350585938" text="Đơn Giá" />
-                        <TableColumn fx:id="NgayNopCol" prefWidth="140.66668701171875" text="Thời Gian" />
-                        <TableColumn fx:id="TThaiCol" prefWidth="154.66668701171875" text="Trạng Thái" />
+                        <TableColumn fx:id="MaPhiCol" prefWidth="57.333346366882324" text="Mã Phí" />
+                  <TableColumn fx:id="TenPhiCol" prefWidth="107.33330535888672" text="Tên Phí" />
+                        <TableColumn fx:id="MaHK3Col" prefWidth="93.99998474121094" text="Mã Hộ Khẩu" />
+                  <TableColumn fx:id="TenCHCol" prefWidth="120.66668701171875" text="Tên Chủ Hộ" />
+                  <TableColumn fx:id="LoaiPhiCol" prefWidth="102.66668701171875" text="Loại Phí" />
+                  <TableColumn fx:id="DonGiaCol" prefWidth="128.66671752929688" text="Đơn Giá" />
+                        <TableColumn fx:id="NgayNopCol" prefWidth="113.3333740234375" text="Thời Gian" />
+                        <TableColumn fx:id="TThaiCol" prefWidth="126.0" text="Trạng Thái" />
                     </columns>
                 </TableView>
                 <TextField fx:id="NopSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
