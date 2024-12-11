@@ -66,6 +66,9 @@ public class NhanKhauController implements Initializable {
     private TextField tfTen;
 
     @FXML
+    private TextField tfQHe;
+
+    @FXML
     private CheckBox TVangCheck;
 
     @FXML

@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.NhanKhauController">
     <children>
-        <AnchorPane fx:id="NKTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css">
+        <AnchorPane fx:id="NKTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css" visible="false">
             <children>
                 <TableView layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
@@ -33,7 +33,7 @@
               <Button fx:id="BtnDltNK" layoutX="562.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">
+      <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0">
          <children>
               <Label layoutX="72.0" layoutY="66.0" text="Tên">
                   <font>
@@ -67,7 +67,13 @@
               <DatePicker fx:id="NSinh" layoutX="659.0" layoutY="123.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
             <Button fx:id="BtnAdd" layoutX="360.0" layoutY="305.0" mnemonicParsing="false" styleClass="add-btn" text="Thêm" />
             <Button fx:id="BtnSave" layoutX="533.0" layoutY="305.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" text="Lưu" />
-            <CheckBox fx:id="TVangCheck" layoutX="527.0" layoutY="195.0" mnemonicParsing="false" text="Tạm Vắng" />
+            <CheckBox fx:id="TVangCheck" layoutX="72.0" layoutY="251.0" mnemonicParsing="false" text="Tạm Vắng" />
+            <Label layoutX="527.0" layoutY="195.0" text="Quan Hệ">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfQHe" layoutX="658.0" layoutY="191.0" prefHeight="25.0" prefWidth="175.0" styleClass="shadow" />
          </children>
       </AnchorPane>
     </children>
