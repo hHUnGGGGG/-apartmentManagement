@@ -22,7 +22,7 @@
                         <TableColumn fx:id="NKNameCol" prefWidth="224.6667022705078" text="Tên" />
                         <TableColumn fx:id="NKAgeCol" prefWidth="110.66668701171875" text="Ngày Sinh" />
                         <TableColumn fx:id="NKPhoneCol" prefWidth="100.6666259765625" text="SĐT" />
-                        <TableColumn fx:id="MaNopCol1" prefWidth="96.66668701171875" text="Mã Hộ Khẩu" />
+                        <TableColumn fx:id="MaHKCol" prefWidth="96.66668701171875" text="Mã Hộ Khẩu" />
                   <TableColumn fx:id="TVangCol" prefWidth="96.66668701171875" text="Tạm Vắng" />
                     </columns>
                 </TableView>
@@ -64,7 +64,7 @@
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <DatePicker layoutX="659.0" layoutY="123.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <DatePicker fx:id="NSinh" layoutX="659.0" layoutY="123.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
             <Button fx:id="BtnAdd" layoutX="360.0" layoutY="305.0" mnemonicParsing="false" styleClass="add-btn" text="Thêm" />
             <Button fx:id="BtnSave" layoutX="533.0" layoutY="305.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" text="Lưu" />
             <CheckBox fx:id="TVangCheck" layoutX="527.0" layoutY="195.0" mnemonicParsing="false" text="Tạm Vắng" />

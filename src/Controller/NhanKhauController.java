@@ -36,7 +36,7 @@ public class NhanKhauController implements Initializable {
     private TableColumn<?, ?> MaNKCol;
 
     @FXML
-    private TableColumn<?, ?> MaNopCol1;
+    private TableColumn<?, ?> MaHKCol;
 
     @FXML
     private TableColumn<?, ?> NKAgeCol;
@@ -54,9 +54,6 @@ public class NhanKhauController implements Initializable {
     private TextField NKSear;
 
     @FXML
-    private TextField PhoneText;
-
-    @FXML
     private TextField tfCCCD;
 
     @FXML
@@ -70,6 +67,9 @@ public class NhanKhauController implements Initializable {
 
     @FXML
     private CheckBox TVangCheck;
+
+    @FXML
+    private DatePicker NSinh;
 
     @FXML
     private AnchorPane NKTablePane;
