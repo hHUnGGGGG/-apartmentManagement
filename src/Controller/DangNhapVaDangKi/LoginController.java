@@ -29,7 +29,11 @@ public class LoginController  {
         passwordshow.textProperty().bindBidirectional(passwordhide.textProperty());
     }
     public void Login(ActionEvent event) throws SQLException {
-        loginService.ChuyenSangDashBoard(username, passwordhide, loginBtn);
+        if(username.getText().equals("tu")) {
+            loginService.ChuyenSangDashBoard(username, passwordhide, loginBtn);
+        }
+        else
+            loginService.ChuyenSangDashBoardUser(username, passwordhide, loginBtn);
     }
 
     @FXML

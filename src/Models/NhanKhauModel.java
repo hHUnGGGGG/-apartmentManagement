@@ -26,7 +26,7 @@ public class NhanKhauModel {
     }
 
     // Constructor đầy đủ
-    public NhanKhauModel(int maNhanKhau, String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, int maHoKhau, String quanHeVoiChuHo, boolean trangThai) {
+    public NhanKhauModel(int maHoKhau, int maNhanKhau,String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, String quanHeVoiChuHo, boolean trangThai) {
         this.maNhanKhau = maNhanKhau;
         this.CCCD = CCCD;
         this.hoTenNhanKhau = hoTenNhanKhau;

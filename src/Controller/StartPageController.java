@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-
+import java.sql.Date;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -34,21 +34,29 @@ public class StartPageController implements Initializable {
 
     public void switchForm(ActionEvent event) {
         if (event.getSource()==signupBtn){
-            loginPane.setVisible(false);
-            loginBtn.setVisible(true);
-            loginLb.setVisible(true);
-            SignUpPane.setVisible(true);
-            signupBtn.setVisible(false);
-            signupLb.setVisible(false);
+            switchLoginToDangKy();
         }
         if (event.getSource()==loginBtn){
-            loginPane.setVisible(true);
-            loginBtn.setVisible(false);
-            loginLb.setVisible(false);
-            SignUpPane.setVisible(false);
-            signupBtn.setVisible(true);
-            signupLb.setVisible(true);
+            switchDangKyToLogin();
         }
+    }
+
+    public void switchLoginToDangKy() {
+        loginPane.setVisible(false);
+        loginBtn.setVisible(true);
+        loginLb.setVisible(true);
+        SignUpPane.setVisible(true);
+        signupBtn.setVisible(false);
+        signupLb.setVisible(false);
+    }
+
+    public void switchDangKyToLogin() {
+        loginPane.setVisible(true);
+        loginBtn.setVisible(false);
+        loginLb.setVisible(false);
+        SignUpPane.setVisible(false);
+        signupBtn.setVisible(true);
+        signupLb.setVisible(true);
     }
 
     @Override
