@@ -1,7 +1,6 @@
 package Models;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class NhanKhauModel {
     private int maNhanKhau;
@@ -15,6 +14,16 @@ public class NhanKhauModel {
 
     // Default constructor
     public NhanKhauModel() {}
+
+    public NhanKhauModel(String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, int maHoKhau, String quanHeVoiChuHo, boolean trangThai) {
+        this.CCCD = CCCD;
+        this.hoTenNhanKhau = hoTenNhanKhau;
+        this.ngaySinh = ngaySinh;
+        this.SDT = SDT;
+        this.maHoKhau = maHoKhau;
+        this.quanHeVoiChuHo = quanHeVoiChuHo;
+        this.trangThai = trangThai;
+    }
 
     // Constructor đầy đủ
     public NhanKhauModel(int maNhanKhau, String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, int maHoKhau, String quanHeVoiChuHo, boolean trangThai) {

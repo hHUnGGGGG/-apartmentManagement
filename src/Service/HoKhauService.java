@@ -16,22 +16,30 @@ public class HoKhauService {
     }
 
 
+    // Lấy mã hộ lớn nhất
+    public int getMaxMaHoKhau() throws SQLException {
+        String query = "SELECT COALESCE(MAX(MAHOKHAU), 1000000) AS maxMaHoKhau FROM HOKHAU";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            if (resultSet.next()) {
+                return resultSet.getInt("maxMaHoKhau");
+            }
+        }
+        return 1000000; // Trả về giá trị mặc định nếu bảng rỗng
+    }
+
+
+
     // Thêm hộ khẩu
     public boolean addHoKhau(HoKhauModel hokhauModel) {
-
-        String getMaxQuery = "SELECT COALESCE(MAX(MAHOKHAU), 1000000) AS maxMaHoKhau FROM HOKHAU";
         String insertQuery = "INSERT INTO HOKHAU (MAHOKHAU) VALUES (?)";
-        int nextMaHoKhau = 1000100; // Giá trị mặc định nếu bảng HOKHAU rỗng
 
         try {
             // Lấy mã hộ khẩu lớn nhất hiện tại
-            try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery(getMaxQuery)) {
-                if (resultSet.next()) {
-                    int maxMaHoKhau = resultSet.getInt("maxMaHoKhau");
-                    nextMaHoKhau = maxMaHoKhau + 100; // Tăng thêm 100
-                }
-            }
+            int maxMaHoKhau = getMaxMaHoKhau();
+            int nextMaHoKhau = maxMaHoKhau + 100; // Tăng thêm 100
 
             // Gán mã hộ khẩu mới vào đối tượng
             hokhauModel.setMaHoKhau(nextMaHoKhau);
@@ -47,6 +55,7 @@ public class HoKhauService {
             return false; // Trả về false nếu có lỗi xảy ra
         }
     }
+
 
 
     // Xóa hộ khẩu

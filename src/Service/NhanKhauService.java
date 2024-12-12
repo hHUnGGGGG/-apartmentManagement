@@ -179,7 +179,7 @@ public class NhanKhauService {
     // Lấy danh sách nhân khẩu
     public List<NhanKhauModel> getListNhanKhau() {
         List<NhanKhauModel> listNhanKhau = new ArrayList<>();
-        String query = "SELECT * FROM NHANKHAU";
+        String query = "SELECT * FROM NHANKHAU ";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
