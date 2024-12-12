@@ -1,65 +1,110 @@
 package Models;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 public class NhanKhauModel {
-        private int id;
-        private String cmnd;
-        private String ten;
-        private int tuoi;
-        private String sdt;
+    private int maNhanKhau;
+    private String CCCD;
+    private String hoTenNhanKhau;
+    private Date ngaySinh;
+    private String SDT;
+    private int maHoKhau;
+    private String quanHeVoiChuHo;
+    private boolean trangThai; // Trạng thái ô tick (true nếu tick, false nếu không)
 
-    public NhanKhauModel(){}
-    public NhanKhauModel(String cmnd, String ten, int tuoi, String sdt){
-        this.cmnd = cmnd;
-        this.ten = ten;
-        this.tuoi = tuoi;
-        this.sdt = sdt;
-    }
-    public NhanKhauModel(int id, String cmnd, String ten, int tuoi, String sdt){
-        this.id = id;
-        this.cmnd = cmnd;
-        this.ten = ten;
-        this.tuoi = tuoi;
-        this.sdt = sdt;
-    }
+    // Default constructor
+    public NhanKhauModel() {}
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    // Constructor đầy đủ
+    public NhanKhauModel(int maNhanKhau, String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, int maHoKhau, String quanHeVoiChuHo, boolean trangThai) {
+        this.maNhanKhau = maNhanKhau;
+        this.CCCD = CCCD;
+        this.hoTenNhanKhau = hoTenNhanKhau;
+        this.ngaySinh = ngaySinh;
+        this.SDT = SDT;
+        this.maHoKhau = maHoKhau;
+        this.quanHeVoiChuHo = quanHeVoiChuHo;
+        this.trangThai = trangThai;
     }
 
-    public String getCmnd() {
-        return cmnd;
+    // Getter và Setter
+    public int getMaNhanKhau() {
+        return maNhanKhau;
     }
 
-    public void setCmnd(String cmnd) {
-        this.cmnd = cmnd;
+    public void setMaNhanKhau(int maNhanKhau) {
+        this.maNhanKhau = maNhanKhau;
     }
 
-    public String getTen() {
-        return ten;
+    public String getCCCD() {
+        return CCCD;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setCCCD(String CCCD) {
+        this.CCCD = CCCD;
     }
 
-    public int getTuoi() {
-        return tuoi;
+    public String getHoTenNhanKhau() {
+        return hoTenNhanKhau;
     }
 
-    public void setTuoi(int tuoi) {
-        this.tuoi = tuoi;
+    public void setHoTenNhanKhau(String hoTenNhanKhau) {
+        this.hoTenNhanKhau = hoTenNhanKhau;
     }
 
-    public String getSdt() {
-        return sdt;
+    public Date getNgaySinh() {
+        return ngaySinh;
     }
 
-    public void setSdt(String sdt) {
-        this.sdt = sdt;
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public String getSDT() {
+        return SDT;
+    }
+
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
+    }
+
+    public int getMaHoKhau() {
+        return maHoKhau;
+    }
+
+    public void setMaHoKhau(int maHoKhau) {
+        this.maHoKhau = maHoKhau;
+    }
+
+    public String getQuanHeVoiChuHo() {
+        return quanHeVoiChuHo;
+    }
+
+    public void setQuanHeVoiChuHo(String quanHeVoiChuHo) {
+        this.quanHeVoiChuHo = quanHeVoiChuHo;
+    }
+
+    public boolean isTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(boolean trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    // Thêm phương thức toString để debug
+    @Override
+    public String toString() {
+        return "NhanKhauModel{" +
+                "maNhanKhau=" + maNhanKhau +
+                ", CCCD='" + CCCD + '\'' +
+                ", hoTenNhanKhau='" + hoTenNhanKhau + '\'' +
+                ", ngaySinh=" + ngaySinh +
+                ", SDT='" + SDT + '\'' +
+                ", maHoKhau=" + maHoKhau +
+                ", quanHeVoiChuHo='" + quanHeVoiChuHo + '\'' +
+                ", trangThai='" + trangThai + '\'' +
+                '}';
     }
 }
-
