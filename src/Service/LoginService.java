@@ -2,6 +2,7 @@ package Service;
 
 import Controller.DangNhapVaDangKi.DangKyController;
 import Controller.DashboardController;
+import Controller.DashboardUserController;
 import Run.Main;
 import database.DatabaseConnection;
 import javafx.fxml.FXMLLoader;
@@ -69,6 +70,51 @@ public class LoginService {
                     newStage.setOpacity(1);
                 });
                 DashboardController dashboardController = loader.getController();
+                newStage.setScene(scene);
+                newStage.initStyle(StageStyle.TRANSPARENT);
+                newStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện mới");
+            }
+        }else{
+            showAlert(Alert.AlertType.ERROR,"Lỗi","Tài khoản hoặc mật khẩu không tồn tại");
+        }
+    }
+    public void ChuyenSangDashBoardUser(TextField username, PasswordField passwordhide, Button login) throws SQLException {
+        String user = username.getText().trim();
+        String pass = passwordhide.getText().trim();
+        if(user.isEmpty() || pass.isEmpty()){
+            showAlert(Alert.AlertType.ERROR, "Lỗi","Vui lòng nhập đủ thông tin");
+            return;
+        }
+
+        if(checkLogin(user,pass)){
+            try {
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/View/Dashboard-user.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+
+                // Thay đổi scene
+                Stage stage = (Stage) login.getScene().getWindow();
+                stage.close();
+
+                Stage newStage = new Stage();
+                root.setOnMousePressed((MouseEvent event) ->{
+                    x = event.getSceneX();
+                    y = event.getSceneY();
+                });
+
+                root.setOnMouseDragged((MouseEvent event) ->{
+                    newStage.setX(event.getScreenX() - x);
+                    newStage.setY(event.getScreenY() - y);
+                    newStage.setOpacity(.8);
+                });
+
+                root.setOnMouseReleased((MouseEvent event) ->{
+                    newStage.setOpacity(1);
+                });
+                DashboardUserController dashboardController = loader.getController();
                 newStage.setScene(scene);
                 newStage.initStyle(StageStyle.TRANSPARENT);
                 newStage.show();

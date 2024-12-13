@@ -6,19 +6,17 @@ import java.sql.SQLException;
 
 import javax.naming.spi.DirStateFactory.Result;
 
+import Models.NhanKhauModel;
 import Service.DangKiService;
+import Service.NhanKhauService;
 import database.DatabaseConnection;
 
 public class Test {
 
 	public static void main(String[] args)  {
-		DangKiService dangKiService = new DangKiService();
-        try {
-            dangKiService.LuuVaoDatabase("0124", "adc");
-			dangKiService.CheckAcc("132");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        NhanKhauService nhanKhauService = new NhanKhauService();
+        for(NhanKhauModel n : nhanKhauService.getListNhanKhau()) {
+            System.out.println(n.getMaNhanKhau());
         }
     }
-
 }

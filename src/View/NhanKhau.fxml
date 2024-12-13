@@ -13,9 +13,9 @@
 
 <AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.NhanKhauController">
     <children>
-        <AnchorPane fx:id="NKTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css" visible="false">
+        <AnchorPane fx:id="NKTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css">
             <children>
-                <TableView layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                <TableView fx:id="NhanKhauTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
                         <TableColumn fx:id="MaNKCol" prefWidth="108.0" text="Mã Nhân Khẩu" />
                         <TableColumn fx:id="CCCol" prefWidth="115.99999237060547" text="CCCD" />
@@ -33,7 +33,7 @@
               <Button fx:id="BtnDltNK" layoutX="562.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0">
+      <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">
          <children>
               <Label layoutX="72.0" layoutY="66.0" text="Tên">
                   <font>
@@ -53,12 +53,12 @@
                   </font>
               </Label>
               <TextField fx:id="tfSDT" layoutX="184.0" layoutY="123.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập sđt nhân khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-              <Label fx:id="tfMaHK" layoutX="527.0" layoutY="66.0" text="Mã Hộ Khẩu">
+              <Label fx:id="MaHK" layoutX="527.0" layoutY="66.0" text="Mã Hộ Khẩu">
                   <font>
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <TextField fx:id="PhoneText" layoutX="659.0" layoutY="62.0" prefWidth="175.0" promptText="Nhập mã hộ khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <TextField fx:id="tfMaHK" layoutX="659.0" layoutY="62.0" prefWidth="175.0" promptText="Nhập mã hộ khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
               <Label fx:id="AgeText" layoutX="527.0" layoutY="127.0" text="Ngày Sinh">
                   <font>
                       <Font name="Tahoma" size="14.0" />
@@ -66,7 +66,7 @@
               </Label>
               <DatePicker fx:id="NSinh" layoutX="659.0" layoutY="123.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
             <Button fx:id="BtnAdd" layoutX="360.0" layoutY="305.0" mnemonicParsing="false" styleClass="add-btn" text="Thêm" />
-            <Button fx:id="BtnSave" layoutX="533.0" layoutY="305.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" text="Lưu" />
+            <Button fx:id="BtnThoat" layoutX="533.0" layoutY="305.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" text="Thoát" />
             <CheckBox fx:id="TVangCheck" layoutX="72.0" layoutY="251.0" mnemonicParsing="false" text="Tạm Vắng" />
             <Label layoutX="527.0" layoutY="195.0" text="Quan Hệ">
                <font>
@@ -74,6 +74,49 @@
                </font>
             </Label>
             <TextField fx:id="tfQHe" layoutX="658.0" layoutY="191.0" prefHeight="25.0" prefWidth="175.0" styleClass="shadow" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="AddPane1" layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="870.0" visible="false">
+         <children>
+            <Label layoutX="72.0" layoutY="66.0" text="Tên">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfTen1" layoutX="184.0" layoutY="62.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập tên nhân khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label layoutX="72.0" layoutY="195.0" text="CCCD">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfCCCD1" layoutX="184.0" layoutY="191.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập CCCD nhân khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label layoutX="72.0" layoutY="127.0" text="SĐT">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfSDT1" layoutX="184.0" layoutY="123.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập sđt nhân khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label fx:id="MaHK1" layoutX="527.0" layoutY="66.0" text="Mã Hộ Khẩu">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfMaHK1" layoutX="659.0" layoutY="62.0" prefWidth="175.0" promptText="Nhập mã hộ khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label fx:id="AgeText1" layoutX="527.0" layoutY="127.0" text="Ngày Sinh">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="NSinh1" layoutX="659.0" layoutY="123.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Button fx:id="BtnAdd1" layoutX="360.0" layoutY="305.0" mnemonicParsing="false" styleClass="add-btn" text="Sửa" />
+            <Button fx:id="BtnThoat1" layoutX="533.0" layoutY="305.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" text="Thoát" />
+            <CheckBox fx:id="TVangCheck1" layoutX="72.0" layoutY="251.0" mnemonicParsing="false" text="Tạm Vắng" />
+            <Label layoutX="527.0" layoutY="195.0" text="Quan Hệ">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfQHe1" layoutX="658.0" layoutY="191.0" prefHeight="25.0" prefWidth="175.0" styleClass="shadow" />
          </children>
       </AnchorPane>
     </children>
