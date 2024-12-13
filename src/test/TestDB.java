@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class TestDB {
     public static void main(String[] args) throws SQLException {
         String sql = "select * from TAIKHOAN;";
-        Connection conn = DatabaseConnection.getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
         //resultSet = statement.executeUpdate();
         ResultSet resultSet1 = statement.executeQuery();
