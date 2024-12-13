@@ -1,5 +1,6 @@
 package Service;
 
+import Models.HoKhauChuHoModel;
 import Models.HoKhauModel;
 import database.DatabaseConnection;
 
@@ -105,24 +106,37 @@ public class HoKhauService {
 
 
     // Lấy danh sách hộ khẩu
-    public List<HoKhauModel> getListHoKhau(){
-        List<HoKhauModel> listHoKhau = new ArrayList<>();
-        String query = "SELECT * FROM HOKHAU";
+    public List<HoKhauChuHoModel> getListHoKhau() {
+        List<HoKhauChuHoModel> danhSachHoKhau = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet rs = preparedStatement.executeQuery()) {
+        String query =
+                "SELECT h.MAHOKHAU, nk.MANHANKHAU, nk.HOTEN AS TENCHUHO, nk.CCCD, nk.SDT " +
+                        "FROM HOKHAU h " +
+                        "JOIN NHANKHAU nk ON h.MAHOKHAU = nk.MAHOKHAU " +
+                        "WHERE nk.QUANHEVOICHUHO = 'Chủ hộ'";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(query)) {
 
             while (rs.next()) {
-                HoKhauModel hoKhauModel = new HoKhauModel();
-                hoKhauModel.setMaHoKhau(rs.getInt("MAHOKHAU"));
-                listHoKhau.add(hoKhauModel);
+                HoKhauChuHoModel hoKhauChuHo = new HoKhauChuHoModel(
+                        rs.getInt("MAHOKHAU"),
+                        rs.getInt("MANHANKHAU"),
+                        rs.getString("TENCHUHO"),
+                        rs.getString("CCCD"),
+                        rs.getString("SDT")
+                );
+
+                danhSachHoKhau.add(hoKhauChuHo);
             }
-        } catch (SQLException e){
-            // Ghi log lỗi chi tiết
+
+        } catch (SQLException e) {
             System.err.println("Lỗi khi lấy danh sách hộ khẩu: " + e.getMessage());
         }
-        return listHoKhau;
+
+        return danhSachHoKhau;
     }
+
 
 
     // Cheked mã hộ khẩu đã tồn tại hay chưa

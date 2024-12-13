@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.HoKhauChuHoModel;
 import Models.HoKhauModel;
 import Models.NhanKhauModel;
 import Service.HoKhauService;
@@ -135,7 +136,7 @@ public class HoKhauController implements Initializable {
     private DatePicker NSinh1;
 
     @FXML
-    private TableView<HoKhauModel> HoKhauTable;
+    private TableView<HoKhauChuHoModel> HoKhauTable;
 
     private final HoKhauService hoKhauService = new HoKhauService();
     private final NhanKhauService nhanKhauService = new NhanKhauService();
@@ -165,12 +166,14 @@ public class HoKhauController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //gán dữ liệu vào cột
+
+
+        // Cấu hình các cột trong bảng TableView
         MaHKCol.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-        MaCHCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
-        TenCHCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
-        CCCDCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
-        SDTCol.setCellValueFactory(new  PropertyValueFactory<>("SDT"));
+        MaCHCol.setCellValueFactory(new PropertyValueFactory<>("maChuHo"));
+        TenCHCol.setCellValueFactory(new PropertyValueFactory<>("tenChuHo"));
+        CCCDCol.setCellValueFactory(new PropertyValueFactory<>("cccdChuHo"));
+        SDTCol.setCellValueFactory(new PropertyValueFactory<>("sdtChuHo"));
 
         TenTVCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
         CCTVCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
@@ -198,9 +201,14 @@ public class HoKhauController implements Initializable {
 
 
     private void loadData() {
-        List<HoKhauModel> listHoKhau = hoKhauService.getListHoKhau();
-        ObservableList<HoKhauModel> danhSachHoKhau = FXCollections.observableArrayList(listHoKhau);
-        HoKhauTable.setItems(danhSachHoKhau);
+        // Lấy dữ liệu từ getListHoKhau
+        List<HoKhauChuHoModel> data = hoKhauService.getListHoKhau();
+
+        // Tạo ObservableList từ data
+        ObservableList<HoKhauChuHoModel> danhSachChuHo = FXCollections.observableArrayList(data);
+
+        // Đặt dữ liệu vào TableView
+        HoKhauTable.setItems(danhSachChuHo);
     }
 
 
@@ -235,7 +243,7 @@ public class HoKhauController implements Initializable {
 
     private void handleDeleteHoKhau(ActionEvent actionEvent) {
 
-        HoKhauModel selectedHoKhau = HoKhauTable.getSelectionModel().getSelectedItem();
+        HoKhauChuHoModel selectedHoKhau = HoKhauTable.getSelectionModel().getSelectedItem();
         if(selectedHoKhau != null) {
             if(confirmDeletion()){
                 if(hoKhauService.delHoKhau(selectedHoKhau.getMaHoKhau()) && nhanKhauService.delNhanKhauHoKhau(selectedHoKhau.getMaHoKhau())){
