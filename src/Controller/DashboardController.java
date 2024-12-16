@@ -28,6 +28,9 @@ public class DashboardController implements Initializable {
     private Button BtnThanhToan;
 
     @FXML
+    private Button BtnXe;
+
+    @FXML
     private Button BtnThongke;
 
     @FXML
@@ -43,6 +46,9 @@ public class DashboardController implements Initializable {
     private AnchorPane ThanhToan;
 
     @FXML
+    private AnchorPane Xe;
+
+    @FXML
     private AnchorPane ThongKe;
 
     @FXML
@@ -55,30 +61,42 @@ public class DashboardController implements Initializable {
             NhanKhau.setVisible(false);
             KhoanPhi.setVisible(false);
             ThanhToan.setVisible(false);
+            Xe.setVisible(false);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnNhankhau){
             HoKhau.setVisible(false);
             NhanKhau.setVisible(true);
             KhoanPhi.setVisible(false);
             ThanhToan.setVisible(false);
+            Xe.setVisible(false);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnKhoanphi){
             HoKhau.setVisible(false);
             NhanKhau.setVisible(false);
             KhoanPhi.setVisible(true);
             ThanhToan.setVisible(false);
+            Xe.setVisible(false);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnThanhToan){
             HoKhau.setVisible(false);
             NhanKhau.setVisible(false);
             KhoanPhi.setVisible(false);
             ThanhToan.setVisible(true);
+            Xe.setVisible(false);
+            ThongKe.setVisible(false);
+        }else if (event.getSource()==BtnXe){
+            HoKhau.setVisible(false);
+            NhanKhau.setVisible(false);
+            KhoanPhi.setVisible(false);
+            ThanhToan.setVisible(false);
+            Xe.setVisible(true);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnThongke) {
             HoKhau.setVisible(false);
             NhanKhau.setVisible(false);
             KhoanPhi.setVisible(false);
             ThanhToan.setVisible(false);
+            Xe.setVisible(false);
             ThongKe.setVisible(true);
         }
     }

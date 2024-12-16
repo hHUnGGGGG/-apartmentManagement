@@ -16,13 +16,12 @@
             <children>
                 <TableView fx:id="PhiTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
-                        <TableColumn fx:id="MaPhiCol" prefWidth="67.33331298828125" text="Mã Phí" />
-                        <TableColumn fx:id="TenPhiCol" prefWidth="140.66668701171875" text="Tên Phí" />
-                        <TableColumn fx:id="HanNopCol" prefWidth="106.0" text="Hạn Nộp" />
-                        <TableColumn fx:id="ThangNopCol" prefWidth="107.33328247070312" text="Tháng Nộp" />
-                        <TableColumn fx:id="LoaiPhiCol" prefWidth="178.00009155273438" text="Loại Phí" />
-                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="143.33331298828125" text="Đơn giá" />
-                        <TableColumn fx:id="MaHKCol2" minWidth="0.0" prefWidth="108.66668701171875" text="Mã Hộ Khẩu" />
+                        <TableColumn fx:id="MaPhiCol" prefWidth="82.6666898727417" text="Mã Phí" />
+                        <TableColumn fx:id="TenPhiCol" prefWidth="180.66666412353516" text="Tên Phí" />
+                        <TableColumn fx:id="HanNopCol" prefWidth="140.6666259765625" text="Hạn Nộp" />
+                        <TableColumn fx:id="ThangNopCol" prefWidth="152.66659545898438" text="Tháng Nộp" />
+                        <TableColumn fx:id="LoaiPhiCol" prefWidth="168.0" text="Loại Phí" />
+                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="130.0" text="Đơn giá" />
                     </columns>
                 </TableView>
                 <TextField fx:id="KTSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />

@@ -28,8 +28,7 @@
                     </columns>
                 </TableView>
               <Button fx:id="BtnAddHK" layoutX="711.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
-              <Button fx:id="BtnEditHK" layoutX="640.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Sửa" />
-              <Button fx:id="BtnDltHK" layoutX="562.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
+              <Button fx:id="BtnDltHK" layoutX="640.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">

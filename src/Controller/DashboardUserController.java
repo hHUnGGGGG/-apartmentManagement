@@ -24,6 +24,9 @@ public class DashboardUserController implements Initializable {
     private Button BtnKhoanPhi;
 
     @FXML
+    private Button BtnXe;
+
+    @FXML
     private Button BtnThanhToan;
 
     @FXML
@@ -31,6 +34,9 @@ public class DashboardUserController implements Initializable {
 
     @FXML
     private AnchorPane KhoanPhi;
+
+    @FXML
+    private AnchorPane Xe;
 
     @FXML
     private AnchorPane ThanhToan;
@@ -43,14 +49,22 @@ public class DashboardUserController implements Initializable {
         if (event.getSource()==BtnHokhau){
             HoKhau.setVisible(true);
             KhoanPhi.setVisible(false);
+            Xe.setVisible(false);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnKhoanPhi){
             HoKhau.setVisible(false);
             KhoanPhi.setVisible(true);
+            Xe.setVisible(false);
+            ThanhToan.setVisible(false);
+        }else if (event.getSource()==BtnXe){
+            HoKhau.setVisible(false);
+            KhoanPhi.setVisible(false);
+            Xe.setVisible(true);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnThanhToan){
             HoKhau.setVisible(false);
             KhoanPhi.setVisible(false);
+            Xe.setVisible(false);
             ThanhToan.setVisible(true);
         }
     }
