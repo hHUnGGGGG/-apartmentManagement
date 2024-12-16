@@ -14,12 +14,20 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginService {
     private double x;
     private double y;
+
+    private final Connection connection;
+
+    public LoginService() {
+        this.connection = DatabaseConnection.getInstance().getConnection();
+    }
     //check xem co user password khong
     private boolean checkLogin(String user, String pass) throws SQLException {
         String query = "select TENTAIKHOAN from TAIKHOAN where TENTAIKHOAN ='" + user + "'and MATKHAU ='" +pass +"'";
@@ -89,7 +97,7 @@ public class LoginService {
             return;
         }
 
-        if(checkLogin(user,pass)){
+        if(checkLogin(user,pass) && (timMaHoKhauBangSDT(user) != 0)){
             try {
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("/View/Dashboard-user.fxml"));
                 Parent root = loader.load();
@@ -125,5 +133,51 @@ public class LoginService {
         }else{
             showAlert(Alert.AlertType.ERROR,"Lỗi","Tài khoản hoặc mật khẩu không tồn tại");
         }
+    }
+
+    public int timMaHoKhauBangSDT(String sdt) {
+        // Chuẩn bị câu lệnh SQL để tìm MAHOKHAU theo SDT
+        int maHoKhau = 0;
+        String query = "SELECT MAHOKHAU FROM NHANKHAU WHERE SDT = ? AND QUANHEVOICHUHO = 'Chủ hộ'";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            // Gán tham số cho câu lệnh SQL
+            preparedStatement.setString(1, sdt);
+
+            // Thực thi câu lệnh và xử lý kết quả
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    maHoKhau = rs.getInt("MAHOKHAU");
+                }
+            }
+        } catch (SQLException e) {
+            // Ghi log lỗi chi tiết
+            System.err.println("Lỗi khi tìm kiếm mã hộ khẩu bằng số điện thoại (" + sdt + "): " + e.getMessage());
+        }
+
+        return maHoKhau;
+    }
+
+    public String timTenChuHoBangSDT(String sdt) {
+        // Chuẩn bị câu lệnh SQL để tìm MAHOKHAU theo SDT
+        String tenChuHo = null;
+        String query = "SELECT HOTEN FROM NHANKHAU WHERE SDT = ? AND QUANHEVOICHUHO = 'Chủ hộ'";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            // Gán tham số cho câu lệnh SQL
+            preparedStatement.setString(1, sdt);
+
+            // Thực thi câu lệnh và xử lý kết quả
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    tenChuHo = rs.getString("HOTEN");
+                }
+            }
+        } catch (SQLException e) {
+            // Ghi log lỗi chi tiết
+            System.err.println("Lỗi khi tìm kiếm tên chủ hộ bằng số điện thoại (" + sdt + "): " + e.getMessage());
+        }
+
+        return tenChuHo;
     }
 }

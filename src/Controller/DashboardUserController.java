@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.DangNhapVaDangKi.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,7 +37,7 @@ public class DashboardUserController implements Initializable {
 
     @FXML
     private AnchorPane main_form;
-
+    private LoginController loginController = new LoginController();
 
     public void switchForm(ActionEvent event){
         if (event.getSource()==BtnHokhau){
@@ -65,6 +66,6 @@ public class DashboardUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        AccountLabel.setText(loginController.getTenChuHoUser());
     }
 }

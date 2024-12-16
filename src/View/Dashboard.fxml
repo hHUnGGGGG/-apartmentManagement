@@ -71,7 +71,7 @@
                                  <fx:include source="HoKhau.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="NhanKhau" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
-                                 <fx:include source="NhanKhau.fxml" />
+                                 <fx:include fx:id="fxmlNhanKhau" source="NhanKhau.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="KhoanPhi" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include source="KhoanPhi.fxml" />

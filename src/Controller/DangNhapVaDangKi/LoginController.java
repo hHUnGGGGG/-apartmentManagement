@@ -24,6 +24,11 @@ public class LoginController  {
     private Button loginBtn;
 
     private LoginService loginService = new LoginService();
+
+    private static int maHoKhauUser;
+
+    private static String tenChuHoUser;
+
     @FXML
     public void initialize(){
         passwordshow.textProperty().bindBidirectional(passwordhide.textProperty());
@@ -32,8 +37,12 @@ public class LoginController  {
         if(username.getText().equals("tu")) {
             loginService.ChuyenSangDashBoard(username, passwordhide, loginBtn);
         }
-        else
+        else {
+            setMaHoKhauUser(username.getText());
+            setTenChuHoUser(username.getText());
             loginService.ChuyenSangDashBoardUser(username, passwordhide, loginBtn);
+            System.out.println(getMaHoKhauUser());
+        }
     }
 
     @FXML
@@ -51,5 +60,21 @@ public class LoginController  {
             passwordhide.setVisible(true);
             passwordshow.setVisible(false);
         }
+    }
+
+    public int getMaHoKhauUser() {
+        return maHoKhauUser;
+    }
+
+    public void setMaHoKhauUser(String sdt) {
+        LoginController.maHoKhauUser = loginService.timMaHoKhauBangSDT(sdt);
+    }
+
+    public String getTenChuHoUser() {
+        return tenChuHoUser;
+    }
+
+    public void setTenChuHoUser(String sdt) {
+        LoginController.tenChuHoUser = loginService.timTenChuHoBangSDT(sdt);
     }
 }

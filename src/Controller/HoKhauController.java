@@ -170,18 +170,17 @@ public class HoKhauController implements Initializable {
 
         // Cấu hình các cột trong bảng TableView
         MaHKCol.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-        MaCHCol.setCellValueFactory(new PropertyValueFactory<>("maChuHo"));
-        TenCHCol.setCellValueFactory(new PropertyValueFactory<>("tenChuHo"));
-        CCCDCol.setCellValueFactory(new PropertyValueFactory<>("cccdChuHo"));
-        SDTCol.setCellValueFactory(new PropertyValueFactory<>("sdtChuHo"));
+        MaCHCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
+        TenCHCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
+        CCCDCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
+        SDTCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
 
-        TenTVCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
-        CCTVCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
-        NSinhTVCol.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
-        SdtTVCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
-        QheTVCol.setCellValueFactory(new PropertyValueFactory<>("quanHeVoiChuHo"));
-
-
+//        TenTVCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
+//        CCTVCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
+//        NSinhTVCol.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
+//        SdtTVCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
+//        QheTVCol.setCellValueFactory(new PropertyValueFactory<>("quanHeVoiChuHo"));
+        
         //Load dữ liệu ban đầu
         loadData();
 

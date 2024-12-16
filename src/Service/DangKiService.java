@@ -25,7 +25,12 @@ public class DangKiService {
     private double x;
     private double y;
     private StartPageController stController;
-    private void setAlert(String s){
+    private final Connection connection;
+
+    public DangKiService() {
+        this.connection = DatabaseConnection.getInstance().getConnection();
+    }
+    public void setAlert(String s){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Message");
         alert.setHeaderText(null);
@@ -38,9 +43,8 @@ public class DangKiService {
         ResultSet resultSet = null;
         resultSet = truyVan.TruyVanDatabase("SELECT TENTAIKHOAN FROM TAIKHOAN");
         while(resultSet.next()) {
-            if((resultSet.getString("TENTAIKHOAN") == sdt)) {
+            if((resultSet.getString("TENTAIKHOAN").equals(sdt))) {
                 setAlert("Tài khoản đã tồn tại");
-                truyVan.closeDatabase();
                 return false;
             }
         }
@@ -50,12 +54,12 @@ public class DangKiService {
     public void LuuVaoDatabase(String TaiKhoan, String MatKhau) throws SQLException {
         DangKiService dangKiService =  new DangKiService();
         TruyVanDataBaseService truyVan = new TruyVanDataBaseService();
-        if(dangKiService.CheckAcc(TaiKhoan)) {
-            String sql = "INSERT INTO TAIKHOAN (TENTAIKHOAN, MATKHAU) VALUES ('" + TaiKhoan + "'" + ", '" + MatKhau + "')";
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.executeUpdate();
-        }
+
+        String sql = "INSERT INTO TAIKHOAN (TENTAIKHOAN, MATKHAU) VALUES ('" + TaiKhoan + "'" + ", '" + MatKhau + "')";
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.executeUpdate();
+
     }
 
     public boolean CheckPass(String pass1, String pass2) {
@@ -103,6 +107,30 @@ public class DangKiService {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int timMaHoKhauBangSDT(String sdt) {
+        // Chuẩn bị câu lệnh SQL để tìm MAHOKHAU theo SDT
+        int maHoKhau;
+        String query = "SELECT MAHOKHAU FROM NHANKHAU WHERE SDT = ? AND QUANHEVOICHUHO = 'Chủ hộ'";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            // Gán tham số cho câu lệnh SQL
+            preparedStatement.setString(1, sdt);
+
+            // Thực thi câu lệnh và xử lý kết quả
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    maHoKhau = rs.getInt("MAHOKHAU");
+                    return maHoKhau;
+                }
+            }
+        } catch (SQLException e) {
+            // Ghi log lỗi chi tiết
+            System.err.println("Lỗi khi tìm kiếm mã hộ khẩu bằng số điện thoại (" + sdt + "): " + e.getMessage());
+        }
+        setAlert("số điện thoại không phải của chủ hộ");
+        return 0;
     }
 
 }
