@@ -28,9 +28,6 @@ public class KhoanPhiUserController implements Initializable {
     private TableColumn<?, ?> LoaiPhiCol;
 
     @FXML
-    private TableColumn<?, ?> MaHKCol2;
-
-    @FXML
     private TableColumn<?, ?> MaPhiCol;
 
     @FXML

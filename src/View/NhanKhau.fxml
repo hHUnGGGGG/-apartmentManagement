@@ -76,7 +76,7 @@
             <TextField fx:id="tfQHe" layoutX="658.0" layoutY="191.0" prefHeight="25.0" prefWidth="175.0" styleClass="shadow" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="AddPane1" layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="870.0" visible="false">
+      <AnchorPane fx:id="AddPane1" prefHeight="520.0" prefWidth="870.0" visible="false">
          <children>
             <Label layoutX="72.0" layoutY="66.0" text="Tên">
                <font>
