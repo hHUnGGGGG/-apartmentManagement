@@ -21,17 +21,19 @@ public class KhoanThuService {
 
     // Thêm khoản thu mới
     public boolean themKhoanThu(KhoanThuModel khoanThu) {
-        String sql = "INSERT INTO PHI ( TENPHI, LOAIPHI, DONGIA, HANNOP, MAHOKHAU, THANGNOP) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (
+        String sql = "INSERT INTO PHI ( TENPHI, LOAIPHI, DONGIA, HANNOP, MAPHI, THANGNOP) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql2 ="SELECT MAX(MAPHI) as MAX FROM PHI";
+        try (PreparedStatement stmt2 = conn.prepareStatement(sql2);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+            int maPhi=1;
+            ResultSet rs=stmt2.executeQuery();
+            if(rs.next()) maPhi=rs.getInt("MAX")+1;
 
             stmt.setString(1, khoanThu.getTenKhoanThu());
             stmt.setDouble(3, khoanThu.getSoTien());
             stmt.setString(2, khoanThu.getLoaiKhoanThu());
             stmt.setDate(4, new java.sql.Date(khoanThu.getHanNop().getTime())); // Chuyển đổi Date sang SQL Date
-            stmt.setInt(5,khoanThu.getMaHoKhau());
+            stmt.setInt(5,maPhi);
             stmt.setInt(6,khoanThu.getThangNop());
 
             int rowsInserted = stmt.executeUpdate();
@@ -79,7 +81,7 @@ public class KhoanThuService {
 
     // Sửa khoản thu theo mã
     public boolean suaKhoanThu(KhoanThuModel khoanThu) {
-        String sql = "UPDATE PHI SET TENPHI = ?, DONGIA = ?, LOAIPHI = ?, HANNOP = ?, MAHOKHAU = ?, THANGNOP = ? WHERE MAPHI = ?";
+        String sql = "UPDATE PHI SET TENPHI = ?, DONGIA = ?, LOAIPHI = ?, HANNOP = ?, THANGNOP = ? WHERE MAPHI = ?";
 
         try (//Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -88,9 +90,9 @@ public class KhoanThuService {
             stmt.setDouble(2, khoanThu.getSoTien());
             stmt.setString(3, khoanThu.getLoaiKhoanThu());
             stmt.setDate(4, new java.sql.Date(khoanThu.getHanNop().getTime()));
-            stmt.setInt(5,khoanThu.getMaHoKhau());
-            stmt.setInt(6, khoanThu.getThangNop());
-            stmt.setInt(7, khoanThu.getMaKhoanThu());
+        //    stmt.setInt(5,khoanThu.getMaHoKhau());
+            stmt.setInt(5, khoanThu.getThangNop());
+            stmt.setInt(6, khoanThu.getMaKhoanThu());
 
             int rowsUpdated = stmt.executeUpdate();
            // DatabaseConnection.closeConnection();
@@ -135,7 +137,7 @@ public class KhoanThuService {
     public List<KhoanThuModel> timKhoanThuTen(String tenPhi) {
         List<KhoanThuModel> result= new ArrayList<>();
         tenPhi="%"+tenPhi+"%";
-        String sql="SELECT * FROM PHI WHERE LOWER(TENPHI) LIKE LOWER(?)";
+        String sql="SELECT * FROM PHI WHERE LOWER(TENPHI) LIKE LOWER(?) AND MAHOKHAU=0";
 
         try (//Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -182,7 +184,7 @@ public class KhoanThuService {
     // Hiển thị danh sách các khoản thu
     public List<KhoanThuModel> layDanhSachKhoanThu() {
         List<KhoanThuModel> danhSach = new ArrayList<>();
-        String sql = "SELECT * FROM PHI";
+        String sql = "SELECT * FROM PHI WHERE MAHOKHAU=0";
 
         try (//Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();

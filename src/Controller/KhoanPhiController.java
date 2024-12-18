@@ -114,7 +114,7 @@ public class KhoanPhiController implements Initializable {
             AddPane.setVisible(true);
             KPTablePane.setVisible(false);
             EditPane.setVisible(false);
-        }else if (event.getSource()==BtnSave || event.getSource()==BtnSave1){
+        }else if (event.getSource()==BtnSave ){
             AddPane.setVisible(false);
             KPTablePane.setVisible(true);
             EditPane.setVisible(false);
@@ -165,11 +165,12 @@ public class KhoanPhiController implements Initializable {
     // Xử lý thêm khoản phí
     private void handleAddPhi(ActionEvent event) {
         try {
-            int maPhi = Integer.parseInt(MaPhitf.getText());
+        //    int maPhi = Integer.parseInt(MaPhitf.getText());
             String tenPhi = TenPhitf.getText();
             double donGia = Double.parseDouble(DonGiatf.getText());
             String loaiPhi = LoaiPhitf.getText();
-            int maHoKhau = Integer.parseInt(MaHKtf2.getText());
+        //    int maHoKhau = Integer.parseInt(MaHKtf2.getText());
+            int maHoKhau=0;
             int thangNop = Integer.parseInt(ThangNoptf.getText());
             Date hanNop = Date.from(HanNoptf.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()); // chuyển từ LocalDate sang Date
 
@@ -211,13 +212,16 @@ public class KhoanPhiController implements Initializable {
             selectedPhi.setTenKhoanThu(TenPhitf1.getText());
             selectedPhi.setSoTien(Double.parseDouble(DonGiatf1.getText()));
             selectedPhi.setLoaiKhoanThu(LoaiPhitf1.getText());
-            selectedPhi.setMaHoKhau(Integer.parseInt(MaHKtf2.getText()));
+        //    selectedPhi.setMaHoKhau(0);
             selectedPhi.setThangNop(Integer.parseInt(ThangNoptf1.getText()));
             selectedPhi.setHanNop(Date.from(HanNoptf1.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
             if (khoanThuService.suaKhoanThu(selectedPhi)) {
                 loadData(); // Làm mới bảng
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Sửa khoản phí thành công!");
+                AddPane.setVisible(false);
+                KPTablePane.setVisible(true);
+                EditPane.setVisible(false);
             } else {
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Sửa khoản phí thất bại!");
             }
@@ -235,11 +239,11 @@ public class KhoanPhiController implements Initializable {
 
     // Xóa dữ liệu nhập
     private void clearFields() {
-        MaPhitf.clear();
+    //    MaPhitf.clear();
         TenPhitf.clear();
         DonGiatf.clear();
         LoaiPhitf.clear();
-        MaHKtf2.clear();
+    //    MaHKtf2.clear();
         ThangNoptf.clear();
         HanNoptf.setValue(null);
     }
