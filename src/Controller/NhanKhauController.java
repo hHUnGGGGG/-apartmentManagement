@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.NhanKhauModel;
+import Service.HoKhauService;
 import Service.NhanKhauService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
-import java.time.LocalDate;
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +21,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class NhanKhauController implements Initializable {
-
-    @FXML
-    private Label AgeText;
 
     @FXML
     private Button BtnAddNK;
@@ -85,16 +83,10 @@ public class NhanKhauController implements Initializable {
     private DatePicker NSinh;
 
     @FXML
-    private Label AgeText1;
-
-    @FXML
     private Button BtnAdd1;
 
     @FXML
     private Button BtnThoat1;
-
-    @FXML
-    private Label MaHK1;
 
     @FXML
     private DatePicker NSinh1;
@@ -130,20 +122,35 @@ public class NhanKhauController implements Initializable {
     private TableView<NhanKhauModel> NhanKhauTable;
 
     private final NhanKhauService nhanKhauService = new NhanKhauService();
+    private final HoKhauService hoKhauService = new HoKhauService();
     private ObservableList<NhanKhauModel> danhSachNhanKhau;
 
-    public void switchForm(ActionEvent event){
-        if (event.getSource()==BtnAddNK){
+    public void switchForm(ActionEvent event) throws SQLException {
+        if (event.getSource() == BtnAddNK){
             AddPane.setVisible(true);
             NKTablePane.setVisible(false);
-        }else if (event.getSource()==BtnEditNK){
-            AddPane1.setVisible(true);
+        }else if (event.getSource() == BtnAdd && validateInput()){
+            AddPane.setVisible(true);
             NKTablePane.setVisible(false);
-        }else if (event.getSource()==BtnAdd || event.getSource()==BtnThoat){
+        } else if (event.getSource() == BtnAdd && !validateInput()) {
+            AddPane.setVisible(false);
+            NKTablePane.setVisible(true);
+        } else if (event.getSource() == BtnThoat) {
             AddPane.setVisible(false);
             NKTablePane.setVisible(true);
         }
-        else if (event.getSource()==BtnAdd1 || event.getSource()==BtnThoat1) {
+
+
+        if (event.getSource() == BtnEditNK){
+            AddPane1.setVisible(true);
+            NKTablePane.setVisible(false);
+        }else if (event.getSource() == BtnAdd1 && validateInput()) {
+            AddPane1.setVisible(true);
+            NKTablePane.setVisible(false);
+        } else if (event.getSource() == BtnAdd1 && !validateInput()){
+            AddPane1.setVisible(false);
+            NKTablePane.setVisible(true);
+        } else if (event.getSource() == BtnThoat1) {
             AddPane1.setVisible(false);
             NKTablePane.setVisible(true);
         }
@@ -152,7 +159,6 @@ public class NhanKhauController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Gán dữ liệu vào cột
         MaNKCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
         CCCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
         NKNameCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
@@ -165,23 +171,41 @@ public class NhanKhauController implements Initializable {
         loadData();
 
         // Gắn sự kiện cho các nút
+
         BtnAdd.setOnAction(event-> {
             handleAddNhanKhau(event);
-            switchForm(event);
+            try {
+                switchForm(event);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
         BtnDltNK.setOnAction(this::handleDeleteNhanKhau);
         BtnEditNK.setOnAction(event-> {
             handleEditNhanKhau(event);
-            switchForm(event);
+            try {
+                switchForm(event);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
         NKSear.setOnKeyReleased(event -> handleSearch());
     }
 
     private void handleAddNhanKhau(ActionEvent actionEvent) {
-        NhanKhauModel nhanKhauModel = new NhanKhauModel(Integer.parseInt(tfMaHK.getText()), 0,tfCCCD.getText(), tfTen.getText(), Date.from(NSinh.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),tfSDT.getText(), tfQHe.getText(), TVangCheck.isSelected());
-        nhanKhauService.addNhanKhau(nhanKhauModel);
-        loadData();
-        clearFields();
+        try{
+
+            NhanKhauModel nhanKhauModel = new NhanKhauModel(Integer.parseInt(tfMaHK.getText().trim()),tfCCCD.getText().trim(), tfTen.getText(), Date.from(NSinh.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),tfSDT.getText().trim(), tfQHe.getText(), TVangCheck.isSelected());
+            if(nhanKhauService.addNhanKhau(nhanKhauModel)) {
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm nhân khẩu thành công!");
+                loadData();
+                clearFields();
+            } else {
+            showAlert(Alert.AlertType.ERROR, "Thất bại", "Thêm nhân khẩu thất bại!");
+            }
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
     }
 
     private void handleDeleteNhanKhau(ActionEvent actionEvent) {
@@ -208,26 +232,36 @@ public class NhanKhauController implements Initializable {
         NSinh1.setValue(new java.sql.Date(selectedNhanKhau.getNgaySinh().getTime()).toLocalDate());
         TVangCheck1.setSelected(selectedNhanKhau.isTrangThai());
         BtnAdd1.setOnAction(event-> {
-            sua(event, selectedNhanKhau);
-            switchForm(event);
+            update(event, selectedNhanKhau);
+            try {
+                switchForm(event);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
-    private void sua(ActionEvent actionEvent, NhanKhauModel n) {
-        NhanKhauModel nhanKhauModel = new NhanKhauModel(Integer.parseInt(tfMaHK1.getText()), 0,tfCCCD1.getText(), tfTen1.getText(), Date.from(NSinh1.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),tfSDT1.getText(), tfQHe1.getText(), TVangCheck1.isSelected());
-        nhanKhauModel.setMaNhanKhau(n.getMaNhanKhau());
-        nhanKhauService.updateNhanKhau(nhanKhauModel);
-        loadData();
+    private void update(ActionEvent actionEvent, NhanKhauModel nhankhau) {
+        try{
+
+            NhanKhauModel nhanKhauModel = new NhanKhauModel(Integer.parseInt(tfMaHK1.getText()),tfCCCD1.getText(), tfTen1.getText(), Date.from(NSinh1.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),tfSDT1.getText(), tfQHe1.getText(), TVangCheck1.isSelected());
+            nhanKhauModel.setMaNhanKhau(nhankhau.getMaNhanKhau());
+
+            if(nhanKhauService.updateNhanKhau(nhanKhauModel)) {
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thay đổi thông tin nhân khẩu thành công!");
+                loadData();
+                clearFields();
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Thất bại", "Thay đổi thông tin nhân khẩu thất bại!");
+            }
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
     }
     private void handleSearch() {
-        String keyword = NKSear.getText().trim();
+        String keyword = NKSear.getText().toLowerCase();
 
-        if (keyword.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng nhập từ khóa tìm kiếm!");
-            return;
-        }
-
-        List<NhanKhauModel> filteredList = null;
+        List<NhanKhauModel> filteredList;
 
         // Kiểm tra loại tìm kiếm dựa trên keyword
         if (Pattern.matches("\\d{1,12}", keyword)) {
@@ -251,7 +285,7 @@ public class NhanKhauController implements Initializable {
     }
 
 
-    private void loadData() {
+    public void loadData() {
         List<NhanKhauModel> listNhanKhau = nhanKhauService.getListNhanKhau();
         danhSachNhanKhau = FXCollections.observableArrayList(listNhanKhau);
         NhanKhauTable.setItems(danhSachNhanKhau);
@@ -272,5 +306,59 @@ public class NhanKhauController implements Initializable {
         tfQHe.clear();
         NSinh.setValue(null);
         TVangCheck.setSelected(false);
+    }
+
+    public boolean validateInput() throws SQLException {
+
+        if (!Pattern.matches("\\d{7}", tfMaHK.getText().trim())) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập mã hộ khẩu hợp lệ!");
+            return true;
+        }
+
+        if (!hoKhauService.existsHoKhauId(Integer.parseInt(tfMaHK.getText()))) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Không tồn tại hộ khẩu này!");
+            return true;
+        }
+
+        if (!Pattern.matches("\\d{12}", tfCCCD.getText().trim())) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập CCCD hợp lệ!");
+            return true;
+        }
+
+
+        if (tfTen.getText().trim().length() < 2 || tfTen.getText().trim().length() > 60) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập tên hợp lệ!");
+            return true;
+        }
+
+
+        if (!Pattern.matches("\\d{10}", tfSDT.getText().trim())) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập số điện thoại hợp lệ!");
+            return true;
+        }
+
+        if (tfQHe.getText().trim().length() < 2 || tfQHe.getText().trim().length() > 60) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập quan hệ hợp lệ!");
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public ObservableList<NhanKhauModel> getDanhSachNhanKhau() {
+        return danhSachNhanKhau;
+    }
+
+    public void setDanhSachNhanKhau(ObservableList<NhanKhauModel> danhSachNhanKhau) {
+        this.danhSachNhanKhau = danhSachNhanKhau;
+    }
+
+    public TableView<NhanKhauModel> getNhanKhauTable() {
+        return NhanKhauTable;
+    }
+
+    public void setNhanKhauTable(TableView<NhanKhauModel> nhanKhauTable) {
+        NhanKhauTable = nhanKhauTable;
     }
 }

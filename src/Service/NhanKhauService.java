@@ -2,11 +2,13 @@ package Service;
 
 import Models.NhanKhauModel;
 import database.DatabaseConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 public class NhanKhauService {
     private final Connection connection;
@@ -15,6 +17,7 @@ public class NhanKhauService {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
+    HoKhauService hoKhauService = new HoKhauService();
 
     // Thêm nhân khẩu
     public boolean addNhanKhau(NhanKhauModel nhankhauModel) {
@@ -41,11 +44,34 @@ public class NhanKhauService {
         }
     }
 
+    //Thêm chủ hộ
+    public boolean addChuHo(NhanKhauModel nhankhauModel) {
+
+        String query = "INSERT INTO NHANKHAU (MANHANKHAU, CCCD, HOTEN, NGAYSINH, SDT, MAHOKHAU, QUANHEVOICHUHO, TRANGTHAI) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            int maHoKhau = nhankhauModel.getMaHoKhau();  // Mã hộ khẩu hiện tại
+
+            // Cập nhật mã nhân khẩu cho đối tượng nhân khẩu
+            nhankhauModel.setMaNhanKhau(maHoKhau + 1);
+
+            // Thiết lập các tham số cho PreparedStatement
+            setNhanKhauParamsAdd(preparedStatement, nhankhauModel);
+
+            return preparedStatement.executeUpdate() > 0; // Trả về true nếu thêm thành công
+        } catch (SQLException e) {
+            // Ghi log lỗi chi tiết
+            System.err.println("Lỗi khi thêm nhân khẩu: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     // Phương thức này để lấy mã nhân khẩu tiếp theo trong hộ khẩu
     public int getNextMaNhanKhau(int maHoKhau) throws SQLException {
 
         String query = "SELECT MAX(MANHANKHAU) FROM NHANKHAU WHERE MAHOKHAU = ?";
+
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, maHoKhau);
@@ -55,7 +81,7 @@ public class NhanKhauService {
                 return maxMaNhanKhau + 1;  // Tính mã nhân khẩu tiếp theo
             }
         }
-        return maHoKhau + 1;  // Nếu không có nhân khẩu nào trong hộ khẩu, bắt đầu từ mã hộ khẩu + 1
+        return 0;
     }
 
 
@@ -170,6 +196,7 @@ public class NhanKhauService {
     public List<NhanKhauModel> searchNhanKhauByTen(String ten) {
 
         List<NhanKhauModel> listNhanKhau = new ArrayList<>();
+
         String query = "SELECT * FROM NHANKHAU WHERE LOWER(HOTEN) LIKE LOWER(?)";
 
         String searchPattern = "%" + ten.trim() + "%";  // Cải thiện việc tạo chuỗi tìm kiếm
@@ -202,26 +229,31 @@ public class NhanKhauService {
             }
         } catch (SQLException e) {
             System.err.println("Lỗi khi lấy danh sách nhân khẩu: " + e.getMessage());
-            // Nếu có lỗi, trả về danh sách rỗng thay vì null
         }
-        return listNhanKhau; // Trả về danh sách rỗng nếu có lỗi
+        return listNhanKhau;
     }
 
 
-    // Cheked mã nhân khẩu đã tồn tại hay chưa
-    public boolean existsNhanKhauId(int maNhanKhau) {
-        String query = "SELECT COUNT(*) FROM NHANKHAU WHERE MANHANKHAU = ?";
+    public List<NhanKhauModel> getTVtrongHK() throws SQLException {
+        List<NhanKhauModel> listTV = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, maNhanKhau);
+        String query = "SELECT * FROM NHANKHAU WHERE MAHOKHAU = ?";
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next(); // Nếu có kết quả thì trả về true
-            }
-        } catch (SQLException e) {
-            System.err.println("Lỗi khi kiểm tra với (mã nhân khẩu : " + maNhanKhau + "):" + e.getMessage());
-            return false; // Trả về false nếu có lỗi hoặc không tìm thấy
-        }
+        int maHoKhau = hoKhauService.getMaxMaHoKhau();
+
+         try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+             preparedStatement .setInt(1,maHoKhau);
+
+             try (ResultSet rs = preparedStatement.executeQuery()) {
+                 while (rs.next()) {
+                     listTV.add(createNhanKhauFromResultSet(rs));  // Trả về đối tượng nếu tìm thấy
+                 }
+             }
+
+         } catch (SQLException e){
+             System.err.println("Lỗi khi lấy danh sách thành viên: " + e.getMessage());
+         }
+         return listTV;
     }
 
 
@@ -261,5 +293,11 @@ public class NhanKhauService {
                 rs.getString("QUANHEVOICHUHO"),
                 rs.getBoolean("TRANGTHAI")
         );
+    }
+
+    public void loadData(TableView<NhanKhauModel> NhanKhauTable, ObservableList<NhanKhauModel> danhSachNhanKhau) {
+        List<NhanKhauModel> listNhanKhau = getListNhanKhau();
+        danhSachNhanKhau = FXCollections.observableArrayList(listNhanKhau);
+        NhanKhauTable.setItems(danhSachNhanKhau);
     }
 }
