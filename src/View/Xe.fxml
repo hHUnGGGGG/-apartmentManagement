@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.XeController">
+    <children>
+        <AnchorPane fx:id="XeTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css">
+            <children>
+                <TableView fx:id="XeTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                    <columns>
+                        <TableColumn fx:id="BKSCol" prefWidth="290.0" text="Biển Kiểm Soát" />
+                        <TableColumn fx:id="LXeCol" prefWidth="290.0" text="Loại Xe" />
+                        <TableColumn fx:id="MaHKCol" prefWidth="290.0" text="Mã Hộ Khẩu" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="XeSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
+            <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
+              <Button fx:id="BtnAddXe" layoutX="711.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
+              <Button fx:id="BtnDltXe" layoutX="640.0" layoutY="467.0" mnemonicParsing="false" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
+            </children>
+        </AnchorPane>
+      <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">
+         <children>
+              <Label layoutX="72.0" layoutY="66.0" text="Biển Kiểm Soát">
+                  <font>
+                      <Font name="Tahoma" size="14.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="tfBks" layoutX="184.0" layoutY="62.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập biển kiểm soát" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <Label layoutX="72.0" layoutY="127.0" text="Loại Xe">
+                  <font>
+                      <Font name="Tahoma" size="14.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="tfLXe" layoutX="184.0" layoutY="123.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập loại xe" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <Label fx:id="MaHK" layoutX="527.0" layoutY="66.0" text="Mã Hộ Khẩu">
+                  <font>
+                      <Font name="Tahoma" size="14.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="tfMaHK" layoutX="659.0" layoutY="62.0" prefWidth="175.0" promptText="Nhập mã hộ khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Button fx:id="BtnAdd" layoutX="360.0" layoutY="305.0" mnemonicParsing="false" styleClass="add-btn" text="Thêm" />
+            <Button fx:id="BtnThoat" layoutX="533.0" layoutY="305.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" text="Thoát" />
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>

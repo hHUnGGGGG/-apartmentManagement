@@ -55,7 +55,8 @@
                               </Label>
                               <Button fx:id="BtnHokhau" layoutX="16.0" layoutY="143.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Hộ Khẩu" />
                               <Button fx:id="BtnKhoanPhi" layoutX="16.0" layoutY="178.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Khoản Phí" />
-                              <Button fx:id="BtnThanhToan" layoutX="16.0" layoutY="213.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Thanh Toán" />
+                              <Button fx:id="BtnXe" layoutX="16.0" layoutY="213.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Xe" />
+                              <Button fx:id="BtnThanhToan" layoutX="16.0" layoutY="248.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Thanh Toán" />
                            </children></AnchorPane>
                      </children>
                   </AnchorPane>
@@ -70,6 +71,9 @@
                               </AnchorPane>
                               <AnchorPane fx:id="KhoanPhi" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include source="KhoanPhi-user.fxml" />
+                              </AnchorPane>
+                              <AnchorPane fx:id="Xe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false" >
+                                 <fx:include source="Xe-user.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="ThanhToan" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include source="ThanhToan-user.fxml" />

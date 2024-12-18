@@ -8,15 +8,18 @@ import javax.naming.spi.DirStateFactory.Result;
 
 import Models.NhanKhauModel;
 import Service.DangKiService;
+import Service.LoginService;
 import Service.NhanKhauService;
 import database.DatabaseConnection;
 
 public class Test {
 
 	public static void main(String[] args)  {
-        NhanKhauService nhanKhauService = new NhanKhauService();
-        for(NhanKhauModel n : nhanKhauService.getListNhanKhau()) {
-            System.out.println(n.getMaNhanKhau());
+        DangKiService dangKiService = new DangKiService();
+        try {
+            System.out.println(dangKiService.CheckAcc("1212121212"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

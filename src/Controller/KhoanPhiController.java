@@ -68,9 +68,6 @@ public class KhoanPhiController implements Initializable {
     private TextField LoaiPhitf1;
 
     @FXML
-    private TableColumn<?, ?> MaHKCol2;
-
-    @FXML
     private TextField MaHKtf2;
 
     @FXML
@@ -142,7 +139,7 @@ public class KhoanPhiController implements Initializable {
         DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("soTien"));
         HanNopCol.setCellValueFactory(new PropertyValueFactory<>("hanNop"));
         LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
-        MaHKCol2.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
+//        MaHKCol2.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
         ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
 
         // Tải dữ liệu từ DAO

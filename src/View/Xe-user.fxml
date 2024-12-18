@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.XeController">
+    <children>
+        <AnchorPane fx:id="XeTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css">
+            <children>
+                <TableView fx:id="XeTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                    <columns>
+                        <TableColumn fx:id="BKSCol" prefWidth="435.0" text="Biển Kiểm Soát" />
+                        <TableColumn fx:id="LXeCol" prefWidth="435.0" text="Loại Xe" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="XeSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
+            <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

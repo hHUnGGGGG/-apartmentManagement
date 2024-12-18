@@ -64,8 +64,8 @@ public class DangKyController implements Initializable {
 
     public void SignUp(ActionEvent event) {
         try {
-            dangKiService.LuuVaoDatabase(username.getText(), passwordhide.getText());
-            if (dangKiService.CheckPass(passwordhide.getText(), password1hide.getText())) {
+            if (dangKiService.CheckPass(passwordhide.getText(), password1hide.getText()) && dangKiService.CheckAcc(username.getText()) && dangKiService.timMaHoKhauBangSDT(username.getText()) != 0) {
+                dangKiService.LuuVaoDatabase(username.getText(), passwordhide.getText());
                 dangKiService.DangKiThanhCong();
                 dangKiService.ChuyenVeLogin(signupBtn);
             }
