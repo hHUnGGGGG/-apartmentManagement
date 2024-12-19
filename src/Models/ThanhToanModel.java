@@ -8,6 +8,15 @@ public class ThanhToanModel extends KhoanThuModel{
     private String phuongThucThanhToan;
     private String tenChuHo;
 
+    public ThanhToanModel(int maKhoanThu, String tenKhoanThu, double soTien, String loaiKhoanThu, Date hanNop,int maHoKhau, int thangNop, String trangThai, Date thoiGianThanhToan, String phuongThucThanhToan) {
+        super(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop, maHoKhau, thangNop);
+        this.trangThai = trangThai;
+        this.thoiGianThanhToan = thoiGianThanhToan;
+        this.phuongThucThanhToan = phuongThucThanhToan;
+
+    }
+
+
     public ThanhToanModel(int maKhoanThu, String tenKhoanThu, double soTien, String loaiKhoanThu, Date hanNop, int maHoKhau, int thangNop, String trangThai, Date thoiGianThanhToan, String phuongThucThanhToan, String tenChuHo) {
         super(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop, maHoKhau, thangNop);
         this.trangThai = trangThai;

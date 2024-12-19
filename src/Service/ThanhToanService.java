@@ -5,15 +5,333 @@ import Models.ThanhToanModel;
 import database.DatabaseConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThanhToanService {
+    private static final double PHI_QUAN_LY_CHUNG_CU_M2 = 7000;
+    private static final double PHI_DICH_VU_M2 = 16500; // Đơn giá dịch vụ chung cư tính theo m^2
     private static final double PHI_XE_MAY = 70000;  // 70,000 đ/xe máy/tháng
     private static final double PHI_XE_OTO = 1200000; // 1,200,000 đ/ô tô/tháng
     private Connection conn;
     public ThanhToanService() {
         this.conn = DatabaseConnection.getInstance().getConnection();
+    }
+
+    public List<ThanhToanModel> timThanhToanTenPhiUser(String tenPhi, int maHoKhau) {
+        List<ThanhToanModel> result= new ArrayList<>();
+        tenPhi="%"+tenPhi+"%";
+        String sql="SELECT * FROM PHI WHERE LOWER(TENPHI) LIKE LOWER(?) AND MAHOKHAU=?";
+
+        try (//Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1,tenPhi);
+            stmt.setInt(2,maHoKhau);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int maKhoanThu = rs.getInt("MAPHI");
+                String tenKhoanThu = rs.getString("TENPHI");
+                double soTien = rs.getDouble("DONGIA");
+                String loaiKhoanThu = rs.getString("LOAIPHI");
+                Date hanNop = rs.getDate("HANNOP");
+            //    int maHoKhau= rs.getInt("MAHOKHAU");
+                int thangNop= rs.getInt("THANGNOP");
+                String trangThai= rs.getString("TRANGTHAI");
+                Date  thoiGianThanhToan= rs.getDate("THOIGIANTHANHTOAN");
+                String phuongThucThanhToan= rs.getString("PHUONGTHUCTHANHTOAN");
+
+                //Lấy tên chủ hộ
+                String sql2="SELECT HOTEN FROM NHANKHAU WHERE MAHOKHAU=? AND QUANHEVOICHUHO=?";
+                try(PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+                    stmt2.setInt(1,maHoKhau);
+                    stmt2.setString(2,"Chủ Hộ");
+                    ResultSet rs2 = stmt2.executeQuery();
+                    String tenChuHo = null;
+                    if (rs2.next()) {
+                        tenChuHo = rs2.getString("HOTEN");
+                    }
+
+                    result.add(new ThanhToanModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop,maHoKhau, thangNop, trangThai,thoiGianThanhToan, phuongThucThanhToan, tenChuHo));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  result;
+    }
+
+    public List<ThanhToanModel> layDanhSachPhiTheoHoKhau(int maHoKhau) {
+        List<ThanhToanModel> danhSachPhi = new ArrayList<>();
+
+        String query = """
+        SELECT MAPHI, TENPHI, HANNOP, THANGNOP, LOAIPHI, DONGIA, TRANGTHAI, THOIGIANTHANHTOAN, PHUONGTHUCTHANHTOAN
+        FROM PHI
+        WHERE MAHOKHAU = ?
+    """;
+
+        try (
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, maHoKhau); // Gán mã hộ khẩu vào câu lệnh SQL
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                // Lấy các thông tin từ ResultSet
+                int maPhi = rs.getInt("MAPHI");
+                String tenPhi = rs.getString("TENPHI");
+                Date hanNopSql = rs.getDate("HANNOP");
+                int thangNop = rs.getInt("THANGNOP");
+                String loaiPhi = rs.getString("LOAIPHI");
+                double donGia = rs.getDouble("DONGIA");
+                String trangThai = rs.getString("TRANGTHAI");
+                Date thoiGianThanhToan = rs.getDate("THOIGIANTHANHTOAN");
+                String phuongThucThanhToan = rs.getString("PHUONGTHUCTHANHTOAN");
+
+                // Chuyển java.sql.Date sang java.util.Date
+                java.util.Date hanNop = (hanNopSql != null) ? new java.util.Date(hanNopSql.getTime()) : null;
+//                java.util.Date thoiGianThanhToan = (thoiGianThanhToanSql != null)
+//                        ? new java.util.Date(thoiGianThanhToanSql.getTime())
+//                        : null;
+
+                //Lấy tên chủ hộ
+                String sql2="SELECT HOTEN FROM NHANKHAU WHERE MAHOKHAU=? AND QUANHEVOICHUHO=?";
+                try(PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+                    stmt2.setInt(1,maHoKhau);
+                    stmt2.setString(2,"Chủ Hộ");
+                    ResultSet rs2 = stmt2.executeQuery();
+                    String tenChuHo = null;
+                    if (rs2.next()) {
+                        tenChuHo = rs2.getString("HOTEN");
+                    }
+
+                    danhSachPhi.add(new ThanhToanModel(maPhi,tenPhi,donGia,loaiPhi, hanNop, maHoKhau, thangNop, trangThai, thoiGianThanhToan, phuongThucThanhToan, tenChuHo));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return danhSachPhi;
+    }
+
+//    public void duplicateFeesToAllHouseholds() {
+//        String queryGetDefaultFees = "SELECT MAPHI, TENPHI, DONGIA, LOAIPHI, HANNOP FROM PHI WHERE MAHOKHAU = 0";
+//        String queryGetHouseholds = "SELECT MAHOKHAU FROM HOKHAU";
+//        String queryInsertFee = "INSERT INTO PHI (TENPHI, DONGIA, LOAIPHI, HANNOP, MAHOKHAU) VALUES (?, ?, ?, ?, ?)";
+//
+//        try (Connection conn = DatabaseConnection.getConnection();
+//             PreparedStatement stmtGetDefaultFees = conn.prepareStatement(queryGetDefaultFees);
+//             PreparedStatement stmtGetHouseholds = conn.prepareStatement(queryGetHouseholds);
+//             PreparedStatement stmtInsertFee = conn.prepareStatement(queryInsertFee)) {
+//
+//            // Lấy danh sách phí có MAHOKHAU = 0
+//            ResultSet rsFees = stmtGetDefaultFees.executeQuery();
+//
+//            // Lưu các phí vào bộ nhớ tạm
+//            List<Fee> defaultFees = new ArrayList<>();
+//            while (rsFees.next()) {
+//                Fee fee = new Fee(
+//                        rsFees.getInt("MAPHI"),
+//                        rsFees.getString("TENPHI"),
+//                        rsFees.getDouble("DONGIA"),
+//                        rsFees.getString("LOAIPHI"),
+//                        rsFees.getDate("HANNOP")
+//                );
+//                defaultFees.add(fee);
+//            }
+//
+//            // Lấy danh sách các hộ khẩu
+//            ResultSet rsHouseholds = stmtGetHouseholds.executeQuery();
+//            List<Integer> householdIds = new ArrayList<>();
+//            while (rsHouseholds.next()) {
+//                householdIds.add(rsHouseholds.getInt("MAHOKHAU"));
+//            }
+//
+//            // Lặp qua từng hộ và từng phí để thêm mới vào bảng PHI
+//            for (Integer householdId : householdIds) {
+//                for (Fee fee : defaultFees) {
+//                    stmtInsertFee.setString(1, fee.getTenPhi());
+//                    stmtInsertFee.setDouble(2, fee.getDonGia());
+//                    stmtInsertFee.setString(3, fee.getLoaiPhi());
+//                    stmtInsertFee.setDate(4, fee.getHanNop());
+//                    stmtInsertFee.setInt(5, householdId);
+//                    stmtInsertFee.addBatch(); // Tăng hiệu suất bằng cách sử dụng batch
+//                }
+//            }
+//
+//            // Thực hiện batch insert
+//            stmtInsertFee.executeBatch();
+//            System.out.println("Các phí đã được gán thành công cho tất cả các hộ.");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+    public void themPhiQuanLyChungCu() {
+        String layCanHoQuery = """
+        SELECT C.MAHOKHAU, C.DIENTICH
+        FROM CANHO C
+    """;
+
+        String kiemTraPhiQuery = """
+        SELECT COUNT(*) AS count
+        FROM PHI
+        WHERE TENPHI = ? AND MAHOKHAU = ?
+    """;
+
+        String themPhiQuery = """
+        INSERT INTO PHI (TENPHI, DONGIA, TRANGTHAI,  PHUONGTHUCTHANHTOAN, MAHOKHAU, MAPHI, LOAIPHI)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """;
+
+        String sql2 ="SELECT MAX(MAPHI) as MAX FROM PHI";
+
+        try (PreparedStatement stmt2 = conn.prepareStatement(sql2);
+             PreparedStatement layCanHoStmt = conn.prepareStatement(layCanHoQuery);
+             PreparedStatement kiemTraPhiStmt = conn.prepareStatement(kiemTraPhiQuery);
+             PreparedStatement themPhiStmt = conn.prepareStatement(themPhiQuery)) {
+
+            ResultSet rs = layCanHoStmt.executeQuery();
+
+            // Lấy tháng và năm hiện tại
+            LocalDate currentDate = LocalDate.now();
+            String monthYear = currentDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
+
+            while (rs.next()) {
+                int maHoKhau = rs.getInt("MAHOKHAU");
+                double dienTich = rs.getDouble("DIENTICH");
+
+                // Tính tổng phí dịch vụ dựa trên diện tích
+                double donGia = PHI_QUAN_LY_CHUNG_CU_M2 * dienTich;
+                if (donGia == 0) {
+                    // Bỏ qua nếu diện tích không hợp lệ
+                    continue;
+                }
+
+                // Tạo tên phí dịch vụ chung cư kèm tháng/năm
+                String tenPhi = "Phí quản lý chung cư " + monthYear;
+
+                // Kiểm tra khoản phí đã tồn tại chưa
+                kiemTraPhiStmt.setString(1, tenPhi);
+                kiemTraPhiStmt.setInt(2, maHoKhau);
+                ResultSet checkRs = kiemTraPhiStmt.executeQuery();
+                checkRs.next();
+                int count = checkRs.getInt("count");
+
+                if (count > 0) {
+                    // Nếu khoản phí đã tồn tại, bỏ qua
+                    continue;
+                }
+
+                // Thêm khoản phí nếu chưa tồn tại
+                int maPhi=1;
+                ResultSet rs2=stmt2.executeQuery();
+                if(rs2.next()) maPhi=rs2.getInt("MAX")+1;
+
+                themPhiStmt.setString(1, tenPhi); // TENPHI
+                themPhiStmt.setDouble(2, donGia); // DONGIA
+                themPhiStmt.setString(3, "Chưa thanh toán"); // TRANGTHAI
+                //    themPhiStmt.setDate(4, java.sql.Date.valueOf(currentDate)); // THOIGIANTHANHTOAN
+                themPhiStmt.setString(4, null); // PHUONGTHUCTHANHTOAN
+                themPhiStmt.setInt(5, maHoKhau); // MAHOKHAU
+                themPhiStmt.setInt(6,maPhi);
+                themPhiStmt.setString(7, "Bắt buộc");
+
+                // Thực thi câu lệnh thêm
+                themPhiStmt.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void themPhiDichVuChungCu() {
+        String layCanHoQuery = """
+        SELECT C.MAHOKHAU, C.DIENTICH
+        FROM CANHO C
+    """;
+
+        String kiemTraPhiQuery = """
+        SELECT COUNT(*) AS count
+        FROM PHI
+        WHERE TENPHI = ? AND MAHOKHAU = ?
+    """;
+
+        String themPhiQuery = """
+        INSERT INTO PHI (TENPHI, DONGIA, TRANGTHAI,  PHUONGTHUCTHANHTOAN, MAHOKHAU, MAPHI, LOAIPHI)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """;
+
+        String sql2 ="SELECT MAX(MAPHI) as MAX FROM PHI";
+
+        try (PreparedStatement stmt2 = conn.prepareStatement(sql2);
+             PreparedStatement layCanHoStmt = conn.prepareStatement(layCanHoQuery);
+             PreparedStatement kiemTraPhiStmt = conn.prepareStatement(kiemTraPhiQuery);
+             PreparedStatement themPhiStmt = conn.prepareStatement(themPhiQuery)) {
+
+            ResultSet rs = layCanHoStmt.executeQuery();
+
+            // Lấy tháng và năm hiện tại
+            LocalDate currentDate = LocalDate.now();
+            String monthYear = currentDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
+
+            while (rs.next()) {
+                int maHoKhau = rs.getInt("MAHOKHAU");
+                double dienTich = rs.getDouble("DIENTICH");
+
+                // Tính tổng phí dịch vụ dựa trên diện tích
+                double donGia = PHI_DICH_VU_M2 * dienTich;
+                if (donGia == 0) {
+                    // Bỏ qua nếu diện tích không hợp lệ
+                    continue;
+                }
+
+                // Tạo tên phí dịch vụ chung cư kèm tháng/năm
+                String tenPhi = "Phí dịch vụ chung cư " + monthYear;
+
+                // Kiểm tra khoản phí đã tồn tại chưa
+                kiemTraPhiStmt.setString(1, tenPhi);
+                kiemTraPhiStmt.setInt(2, maHoKhau);
+                ResultSet checkRs = kiemTraPhiStmt.executeQuery();
+                checkRs.next();
+                int count = checkRs.getInt("count");
+
+                if (count > 0) {
+                    // Nếu khoản phí đã tồn tại, bỏ qua
+                    continue;
+                }
+
+                // Thêm khoản phí nếu chưa tồn tại
+                int maPhi=1;
+                ResultSet rs2=stmt2.executeQuery();
+                if(rs2.next()) maPhi=rs2.getInt("MAX")+1;
+
+                themPhiStmt.setString(1, tenPhi); // TENPHI
+                themPhiStmt.setDouble(2, donGia); // DONGIA
+                themPhiStmt.setString(3, "Chưa thanh toán"); // TRANGTHAI
+            //    themPhiStmt.setDate(4, java.sql.Date.valueOf(currentDate)); // THOIGIANTHANHTOAN
+                themPhiStmt.setString(4, null); // PHUONGTHUCTHANHTOAN
+                themPhiStmt.setInt(5, maHoKhau); // MAHOKHAU
+                themPhiStmt.setInt(6,maPhi);
+                themPhiStmt.setString(7, "Bắt buộc");
+
+                // Thực thi câu lệnh thêm
+                themPhiStmt.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void themPhiGuiXe() {
@@ -26,14 +344,14 @@ public class ThanhToanService {
                 """;
 
         String themPhiQuery = """
-                INSERT INTO PHI (TENPHI, DONGIA, TRANGTHAI, THOIGIANTHANHTOAN, PHUONGTHUCTHANHTOAN, MAHOKHAU, MAPHI)
+                INSERT INTO PHI (TENPHI, DONGIA, TRANGTHAI, PHUONGTHUCTHANHTOAN, MAHOKHAU, MAPHI, LOAIPHI)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
 
         String kiemTraPhiQuery = """
                     SELECT COUNT(*) AS count
                     FROM PHI
-                    WHERE TENPHI = ? AND MAHOKHAU = ?
+                    WHERE TENPHI = ? AND MAHOKHAU = ? 
                 """;
 
         String sql2 ="SELECT MAX(MAPHI) as MAX FROM PHI";
@@ -44,6 +362,9 @@ public class ThanhToanService {
              PreparedStatement themPhiStmt = conn.prepareStatement(themPhiQuery)) {
 
             ResultSet rs = layXeStmt.executeQuery();
+
+            LocalDate currentDate = LocalDate.now();
+            String monthYear = currentDate.format(DateTimeFormatter.ofPattern("MM/yyyy"));
 
             while (rs.next()) {
                 int maHoKhau = rs.getInt("MAHOKHAU");
@@ -57,9 +378,13 @@ public class ThanhToanService {
                     continue;
                 }
 
+                // Tạo tên phí gửi xe kèm tháng/năm
+                String tenPhi = "Phí gửi xe " + monthYear;
+
                 // Kiểm tra khoản phí đã tồn tại chưa
-                kiemTraPhiStmt.setString(1, "Phí gửi xe");
+                kiemTraPhiStmt.setString(1, tenPhi);
                 kiemTraPhiStmt.setInt(2, maHoKhau);
+
             //    kiemTraPhiStmt.setDate(3, new Date(System.currentTimeMillis())); // Ngày hiện tại
                 ResultSet checkRs = kiemTraPhiStmt.executeQuery();
                 checkRs.next();
@@ -75,13 +400,14 @@ public class ThanhToanService {
                 ResultSet rs2=stmt2.executeQuery();
                 if(rs2.next()) maPhi=rs2.getInt("MAX")+1;
 
-                themPhiStmt.setString(1, "Phí gửi xe"); // TENPHI
+                themPhiStmt.setString(1, tenPhi); // TENPHI
                 themPhiStmt.setDouble(2, donGia); // DONGIA
                 themPhiStmt.setString(3, "Chưa thanh toán"); // TRANGTHAI
-                themPhiStmt.setDate(4, new Date(System.currentTimeMillis())); // THOIGIANTHANHTOAN
-                themPhiStmt.setString(5, null); // PHUONGTHUCTHANHTOAN
-                themPhiStmt.setInt(6, maHoKhau); // MAHOKHAU
-                themPhiStmt.setInt(7, maPhi);
+            //    themPhiStmt.setDate(4, new Date(System.currentTimeMillis())); // THOIGIANTHANHTOAN
+                themPhiStmt.setString(4, null); // PHUONGTHUCTHANHTOAN
+                themPhiStmt.setInt(5, maHoKhau); // MAHOKHAU
+                themPhiStmt.setInt(6, maPhi);
+                themPhiStmt.setString(7, "Bắt buộc");
 
                 // Thực thi câu lệnh thêm
                 themPhiStmt.executeUpdate();
@@ -138,7 +464,30 @@ public class ThanhToanService {
         return  result;
     }
 
-    //Xác nhận thanh toán
+    //Gửi thanh toán (bên user)
+    public boolean guiThanhToan(ThanhToanModel thanhToan) {
+        String sql = "UPDATE PHI SET TRANGTHAI=?, THOIGIANTHANHTOAN=? WHERE MAPHI=?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "Chờ xác nhận");
+            stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            stmt.setInt(3,thanhToan.getMaKhoanThu());
+
+            int rowsUpdated = stmt.executeUpdate();
+            // DatabaseConnection.closeConnection();
+            if (rowsUpdated > 0) {
+                System.out.println("Đã gửi thanh toán thành công!");
+                return true;
+            }
+            else return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //Xác nhận thanh toán (bên admin)
     public boolean xacNhanThanhToan(ThanhToanModel thanhToan) {
         String sql = "UPDATE PHI SET TRANGTHAI=? WHERE MAPHI=?";
 
