@@ -15,15 +15,24 @@ public class NhanKhauModel {
     // Default constructor
     public NhanKhauModel() {}
 
-    public NhanKhauModel(String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, int maHoKhau, String quanHeVoiChuHo, boolean trangThai) {
+    public NhanKhauModel(int maHoKhau, int maNhanKhau, String hoTenNhanKhau, String CCCD, String SDT) {
+        this.maNhanKhau = maNhanKhau;
         this.CCCD = CCCD;
         this.hoTenNhanKhau = hoTenNhanKhau;
+        this.SDT = SDT;
+        this.maHoKhau = maHoKhau;
+    }
+
+    public NhanKhauModel(int maHoKhau, String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, String quanHeVoiChuHo, boolean trangThai) {
         this.ngaySinh = ngaySinh;
+        this.CCCD = CCCD;
+        this.hoTenNhanKhau = hoTenNhanKhau;
         this.SDT = SDT;
         this.maHoKhau = maHoKhau;
         this.quanHeVoiChuHo = quanHeVoiChuHo;
         this.trangThai = trangThai;
     }
+
 
     // Constructor đầy đủ
     public NhanKhauModel(int maHoKhau, int maNhanKhau,String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, String quanHeVoiChuHo, boolean trangThai) {

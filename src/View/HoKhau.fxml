@@ -14,91 +14,93 @@
 <AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HoKhauController">
 
     <children>
-      <AnchorPane fx:id="CHTablePane" prefHeight="520.0" prefWidth="870.0">
-         <children>
+        <AnchorPane fx:id="CHTablePane" prefHeight="520.0" prefWidth="870.0">
+            <children>
                 <TextField fx:id="HokhauSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
-            <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
+                <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
                 <TableView fx:id="HoKhauTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
                         <TableColumn fx:id="MaHKCol" prefWidth="99.33334636688232" text="Mã Hộ Khẩu" />
                         <TableColumn fx:id="MaCHCol" prefWidth="113.3332748413086" text="Mã Chủ Hộ" />
-                  <TableColumn fx:id="TenCHCol" prefWidth="285.33338928222656" text="Họ Tên Chủ Hộ" />
-                  <TableColumn fx:id="CCCDCol" prefWidth="162.66668701171875" text="CCCD" />
-                  <TableColumn fx:id="SDTCol" prefWidth="236.6666259765625" text="SĐT" />
+                        <TableColumn fx:id="TenCHCol" prefWidth="285.33338928222656" text="Họ Tên Chủ Hộ" />
+                        <TableColumn fx:id="CCCDCol" prefWidth="162.66668701171875" text="CCCD" />
+                        <TableColumn fx:id="SDTCol" prefWidth="236.6666259765625" text="SĐT" />
                     </columns>
                 </TableView>
-              <Button fx:id="BtnAddHK" layoutX="711.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
-              <Button fx:id="BtnDltHK" layoutX="640.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">
-         <children>
-            <Button fx:id="BtnSave" layoutX="413.0" layoutY="478.0" mnemonicParsing="false" styleClass="update-btn" text="Lưu" />
-            <AnchorPane fx:id="AddHKPane" prefHeight="260.0" prefWidth="870.0">
-               <children>
-                  <Label layoutX="90.0" layoutY="70.0" text="Mã Hộ Khẩu" />
-                  <Label fx:id="MaHKlb" layoutX="200.0" layoutY="70.0" />
-                  <Label layoutX="510.0" layoutY="70.0" text="Mã Chủ Hộ" />
-                  <Label fx:id="MaCHlb" layoutX="620.0" layoutY="70.0" />
-                  <Label layoutX="90.0" layoutY="134.0" text="Tên chủ hộ:" />
-                  <TextField fx:id="TenCHtf" layoutX="200.0" layoutY="130.0" promptText="Nhập tên chủ hộ" styleClass="shadow" />
-                  <Label layoutX="88.0" layoutY="180.0" text="SĐT chủ hộ:" />
-                  <TextField fx:id="SdtCHtf" layoutX="200.0" layoutY="176.0" promptText="Nhập sđt chủ hộ" styleClass="shadow" />
-                  <Label layoutX="510.0" layoutY="134.0" text="Mã CCCD chủ hộ:" />
-                  <TextField fx:id="cccdCHtf" layoutX="620.0" layoutY="130.0" promptText="Nhập mã CCCD chủ hộ" styleClass="shadow" />
-                  <Button fx:id="BtnAddHo" layoutX="435.0" layoutY="226.0" mnemonicParsing="false" styleClass="add-btn" text="Lưu hộ" />
-                  <Button fx:id="BtnAddTV1" layoutX="529.0" layoutY="226.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="clear-btn" text="Thêm thành viên" />
-                  <DatePicker fx:id="NSinh1" layoutX="620.0" layoutY="175.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-                  <Label fx:id="NSinh2" layoutX="547.0" layoutY="180.0" text="Ngày Sinh:" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="AddTVPane" prefHeight="260.0" prefWidth="870.0" visible="false">
-               <children>
-                  <Label layoutX="80.0" layoutY="44.0" text="Tên">
-                     <font>
-                        <Font name="Tahoma" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfTen" layoutX="180.0" layoutY="40.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập tên thành viên" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-                  <Label layoutX="80.0" layoutY="104.0" text="SĐT">
-                     <font>
-                        <Font name="Tahoma" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfSDT" layoutX="180.0" layoutY="100.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập sđt thành viên" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-                  <Label layoutX="80.0" layoutY="164.0" text="CCCD">
-                     <font>
-                        <Font name="Tahoma" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfCCCD" layoutX="180.0" layoutY="160.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập CCCD thành viên" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-                  <Label fx:id="AgeText" layoutX="550.0" layoutY="44.0" text="Ngày Sinh">
-                     <font>
-                        <Font name="Tahoma" size="14.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="NSinh" layoutX="660.0" layoutY="40.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-                  <CheckBox fx:id="TVangCheck" layoutX="550.0" layoutY="164.0" mnemonicParsing="false" text="Tạm Vắng" />
-                  <Button fx:id="BtnAddTV" layoutX="407.0" layoutY="220.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
-                  <Label fx:id="QHeText" layoutX="550.0" layoutY="104.0" text="Quan Hệ">
-                     <font>
-                        <Font name="Tahoma" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfQHe" layoutX="659.0" layoutY="100.0" prefHeight="25.0" prefWidth="175.0" promptText="Quan hệ với chủ hộ" styleClass="shadow" />
-               </children>
-            </AnchorPane>
-            <TableView fx:id="ThanhVienTable" layoutX="14.0" layoutY="269.0" prefHeight="200.0" prefWidth="855.0">
-              <columns>
-                <TableColumn fx:id="TenTVCol" prefWidth="259.33332347869873" text="Tên" />
-                <TableColumn fx:id="SdtTVCol" prefWidth="122.66665649414062" text="SĐT" />
-                  <TableColumn fx:id="QheTVCol" prefWidth="92.00003051757812" text="Quan Hệ" />
-                  <TableColumn fx:id="CCTVCol" prefWidth="169.33340454101562" text="CCCD" />
-                  <TableColumn fx:id="NSinhTVCol" prefWidth="112.0" text="Ngày Sinh" />
-                  <TableColumn fx:id="TVangCol" prefWidth="96.0" text="Tạm Vắng" />
-              </columns>
-            </TableView>
-         </children>
-      </AnchorPane>
+                <Button fx:id="BtnAddHK" layoutX="710.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
+                <Button fx:id="BtnDltHK" layoutX="622.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">
+            <children>
+                <Button fx:id="BtnSave" layoutX="314.0" layoutY="478.0" mnemonicParsing="false" styleClass="update-btn" text="Lưu" />
+                <AnchorPane fx:id="AddHKPane" prefHeight="260.0" prefWidth="870.0">
+                    <children>
+                        <Label layoutX="90.0" layoutY="70.0" text="Mã Hộ Khẩu" />
+                        <Label fx:id="MaHKlb" layoutX="200.0" layoutY="70.0" />
+                        <Label layoutX="510.0" layoutY="70.0" text="Mã Chủ Hộ" />
+                        <Label fx:id="MaCHlb" layoutX="620.0" layoutY="70.0" />
+                        <Label layoutX="90.0" layoutY="134.0" text="Tên chủ hộ:" />
+                        <TextField fx:id="TenCHtf" layoutX="200.0" layoutY="130.0" promptText="Nhập tên chủ hộ" styleClass="shadow" />
+                        <Label layoutX="88.0" layoutY="180.0" text="SĐT chủ hộ:" />
+                        <TextField fx:id="SdtCHtf" layoutX="200.0" layoutY="176.0" promptText="Nhập sđt chủ hộ" styleClass="shadow" />
+                        <Label layoutX="510.0" layoutY="134.0" text="Mã CCCD chủ hộ:" />
+                        <TextField fx:id="cccdCHtf" layoutX="620.0" layoutY="130.0" promptText="Nhập mã CCCD chủ hộ" styleClass="shadow" />
+                        <Button fx:id="BtnAddHo" layoutX="403.0" layoutY="227.0" mnemonicParsing="false" styleClass="add-btn" text="Lưu hộ" />
+                        <DatePicker fx:id="NSinh1" layoutX="620.0" layoutY="175.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                        <Label fx:id="NSinh2" layoutX="547.0" layoutY="180.0" text="Ngày Sinh:" />
+                        <Button fx:id="BtnThoat" layoutX="508.0" layoutY="227.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" text="Thoát" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="AddTVPane" prefHeight="260.0" prefWidth="870.0" visible="false">
+                    <children>
+                        <Label layoutX="80.0" layoutY="44.0" text="Tên">
+                            <font>
+                                <Font name="Tahoma" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfTen" layoutX="180.0" layoutY="40.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập tên thành viên" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                        <Label layoutX="80.0" layoutY="104.0" text="SĐT">
+                            <font>
+                                <Font name="Tahoma" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfSDT" layoutX="180.0" layoutY="100.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập sđt thành viên" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                        <Label layoutX="80.0" layoutY="164.0" text="CCCD">
+                            <font>
+                                <Font name="Tahoma" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfCCCD" layoutX="180.0" layoutY="160.0" prefHeight="25.0" prefWidth="237.0" promptText="Nhập CCCD thành viên" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                        <Label fx:id="AgeText" layoutX="550.0" layoutY="44.0" text="Ngày Sinh">
+                            <font>
+                                <Font name="Tahoma" size="14.0" />
+                            </font>
+                        </Label>
+                        <DatePicker fx:id="NSinh" layoutX="660.0" layoutY="40.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                        <CheckBox fx:id="TVangCheck" layoutX="550.0" layoutY="164.0" mnemonicParsing="false" text="Tạm Vắng" />
+                        <Button fx:id="BtnAddTV" layoutX="407.0" layoutY="220.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
+                        <Label fx:id="QHeText" layoutX="550.0" layoutY="104.0" text="Quan Hệ">
+                            <font>
+                                <Font name="Tahoma" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfQHe" layoutX="659.0" layoutY="100.0" prefHeight="25.0" prefWidth="175.0" promptText="Quan hệ với chủ hộ" styleClass="shadow" />
+                        <Button fx:id="BtnThoat1" layoutX="509.0" layoutY="220.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thoát" />
+                    </children>
+                </AnchorPane>
+                <TableView fx:id="ThanhVienTable" layoutX="14.0" layoutY="269.0" prefHeight="200.0" prefWidth="855.0">
+                    <columns>
+                        <TableColumn fx:id="TenTVCol" prefWidth="259.33332347869873" text="Tên" />
+                        <TableColumn fx:id="SdtTVCol" prefWidth="122.66665649414062" text="SĐT" />
+                        <TableColumn fx:id="QheTVCol" prefWidth="92.00003051757812" text="Quan Hệ" />
+                        <TableColumn fx:id="CCTVCol" prefWidth="169.33340454101562" text="CCCD" />
+                        <TableColumn fx:id="NSinhTVCol" prefWidth="112.0" text="Ngày Sinh" />
+                        <TableColumn fx:id="TVangCol" prefWidth="96.0" text="Tạm Vắng" />
+                    </columns>
+                </TableView>
+                <Button fx:id="BtnAddTV1" layoutX="490.0" layoutY="478.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="clear-btn" text="Thêm thành viên" />
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>
