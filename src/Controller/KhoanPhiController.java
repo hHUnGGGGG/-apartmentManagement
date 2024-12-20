@@ -68,13 +68,7 @@ public class KhoanPhiController implements Initializable {
     private TextField LoaiPhitf1;
 
     @FXML
-    private TextField MaHKtf2;
-
-    @FXML
     private TableColumn<?, ?> MaPhiCol;
-
-    @FXML
-    private TextField MaPhitf;
 
     @FXML
     private TableColumn<?, ?> TenPhiCol;

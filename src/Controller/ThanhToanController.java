@@ -1,8 +1,6 @@
 package Controller;
 
-import Models.KhoanThuModel;
 import Models.ThanhToanModel;
-import Service.KhoanThuService;
 import Service.ThanhToanService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -21,6 +18,9 @@ public class ThanhToanController implements Initializable {
 
     @FXML
     private Button BtnCf;
+
+    @FXML
+    private ChoiceBox<String> CbSear;
 
     @FXML
     private TableColumn<?, ?> DonGiaCol;
@@ -57,6 +57,10 @@ public class ThanhToanController implements Initializable {
     private ObservableList<ThanhToanModel> danhSachThanhToan; // Dữ liệu hiển thị trên bảng
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ObservableList<String> searChoi = FXCollections.observableArrayList();
+        searChoi.addAll("Tên phí", "Mã HK");
+        CbSear.setItems(searChoi);
         // Gán dữ liệu cột
         MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
         TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
