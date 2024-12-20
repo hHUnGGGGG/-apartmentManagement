@@ -20,7 +20,7 @@
                         <TableColumn fx:id="MaHK3Col" prefWidth="93.99998474121094" text="Mã Hộ Khẩu" />
                   <TableColumn fx:id="TenCHCol" prefWidth="120.66668701171875" text="Tên Chủ Hộ" />
                   <TableColumn fx:id="LoaiPhiCol" prefWidth="102.66668701171875" text="Loại Phí" />
-                  <TableColumn fx:id="DonGiaCol" prefWidth="128.66671752929688" text="Đơn Giá" />
+                  <TableColumn fx:id="DonGiaCol" prefWidth="128.66671752929688" text="Số Tiền" />
                         <TableColumn fx:id="NgayNopCol" prefWidth="113.3333740234375" text="Thời Gian" />
                         <TableColumn fx:id="TThaiCol" prefWidth="126.0" text="Trạng Thái" />
                     </columns>

@@ -59,7 +59,7 @@ public class ThanhToanController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         ObservableList<String> searChoi = FXCollections.observableArrayList();
-        searChoi.addAll("Tên phí", "Mã HK");
+        searChoi.addAll("Mã Phí", "Tên Phí", "Mã HK", "Tên Chủ Hộ", "Loại Phí", "Số Tiền", "Thời Gian", "Trạng Thái");
         CbSear.setItems(searChoi);
         // Gán dữ liệu cột
         MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
