@@ -12,12 +12,11 @@
             <children>
                 <TableView fx:id="PhiTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
-                        <TableColumn fx:id="MaPhiCol" prefWidth="97.33334636688232" text="Mã Phí" />
-                        <TableColumn fx:id="TenPhiCol" prefWidth="183.9999771118164" text="Tên Phí" />
-                        <TableColumn fx:id="HanNopCol" prefWidth="144.0" text="Hạn Nộp" />
-                        <TableColumn fx:id="ThangNopCol" prefWidth="139.99996948242188" text="Tháng Nộp" />
-                        <TableColumn fx:id="LoaiPhiCol" prefWidth="158.66668701171875" text="Loại Phí" />
-                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="129.3333740234375" text="Đơn giá" />
+                        <TableColumn fx:id="MaPhiCol" prefWidth="100.0" text="Mã Phí" />
+                        <TableColumn fx:id="TenPhiCol" prefWidth="230.0" text="Tên Phí" />
+                        <TableColumn fx:id="HanNopCol" prefWidth="175.0" text="Hạn Nộp" />
+                        <TableColumn fx:id="LoaiPhiCol" prefWidth="200.0" text="Loại Phí" />
+                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="150.0" text="Số Tiền" />
                     </columns>
                 </TableView>
                 <TextField fx:id="KTSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />

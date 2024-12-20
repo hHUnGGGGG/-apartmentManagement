@@ -16,11 +16,11 @@
             <children>
                 <TableView fx:id="PhiTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
-                        <TableColumn fx:id="MaPhiCol" prefWidth="118.66668224334717" text="Mã Phí" />
-                        <TableColumn fx:id="TenPhiCol" prefWidth="224.66664123535156" text="Tên Phí" />
-                        <TableColumn fx:id="HanNopCol" prefWidth="167.99996948242188" text="Hạn Nộp" />
-                        <TableColumn fx:id="LoaiPhiCol" prefWidth="175.33331298828125" text="Loại Phí" />
-                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="168.0" text="Đơn giá" />
+                        <TableColumn fx:id="MaPhiCol" prefWidth="100.0" text="Mã Phí" />
+                        <TableColumn fx:id="TenPhiCol" prefWidth="230.0" text="Tên Phí" />
+                        <TableColumn fx:id="HanNopCol" prefWidth="175.0" text="Hạn Nộp" />
+                        <TableColumn fx:id="LoaiPhiCol" prefWidth="200.0" text="Loại Phí" />
+                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="150.0" text="Đơn giá" />
                     </columns>
                 </TableView>
                 <TextField fx:id="KTSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
