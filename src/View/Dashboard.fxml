@@ -55,10 +55,11 @@
                               </Label>
                               <Button fx:id="BtnHokhau" layoutX="16.0" layoutY="143.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Hộ Khẩu" />
                               <Button fx:id="BtnNhankhau" layoutX="16.0" layoutY="178.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Nhân Khẩu" />
-                              <Button fx:id="BtnKhoanphi" layoutX="16.0" layoutY="213.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Khoản Phí" />
-                              <Button fx:id="BtnThanhToan" layoutX="16.0" layoutY="248.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Thanh Toán" />
-                              <Button fx:id="BtnXe" layoutX="16.0" layoutY="283.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Xe" />
-                              <Button fx:id="BtnThongke" layoutX="16.0" layoutY="318.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Thống Kê" />
+                              <Button fx:id="BtnPPS" layoutX="16.0" layoutY="213.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Phí Phát Sinh" />
+                              <Button fx:id="BtnPTN" layoutX="16.0" layoutY="248.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Phí Thường Niên" />
+                              <Button fx:id="BtnThanhToan" layoutX="16.0" layoutY="281.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Thanh Toán" />
+                              <Button fx:id="BtnXe" layoutX="16.0" layoutY="317.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Xe" />
+                              <Button fx:id="BtnThongke" layoutX="16.0" layoutY="353.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Thống Kê" />
                            </children></AnchorPane>
                      </children>
                   </AnchorPane>
@@ -74,13 +75,16 @@
                               <AnchorPane fx:id="NhanKhau" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include fx:id="fxmlNhanKhau" source="NhanKhau.fxml" />
                               </AnchorPane>
-                              <AnchorPane fx:id="KhoanPhi" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
-                                 <fx:include source="KhoanPhi.fxml" />
+                              <AnchorPane fx:id="PPS" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
+                                 <fx:include source="PhiPhatSinh.fxml" />
+                              </AnchorPane>
+                              <AnchorPane fx:id="PTN" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false">
+                                 <fx:include source="PhiThuongNien.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="ThanhToan" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include source="ThanhToan.fxml" />
                               </AnchorPane>
-                              <AnchorPane fx:id="Xe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false" >
+                              <AnchorPane fx:id="Xe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false">
                                  <fx:include source="Xe.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="ThongKe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false">

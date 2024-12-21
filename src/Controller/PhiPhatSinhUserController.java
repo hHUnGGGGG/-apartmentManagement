@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class KhoanPhiUserController implements Initializable {
+public class PhiPhatSinhUserController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> DonGiaCol;
@@ -58,7 +58,7 @@ public class KhoanPhiUserController implements Initializable {
         HanNopCol.setCellValueFactory(new PropertyValueFactory<>("hanNop"));
         LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
 //        MaHKCol2.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-        ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
+//        ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
 
         loadData();
 

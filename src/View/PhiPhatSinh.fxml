@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="520.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.KhoanPhiController">
+<AnchorPane prefHeight="520.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PhiPhatSinhController">
     <children>
         <AnchorPane fx:id="KPTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css">
             <children>
@@ -20,7 +20,7 @@
                         <TableColumn fx:id="TenPhiCol" prefWidth="230.0" text="Tên Phí" />
                         <TableColumn fx:id="HanNopCol" prefWidth="175.0" text="Hạn Nộp" />
                         <TableColumn fx:id="LoaiPhiCol" prefWidth="200.0" text="Loại Phí" />
-                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="150.0" text="Đơn giá" />
+                        <TableColumn fx:id="DonGiaCol" minWidth="0.0" prefWidth="150.0" text="Số Tiền" />
                     </columns>
                 </TableView>
                 <TextField fx:id="KTSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
@@ -44,12 +44,12 @@
                   </font>
               </Label>
               <DatePicker fx:id="HanNoptf" layoutX="633.0" layoutY="118.0" promptText="Hạn nộp" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-              <Label layoutX="510.0" layoutY="62.0" text="Đơn Giá">
+              <Label layoutX="510.0" layoutY="62.0" text="Số Tiền">
                   <font>
                       <Font name="Tahoma" size="14.0" />
                   </font>
               </Label>
-              <TextField fx:id="DonGiatf" layoutX="632.0" layoutY="58.0" prefHeight="25.0" prefWidth="175.0" promptText="Đơn giá" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+              <TextField fx:id="DonGiatf" layoutX="632.0" layoutY="58.0" prefHeight="25.0" prefWidth="175.0" promptText="Số tiền" styleClass="shadow" stylesheets="@dashboardDesign.css" />
               <Label layoutX="60.0" layoutY="122.0" text="Loại Phí">
                   <font>
                       <Font name="Tahoma" size="14.0" />
@@ -74,12 +74,12 @@
                </font>
             </Label>
             <DatePicker fx:id="HanNoptf1" layoutX="633.0" layoutY="118.0" promptText="Hạn nộp" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-            <Label layoutX="510.0" layoutY="62.0" text="Đơn Giá">
+            <Label layoutX="510.0" layoutY="62.0" text="Số Tiền">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="DonGiatf1" layoutX="632.0" layoutY="58.0" prefHeight="25.0" prefWidth="175.0" promptText="Đơn giá" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <TextField fx:id="DonGiatf1" layoutX="632.0" layoutY="58.0" prefHeight="25.0" prefWidth="175.0" promptText="Số tiền" styleClass="shadow" stylesheets="@dashboardDesign.css" />
             <Label layoutX="60.0" layoutY="122.0" text="Loại Phí">
                <font>
                   <Font name="Tahoma" size="14.0" />

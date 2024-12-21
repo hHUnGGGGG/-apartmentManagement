@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class KhoanPhiController implements Initializable {
+public class PhiPhatSinhController implements Initializable {
 
     @FXML
     private Button BtnAddPhi;
@@ -134,7 +134,7 @@ public class KhoanPhiController implements Initializable {
         HanNopCol.setCellValueFactory(new PropertyValueFactory<>("hanNop"));
         LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
 //        MaHKCol2.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-        ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
+//        ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
 
         // Tải dữ liệu từ DAO
         loadData();

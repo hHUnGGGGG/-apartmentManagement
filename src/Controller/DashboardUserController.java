@@ -21,7 +21,10 @@ public class DashboardUserController implements Initializable {
     private Button BtnHokhau;
 
     @FXML
-    private Button BtnKhoanPhi;
+    private Button BtnPPS;
+
+    @FXML
+    private Button BtnPTN;
 
     @FXML
     private Button BtnXe;
@@ -33,7 +36,10 @@ public class DashboardUserController implements Initializable {
     private AnchorPane HoKhau;
 
     @FXML
-    private AnchorPane KhoanPhi;
+    private AnchorPane PPS;
+
+    @FXML
+    private AnchorPane PTN;
 
     @FXML
     private AnchorPane Xe;
@@ -48,22 +54,32 @@ public class DashboardUserController implements Initializable {
     public void switchForm(ActionEvent event){
         if (event.getSource()==BtnHokhau){
             HoKhau.setVisible(true);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(false);
-        }else if (event.getSource()==BtnKhoanPhi){
+        }else if (event.getSource()== BtnPPS){
             HoKhau.setVisible(false);
-            KhoanPhi.setVisible(true);
+            PPS.setVisible(true);
+            PTN.setVisible(false);
+            Xe.setVisible(false);
+            ThanhToan.setVisible(false);
+        }else if (event.getSource()== BtnPTN){
+            HoKhau.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(true);
             Xe.setVisible(false);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnXe){
             HoKhau.setVisible(false);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             Xe.setVisible(true);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnThanhToan){
             HoKhau.setVisible(false);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(true);
         }

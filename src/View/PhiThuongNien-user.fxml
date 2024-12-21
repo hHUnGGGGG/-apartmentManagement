@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="520.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PhiThuongNienUserController">
+    <children>
+        <AnchorPane fx:id="PTNTablePane" prefHeight="520.0" prefWidth="870.0" stylesheets="@dashboardDesign.css">
+            <children>
+                <TableView fx:id="PTNTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                    <columns>
+                        <TableColumn fx:id="MaPhiCol" prefWidth="155.0" text="Mã Phí" />
+                        <TableColumn fx:id="TenPhiCol" prefWidth="300.0" text="Tên Phí" />
+                        <TableColumn fx:id="LoaiPhiCol" prefWidth="200.0" text="Loại Phí" />
+                        <TableColumn fx:id="SoTienCol" minWidth="0.0" prefWidth="200.0" text="Số Tiền" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="PTNSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
+            <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
