@@ -11,16 +11,18 @@ public class NhanKhauModel {
     private int maHoKhau;
     private String quanHeVoiChuHo;
     private boolean trangThai; // Trạng thái ô tick (true nếu tick, false nếu không)
+    private int soPhong;
 
     // Default constructor
     public NhanKhauModel() {}
 
-    public NhanKhauModel(int maHoKhau, int maNhanKhau, String hoTenNhanKhau, String CCCD, String SDT) {
+    public NhanKhauModel(int maHoKhau, int maNhanKhau, String hoTenNhanKhau, String CCCD, String SDT, int soPhong) {
         this.maNhanKhau = maNhanKhau;
         this.CCCD = CCCD;
         this.hoTenNhanKhau = hoTenNhanKhau;
         this.SDT = SDT;
         this.maHoKhau = maHoKhau;
+        this.soPhong = soPhong;
     }
 
     public NhanKhauModel(int maHoKhau, String CCCD, String hoTenNhanKhau, Date ngaySinh, String SDT, String quanHeVoiChuHo, boolean trangThai) {
@@ -109,6 +111,14 @@ public class NhanKhauModel {
 
     public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public int getSoPhong() {
+        return soPhong;
+    }
+
+    public void setSoPhong(int soPhong) {
+        this.soPhong = soPhong;
     }
 
     // Thêm phương thức toString để debug

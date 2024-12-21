@@ -72,11 +72,69 @@ public class ThanhToanService {
         String query = """
         SELECT MAPHI, TENPHI, HANNOP, THANGNOP, LOAIPHI, DONGIA, TRANGTHAI, THOIGIANTHANHTOAN, PHUONGTHUCTHANHTOAN
         FROM PHI
-        WHERE MAHOKHAU = ?
+        WHERE MAHOKHAU = ? AND TRANGTHAI != 'Đã xác nhận'
     """;
 
         try (
              PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, maHoKhau); // Gán mã hộ khẩu vào câu lệnh SQL
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                // Lấy các thông tin từ ResultSet
+                int maPhi = rs.getInt("MAPHI");
+                String tenPhi = rs.getString("TENPHI");
+                Date hanNopSql = rs.getDate("HANNOP");
+                int thangNop = rs.getInt("THANGNOP");
+                String loaiPhi = rs.getString("LOAIPHI");
+                double donGia = rs.getDouble("DONGIA");
+                String trangThai = rs.getString("TRANGTHAI");
+                Date thoiGianThanhToan = rs.getDate("THOIGIANTHANHTOAN");
+                String phuongThucThanhToan = rs.getString("PHUONGTHUCTHANHTOAN");
+
+                // Chuyển java.sql.Date sang java.util.Date
+                java.util.Date hanNop = (hanNopSql != null) ? new java.util.Date(hanNopSql.getTime()) : null;
+//                java.util.Date thoiGianThanhToan = (thoiGianThanhToanSql != null)
+//                        ? new java.util.Date(thoiGianThanhToanSql.getTime())
+//                        : null;
+
+                //Lấy tên chủ hộ
+                String sql2="SELECT HOTEN FROM NHANKHAU WHERE MAHOKHAU=? AND QUANHEVOICHUHO=?";
+                try(PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+                    stmt2.setInt(1,maHoKhau);
+                    stmt2.setString(2,"Chủ Hộ");
+                    ResultSet rs2 = stmt2.executeQuery();
+                    String tenChuHo = null;
+                    if (rs2.next()) {
+                        tenChuHo = rs2.getString("HOTEN");
+                    }
+
+                    danhSachPhi.add(new ThanhToanModel(maPhi,tenPhi,donGia,loaiPhi, hanNop, maHoKhau, thangNop, trangThai, thoiGianThanhToan, phuongThucThanhToan, tenChuHo));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return danhSachPhi;
+    }
+
+    public List<ThanhToanModel> layDanhSachLichSuPhiTheoHoKhau(int maHoKhau) {
+        List<ThanhToanModel> danhSachPhi = new ArrayList<>();
+
+        String query = """
+        SELECT MAPHI, TENPHI, HANNOP, THANGNOP, LOAIPHI, DONGIA, TRANGTHAI, THOIGIANTHANHTOAN, PHUONGTHUCTHANHTOAN
+        FROM PHI
+        WHERE MAHOKHAU = ? AND TRANGTHAI = 'Đã xác nhận'
+    """;
+
+        try (
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, maHoKhau); // Gán mã hộ khẩu vào câu lệnh SQL
             ResultSet rs = stmt.executeQuery();
@@ -548,6 +606,53 @@ public class ThanhToanService {
                 }
 
             //    danhSach.add(new KhoanThuModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop,maHoKhau, thangNop));
+            }
+
+            // DatabaseConnection.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSach;
+    }
+
+    public List<ThanhToanModel> layDanhSachThanhToanUser() {
+        List<ThanhToanModel> danhSach = new ArrayList<>();
+        String sql = "SELECT * FROM PHI WHERE MAHOKHAU!=0 AND TRANGTHAI != 'Đã xác nhận'";
+
+        try (//Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+
+             ResultSet rs = stmt.executeQuery(sql)) {
+            System.out.println("aabc");
+            while (rs.next()) {
+                int maKhoanThu = rs.getInt("MAPHI");
+                String tenKhoanThu = rs.getString("TENPHI");
+                double soTien = rs.getDouble("DONGIA");
+                String loaiKhoanThu = rs.getString("LOAIPHI");
+                Date hanNop = rs.getDate("HANNOP");
+                int maHoKhau= rs.getInt("MAHOKHAU");
+                int thangNop= rs.getInt("THANGNOP");
+                String trangThai= rs.getString("TRANGTHAI");
+                Date  thoiGianThanhToan= rs.getDate("THOIGIANTHANHTOAN");
+                String phuongThucThanhToan= rs.getString("PHUONGTHUCTHANHTOAN");
+
+                //Lấy tên chủ hộ
+                String sql2="SELECT HOTEN FROM NHANKHAU WHERE MAHOKHAU=? AND QUANHEVOICHUHO=?";
+                try(PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+                    stmt2.setInt(1,maHoKhau);
+                    stmt2.setString(2,"Chủ Hộ");
+                    ResultSet rs2 = stmt2.executeQuery();
+                    String tenChuHo = null;
+                    if (rs2.next()) {
+                        tenChuHo = rs2.getString("HOTEN");
+                    }
+
+                    danhSach.add(new ThanhToanModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop,maHoKhau, thangNop, trangThai,thoiGianThanhToan, phuongThucThanhToan, tenChuHo));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                //    danhSach.add(new KhoanThuModel(maKhoanThu, tenKhoanThu, soTien, loaiKhoanThu, hanNop,maHoKhau, thangNop));
             }
 
             // DatabaseConnection.closeConnection();

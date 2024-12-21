@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -21,14 +22,15 @@
                 <TableView fx:id="HoKhauTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
                         <TableColumn fx:id="MaHKCol" prefWidth="99.33334636688232" text="Mã Hộ Khẩu" />
-                        <TableColumn fx:id="MaCHCol" prefWidth="113.3332748413086" text="Mã Chủ Hộ" />
-                        <TableColumn fx:id="TenCHCol" prefWidth="285.33338928222656" text="Họ Tên Chủ Hộ" />
-                        <TableColumn fx:id="CCCDCol" prefWidth="162.66668701171875" text="CCCD" />
-                        <TableColumn fx:id="SDTCol" prefWidth="236.6666259765625" text="SĐT" />
+                  <TableColumn fx:id="soCanHoCol" prefWidth="93.60000610351562" text="Số căn hộ" />
+                        <TableColumn fx:id="TenCHCol" prefWidth="195.199951171875" text="Họ Tên Chủ Hộ" />
+                        <TableColumn fx:id="CCCDCol" prefWidth="178.4000244140625" text="CCCD" />
+                        <TableColumn fx:id="SDTCol" prefWidth="312.7999267578125" text="SĐT" />
                     </columns>
                 </TableView>
                 <Button fx:id="BtnAddHK" layoutX="710.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
                 <Button fx:id="BtnDltHK" layoutX="622.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
+            <Button fx:id="BtnXemChiTiet" layoutX="493.0" layoutY="467.0" mnemonicParsing="false" styleClass="update-btn" text="Xem chi tiết" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">
@@ -36,20 +38,26 @@
                 <Button fx:id="BtnSave" layoutX="314.0" layoutY="478.0" mnemonicParsing="false" styleClass="update-btn" text="Lưu" />
                 <AnchorPane fx:id="AddHKPane" prefHeight="260.0" prefWidth="870.0">
                     <children>
-                        <Label layoutX="90.0" layoutY="70.0" text="Mã Hộ Khẩu" />
                         <Label fx:id="MaHKlb" layoutX="200.0" layoutY="70.0" />
-                        <Label layoutX="510.0" layoutY="70.0" text="Mã Chủ Hộ" />
                         <Label fx:id="MaCHlb" layoutX="620.0" layoutY="70.0" />
-                        <Label layoutX="90.0" layoutY="134.0" text="Tên chủ hộ:" />
-                        <TextField fx:id="TenCHtf" layoutX="200.0" layoutY="130.0" promptText="Nhập tên chủ hộ" styleClass="shadow" />
-                        <Label layoutX="88.0" layoutY="180.0" text="SĐT chủ hộ:" />
-                        <TextField fx:id="SdtCHtf" layoutX="200.0" layoutY="176.0" promptText="Nhập sđt chủ hộ" styleClass="shadow" />
-                        <Label layoutX="510.0" layoutY="134.0" text="Mã CCCD chủ hộ:" />
-                        <TextField fx:id="cccdCHtf" layoutX="620.0" layoutY="130.0" promptText="Nhập mã CCCD chủ hộ" styleClass="shadow" />
-                        <Button fx:id="BtnAddHo" layoutX="403.0" layoutY="227.0" mnemonicParsing="false" styleClass="add-btn" text="Lưu hộ" />
-                        <DatePicker fx:id="NSinh1" layoutX="620.0" layoutY="175.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-                        <Label fx:id="NSinh2" layoutX="547.0" layoutY="180.0" text="Ngày Sinh:" />
-                        <Button fx:id="BtnThoat" layoutX="508.0" layoutY="227.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" text="Thoát" />
+                        <Label layoutX="89.0" layoutY="80.0" text="Tên chủ hộ:" />
+                        <TextField fx:id="TenCHtf" layoutX="199.0" layoutY="76.0" promptText="Nhập tên chủ hộ" styleClass="shadow" />
+                        <Label layoutX="88.0" layoutY="125.0" text="SĐT chủ hộ:" />
+                        <TextField fx:id="SdtCHtf" layoutX="199.0" layoutY="121.0" promptText="Nhập sđt chủ hộ" styleClass="shadow" />
+                        <Label layoutX="510.0" layoutY="80.0" text="Mã CCCD chủ hộ:" />
+                        <TextField fx:id="cccdCHtf" layoutX="619.0" layoutY="76.0" promptText="Nhập mã CCCD chủ hộ" styleClass="shadow" />
+                        <Button fx:id="BtnAddHo" layoutX="708.0" layoutY="218.0" mnemonicParsing="false" styleClass="add-btn" text="Lưu hộ" />
+                        <DatePicker fx:id="NSinh1" layoutX="620.0" layoutY="121.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                        <Label fx:id="NSinh2" layoutX="547.0" layoutY="125.0" text="Ngày Sinh:" />
+                        <Button fx:id="BtnThoat" layoutX="800.0" layoutY="218.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" text="Thoát" />
+                  <Label layoutX="90.0" layoutY="36.0" text="Căn hộ:" />
+                  <Label layoutX="144.0" layoutY="36.0" text="Tầng:" />
+                  <Label layoutX="548.0" layoutY="36.0" text="Số Phòng:" />
+                  <ChoiceBox fx:id="tangChoiceBox" layoutX="199.0" layoutY="32.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="soPhongChoiceBox" layoutX="619.0" layoutY="32.0" prefWidth="150.0" />
+                  <CheckBox fx:id="laMotHocheckBox" layoutX="90.0" layoutY="231.0" mnemonicParsing="false" text="Là một hộ gia đình" />
+                  <ChoiceBox fx:id="trangThaiChoiceBox" layoutX="619.0" layoutY="172.0" prefWidth="150.0" />
+                  <Label layoutX="547.0" layoutY="176.0" text="Trạng Thái:" />
                     </children>
                 </AnchorPane>
                 <AnchorPane fx:id="AddTVPane" prefHeight="260.0" prefWidth="870.0" visible="false">
@@ -91,16 +99,90 @@
                 </AnchorPane>
                 <TableView fx:id="ThanhVienTable" layoutX="14.0" layoutY="269.0" prefHeight="200.0" prefWidth="855.0">
                     <columns>
-                        <TableColumn fx:id="TenTVCol" prefWidth="259.33332347869873" text="Tên" />
-                        <TableColumn fx:id="SdtTVCol" prefWidth="122.66665649414062" text="SĐT" />
-                        <TableColumn fx:id="QheTVCol" prefWidth="92.00003051757812" text="Quan Hệ" />
-                        <TableColumn fx:id="CCTVCol" prefWidth="169.33340454101562" text="CCCD" />
-                        <TableColumn fx:id="NSinhTVCol" prefWidth="112.0" text="Ngày Sinh" />
-                        <TableColumn fx:id="TVangCol" prefWidth="96.0" text="Tạm Vắng" />
+                        <TableColumn fx:id="TenTVCol" prefWidth="240.0" text="Tên" />
+                        <TableColumn fx:id="SdtTVCol" prefWidth="180.0" text="SĐT" />
+                        <TableColumn fx:id="QheTVCol" prefWidth="112.0" text="Quan Hệ" />
+                        <TableColumn fx:id="CCTVCol" prefWidth="178.4000244140625" text="CCCD" />
+                        <TableColumn fx:id="NSinhTVCol" prefWidth="147.19989013671875" text="Ngày Sinh" />
                     </columns>
                 </TableView>
                 <Button fx:id="BtnAddTV1" layoutX="490.0" layoutY="478.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="clear-btn" text="Thêm thành viên" />
             </children>
         </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="870.0" visible="false" fx:id="xemChiTietPane">
+         <children>
+            <AnchorPane prefHeight="260.0" prefWidth="870.0">
+               <children>
+                  <Label layoutX="90.0" layoutY="70.0" text="Căn hộ : ">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="canHoLable" layoutX="152.0" layoutY="70.0" prefHeight="18.0" prefWidth="76.0" text="số căn hộ">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="MaCHlb1" layoutX="259.0" layoutY="69.0" prefHeight="26.0" prefWidth="76.0" text="Diện tích :">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="dienTichLable" layoutX="335.0" layoutY="68.0" prefHeight="26.0" prefWidth="76.0" text="giá trị diện tích">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="449.0" layoutY="69.0" text="Xe : ">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="479.0" layoutY="69.0" prefHeight="26.0" prefWidth="76.0" text="Xe Máy (">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="546.0" layoutY="69.0" text="81 )" fx:id="xeMayLable">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="479.0" layoutY="95.0" prefHeight="26.0" prefWidth="76.0" text="Ô tô (">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="oToLable" layoutX="527.0" layoutY="95.0" text="81 )">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="615.0" layoutY="68.0" prefHeight="26.0" prefWidth="85.0" text="Trạng Thái:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="trangThaiLable" layoutX="701.0" layoutY="68.0" text="Label">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <TableView fx:id="ThanhVienXemChiTietTable" layoutX="-1.0" layoutY="130.0" prefHeight="339.0" prefWidth="870.0">
+               <columns>
+                  <TableColumn fx:id="MaNKTVCol" prefWidth="99.20001220703125" text="Mã Nhân Khẩu" />
+                  <TableColumn fx:id="TenTVCol1" prefWidth="215.20001220703125" text="Tên" />
+                  <TableColumn fx:id="SdtTVCol1" prefWidth="160.0" text="SĐT" />
+                  <TableColumn fx:id="QheTVCol1" prefWidth="64.79998779296875" text="Quan Hệ" />
+                  <TableColumn fx:id="CCTVCol1" prefWidth="141.5999755859375" text="CCCD" />
+                  <TableColumn fx:id="NSinhTVCol1" prefWidth="112.0" text="Ngày Sinh" />
+                  <TableColumn fx:id="TVangCol1" minWidth="0.0" prefWidth="77.60009765625" text="Tạm Vắng" />
+               </columns>
+            </TableView>
+            <Button fx:id="BtnThoatXemChiTiet" layoutX="704.0" layoutY="478.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" text="Thoát" />
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

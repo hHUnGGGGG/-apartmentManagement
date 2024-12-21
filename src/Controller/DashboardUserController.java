@@ -21,10 +21,7 @@ public class DashboardUserController implements Initializable {
     private Button BtnHokhau;
 
     @FXML
-    private Button BtnPPS;
-
-    @FXML
-    private Button BtnPTN;
+    private Button BtnKhoanPhi;
 
     @FXML
     private Button BtnXe;
@@ -33,13 +30,13 @@ public class DashboardUserController implements Initializable {
     private Button BtnThanhToan;
 
     @FXML
+    private Button BtnKhoanPhiTuNguyen;
+
+    @FXML
     private AnchorPane HoKhau;
 
     @FXML
-    private AnchorPane PPS;
-
-    @FXML
-    private AnchorPane PTN;
+    private AnchorPane KhoanPhi;
 
     @FXML
     private AnchorPane Xe;
@@ -48,40 +45,44 @@ public class DashboardUserController implements Initializable {
     private AnchorPane ThanhToan;
 
     @FXML
+    private AnchorPane KhoanPhiTuNguyen;
+
+    @FXML
     private AnchorPane main_form;
     private LoginController loginController = new LoginController();
 
     public void switchForm(ActionEvent event){
         if (event.getSource()==BtnHokhau){
             HoKhau.setVisible(true);
-            PPS.setVisible(false);
-            PTN.setVisible(false);
+            KhoanPhi.setVisible(false);
+            KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(false);
-        }else if (event.getSource()== BtnPPS){
+        }else if (event.getSource()==BtnKhoanPhi){
             HoKhau.setVisible(false);
-            PPS.setVisible(true);
-            PTN.setVisible(false);
-            Xe.setVisible(false);
-            ThanhToan.setVisible(false);
-        }else if (event.getSource()== BtnPTN){
-            HoKhau.setVisible(false);
-            PPS.setVisible(false);
-            PTN.setVisible(true);
+            KhoanPhi.setVisible(true);
+            KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnXe){
             HoKhau.setVisible(false);
-            PPS.setVisible(false);
-            PTN.setVisible(false);
+            KhoanPhi.setVisible(false);
+            KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(true);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnThanhToan){
             HoKhau.setVisible(false);
-            PPS.setVisible(false);
-            PTN.setVisible(false);
+            KhoanPhi.setVisible(false);
+            KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(true);
+        }
+        else if (event.getSource()==BtnKhoanPhiTuNguyen){
+            HoKhau.setVisible(false);
+            KhoanPhi.setVisible(false);
+            KhoanPhiTuNguyen.setVisible(true);
+            Xe.setVisible(false);
+            ThanhToan.setVisible(false);
         }
     }
 

@@ -23,6 +23,27 @@ import java.util.regex.Pattern;
 public class NhanKhauController implements Initializable {
 
     @FXML
+    private AnchorPane AddPane;
+
+    @FXML
+    private AnchorPane AddPane1;
+
+    @FXML
+    private Label AgeText;
+
+    @FXML
+    private Label AgeText1;
+
+    @FXML
+    private TableColumn<?, ?> BatDauTVCol;
+
+    @FXML
+    private Button BtnAdd;
+
+    @FXML
+    private Button BtnAdd1;
+
+    @FXML
     private Button BtnAddNK;
 
     @FXML
@@ -32,19 +53,40 @@ public class NhanKhauController implements Initializable {
     private Button BtnEditNK;
 
     @FXML
-    private Button BtnAdd;
+    private Button BtnLichSuTV;
 
     @FXML
     private Button BtnThoat;
 
     @FXML
-    private TableColumn<?, ?> CCCol;
+    private Button BtnThoat1;
 
     @FXML
-    private TableColumn<?, ?> MaNKCol;
+    private Button BtnThoatLichSuTV;
+
+    @FXML
+    private TableColumn<?, ?> CanHoCol;
+
+    @FXML
+    private TableColumn<?, ?> KetThucTVCol;
+
+    @FXML
+    private TableView<?> LIchSuTVTable;
+
+    @FXML
+    private AnchorPane LichSuTVPane;
+
+    @FXML
+    private Label MaHK;
+
+    @FXML
+    private Label MaHK1;
 
     @FXML
     private TableColumn<?, ?> MaHKCol;
+
+    @FXML
+    private TableColumn<?, ?> MaNKCol;
 
     @FXML
     private TableColumn<?, ?> NKAgeCol;
@@ -53,73 +95,91 @@ public class NhanKhauController implements Initializable {
     private TableColumn<?, ?> NKNameCol;
 
     @FXML
-    private TableColumn<?, ?> NKPhoneCol;
+    private TableColumn<?, ?> NKNameCol1;
 
     @FXML
-    private TableColumn<?, ?> TVangCol;
+    private TableColumn<?, ?> NKPhoneCol;
 
     @FXML
     private TextField NKSear;
 
     @FXML
-    private TextField tfCCCD;
-
-    @FXML
-    private TextField tfMaHK;
-
-    @FXML
-    private TextField tfSDT;
-
-    @FXML
-    private TextField tfTen;
-
-    @FXML
-    private TextField tfQHe;
-
-    @FXML
-    private CheckBox TVangCheck;
+    private AnchorPane NKTablePane;
 
     @FXML
     private DatePicker NSinh;
 
     @FXML
-    private Button BtnAdd1;
-
-    @FXML
-    private Button BtnThoat1;
-
-    @FXML
     private DatePicker NSinh1;
+
+    @FXML
+    private TableView<NhanKhauModel> NhanKhauTable;
+
+    @FXML
+    private CheckBox TVangCheck;
 
     @FXML
     private CheckBox TVangCheck1;
 
     @FXML
+    private TableColumn<?, ?> TVangCol;
+
+    @FXML
+    private TableColumn<?, ?> TrangThaiCol;
+
+    @FXML
+    private Label canHoLable;
+
+    @FXML
+    private Label canHoLable1;
+
+    @FXML
+    private TextField canHotextField;
+
+    @FXML
+    private TextField canHotextField1;
+
+    @FXML
+    private CheckBox laTVHoCheck;
+
+    @FXML
+    private CheckBox laTVHoCheck1;
+
+    @FXML
+    private TextField tfCCCD;
+
+    @FXML
     private TextField tfCCCD1;
+
+    @FXML
+    private TextField tfMaHK;
 
     @FXML
     private TextField tfMaHK1;
 
     @FXML
+    private TextField tfQHe;
+
+    @FXML
     private TextField tfQHe1;
+
+    @FXML
+    private TextField tfSDT;
 
     @FXML
     private TextField tfSDT1;
 
     @FXML
+    private TextField tfTen;
+
+    @FXML
     private TextField tfTen1;
 
     @FXML
-    private AnchorPane NKTablePane;
+    private ChoiceBox<?> trangThaiChoiceBox;
 
     @FXML
-    private AnchorPane AddPane;
-
-    @FXML
-    private AnchorPane AddPane1;
-
-    @FXML
-    private TableView<NhanKhauModel> NhanKhauTable;
+    private ChoiceBox<?> trangThaiChoiceBox1;
 
     private final NhanKhauService nhanKhauService = new NhanKhauService();
     private final HoKhauService hoKhauService = new HoKhauService();
@@ -154,13 +214,22 @@ public class NhanKhauController implements Initializable {
             AddPane1.setVisible(false);
             NKTablePane.setVisible(true);
         }
+
+        if(event.getSource() == BtnLichSuTV){
+            LichSuTVPane.setVisible(true);
+            NKTablePane.setVisible(false);
+        }
+        else if(event.getSource() == BtnThoatLichSuTV) {
+            LichSuTVPane.setVisible(false);
+            NKTablePane.setVisible(true);
+        }
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MaNKCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
-        CCCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
+
         NKNameCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
         NKAgeCol.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
         NKPhoneCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
@@ -209,7 +278,7 @@ public class NhanKhauController implements Initializable {
     }
 
     private void handleDeleteNhanKhau(ActionEvent actionEvent) {
-        NhanKhauModel selectedNhanKhau = NhanKhauTable.getSelectionModel().getSelectedItem();
+        NhanKhauModel selectedNhanKhau = (NhanKhauModel) NhanKhauTable.getSelectionModel().getSelectedItem();
         if (selectedNhanKhau != null) {
             if (nhanKhauService.delNhanKhau(selectedNhanKhau.getMaNhanKhau())) {
                 danhSachNhanKhau.remove(selectedNhanKhau); // Xóa khỏi danh sách hiển thị
@@ -223,7 +292,7 @@ public class NhanKhauController implements Initializable {
     }
 
     private void handleEditNhanKhau(ActionEvent actionEvent) {
-        NhanKhauModel selectedNhanKhau = NhanKhauTable.getSelectionModel().getSelectedItem();
+        NhanKhauModel selectedNhanKhau = (NhanKhauModel) NhanKhauTable.getSelectionModel().getSelectedItem();
         tfTen1.setText(selectedNhanKhau.getHoTenNhanKhau());
         tfSDT1.setText(selectedNhanKhau.getSDT());
         tfCCCD1.setText(selectedNhanKhau.getCCCD());
