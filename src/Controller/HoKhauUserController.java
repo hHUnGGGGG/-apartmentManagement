@@ -3,7 +3,6 @@ package Controller;
 import Controller.DangNhapVaDangKi.LoginController;
 import Models.NhanKhauModel;
 import Service.HoKhauUserService;
-import Service.LoginService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

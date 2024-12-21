@@ -234,13 +234,14 @@ public class NhanKhauService {
     }
 
 
-    public List<NhanKhauModel> getTVtrongHK() throws SQLException {
+    public List<NhanKhauModel> getTVtrongHK(boolean laMotHo) throws SQLException {
         List<NhanKhauModel> listTV = new ArrayList<>();
 
         String query = "SELECT * FROM NHANKHAU WHERE MAHOKHAU = ?";
 
-        int maHoKhau = hoKhauService.getMaxMaHoKhau();
-
+        int maHoKhau;
+        if(laMotHo) maHoKhau = hoKhauService.getMaxMaHoKhau();
+        else maHoKhau = hoKhauService.getMaxMaHoKhauTamTru();
          try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
              preparedStatement .setInt(1,maHoKhau);
 

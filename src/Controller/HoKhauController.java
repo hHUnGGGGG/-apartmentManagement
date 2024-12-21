@@ -8,13 +8,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.sql.SQLException;
@@ -26,19 +24,22 @@ import java.util.regex.Pattern;
 public class HoKhauController implements Initializable {
 
     @FXML
-    private AnchorPane CHTablePane;
+    private AnchorPane AddHKPane;
 
     @FXML
     private AnchorPane AddPane;
 
     @FXML
-    private AnchorPane AddHKPane;
-
-    @FXML
     private AnchorPane AddTVPane;
 
     @FXML
+    private Label AgeText;
+
+    @FXML
     private Button BtnAddHK;
+
+    @FXML
+    private Button BtnAddHo;
 
     @FXML
     private Button BtnAddTV;
@@ -50,7 +51,7 @@ public class HoKhauController implements Initializable {
     private Button BtnDltHK;
 
     @FXML
-    private Button BtnAddHo;
+    private Button BtnSave;
 
     @FXML
     private Button BtnThoat;
@@ -59,70 +60,40 @@ public class HoKhauController implements Initializable {
     private Button BtnThoat1;
 
     @FXML
-    private Button BtnSave;
+    private Button BtnThoatXemChiTiet;
+
+    @FXML
+    private Button BtnXemChiTiet;
 
     @FXML
     private TableColumn<?, ?> CCCDCol;
 
     @FXML
+    private TableColumn<?, ?> CCTVCol;
+
+    @FXML
+    private TableColumn<?, ?> CCTVCol1;
+
+    @FXML
+    private AnchorPane CHTablePane;
+
+    @FXML
+    private TableView<NhanKhauModel> HoKhauTable;
+
+    @FXML
     private TextField HokhauSear;
 
     @FXML
-    private TableColumn<?, ?> MaCHCol;
+    private Label MaCHlb;
 
     @FXML
-    private Label QHeText;
+    private Label MaCHlb1;
 
     @FXML
     private TableColumn<?, ?> MaHKCol;
 
     @FXML
-    private TableColumn<?, ?> SDTCol;
-
-    @FXML
-    private TextField SdtCHtf;
-
-    @FXML
-    private CheckBox TVangCheck;
-
-    @FXML
-    private TableColumn<?, ?> TenCHCol;
-
-    @FXML
-    private TableColumn<?, ?> CCTVCol;
-
-    @FXML
-    private TableColumn<?, ?> NSinhTVCol;
-
-    @FXML
-    private TableColumn<?, ?> SdtTVCol;
-
-    @FXML
-    private TableColumn<?, ?> TenTVCol;
-
-    @FXML
-    private TableColumn<?, ?> QheTVCol;
-
-    @FXML
-    private TableView<NhanKhauModel> ThanhVienTable;
-
-    @FXML
-    private TextField TenCHtf;
-
-    @FXML
-    private TextField cccdCHtf;
-
-    @FXML
-    private TextField tfCCCD;
-
-    @FXML
-    private TextField tfSDT;
-
-    @FXML
-    private TextField tfTen;
-
-    @FXML
-    private TextField tfQHe;
+    private Label MaHKlb;
 
     @FXML
     private DatePicker NSinh;
@@ -131,7 +102,112 @@ public class HoKhauController implements Initializable {
     private DatePicker NSinh1;
 
     @FXML
-    private TableView<NhanKhauModel> HoKhauTable;
+    private Label NSinh2;
+
+    @FXML
+    private TableColumn<?, ?> NSinhTVCol;
+
+    @FXML
+    private TableColumn<?, ?> NSinhTVCol1;
+
+    @FXML
+    private Label QHeText;
+
+    @FXML
+    private TableColumn<?, ?> QheTVCol;
+
+    @FXML
+    private TableColumn<?, ?> QheTVCol1;
+
+    @FXML
+    private TableColumn<?, ?> SDTCol;
+
+    @FXML
+    private TextField SdtCHtf;
+
+    @FXML
+    private TableColumn<?, ?> SdtTVCol;
+
+    @FXML
+    private TableColumn<?, ?> SdtTVCol1;
+
+    @FXML
+    private CheckBox TVangCheck;
+
+    @FXML
+    private TableColumn<?, ?> TVangCol;
+
+    @FXML
+    private TableColumn<?, ?> TVangCol1;
+
+    @FXML
+    private TableColumn<?, ?> TenCHCol;
+
+    @FXML
+    private TextField TenCHtf;
+
+    @FXML
+    private TableColumn<?, ?> TenTVCol;
+
+    @FXML
+    private TableColumn<?, ?> TenTVCol1;
+
+    @FXML
+    private TableView<NhanKhauModel> ThanhVienTable;
+
+    @FXML
+    private TableView<NhanKhauModel> ThanhVienXemChiTietTable;
+
+    @FXML
+    private Label canHoLable;
+
+    @FXML
+    private TextField cccdCHtf;
+
+    @FXML
+    private Label dienTichLable;
+
+    @FXML
+    private Label oToLable;
+
+    @FXML
+    private TableColumn<?, ?> soCanHoCol;
+
+    @FXML
+    private TextField tfCCCD;
+
+    @FXML
+    private TextField tfQHe;
+
+    @FXML
+    private TextField tfSDT;
+
+    @FXML
+    private TextField tfTen;
+
+    @FXML
+    private Label xeMayLable;
+
+    @FXML
+    private AnchorPane xemChiTietPane;
+
+    @FXML
+    private ChoiceBox<Integer> tangChoiceBox;
+
+    @FXML
+    private ChoiceBox<Integer> soPhongChoiceBox;
+
+    @FXML
+    private CheckBox laMotHocheckBox;
+
+    @FXML
+    private TableColumn<?, ?> MaNKTVCol;
+
+    @FXML
+    private ChoiceBox<String> trangThaiChoiceBox;
+
+    @FXML
+    private Label trangThaiLable;
 
     private final HoKhauService hoKhauService = new HoKhauService();
     private final NhanKhauService nhanKhauService = new NhanKhauService();
@@ -151,6 +227,7 @@ public class HoKhauController implements Initializable {
     public void switchForm(ActionEvent event) throws SQLException {
         if (event.getSource() == BtnAddHK){
             AddPane.setVisible(true);
+            ThanhVienTable.getItems().clear();
             CHTablePane.setVisible(false);
         }else if (event.getSource() == BtnSave && validateInputCH()) {
             AddPane.setVisible(true);
@@ -160,6 +237,12 @@ public class HoKhauController implements Initializable {
             CHTablePane.setVisible(true);
         } else if (event.getSource() == BtnThoat) {
             AddPane.setVisible(false);
+            CHTablePane.setVisible(true);
+        } else if (event.getSource() == BtnXemChiTiet) {
+            xemChiTietPane.setVisible(true);
+            CHTablePane.setVisible(false);
+        } else if (event.getSource() == BtnThoatXemChiTiet) {
+            xemChiTietPane.setVisible(false);
             CHTablePane.setVisible(true);
         }
     }
@@ -184,14 +267,12 @@ public class HoKhauController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         // Cấu hình các cột trong bảng TableView
         MaHKCol.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-        MaCHCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
         TenCHCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
         CCCDCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
         SDTCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
+        soCanHoCol.setCellValueFactory(new PropertyValueFactory<>("soPhong"));
 
         TenTVCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
         CCTVCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
@@ -199,7 +280,23 @@ public class HoKhauController implements Initializable {
         SdtTVCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
         QheTVCol.setCellValueFactory(new PropertyValueFactory<>("quanHeVoiChuHo"));
 
+        TenTVCol1.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
+        CCTVCol1.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
+        NSinhTVCol1.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
+        SdtTVCol1.setCellValueFactory(new PropertyValueFactory<>("SDT"));
+        QheTVCol1.setCellValueFactory(new PropertyValueFactory<>("quanHeVoiChuHo"));
+        TVangCol1.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
+        MaNKTVCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
 
+        for (int i = 1; i <= 24; i++) {
+            tangChoiceBox.getItems().add(i);
+        }
+
+        tangChoiceBox.setValue(1); // Chọn giá trị mặc định là 1
+
+        List<Integer> canHo = hoKhauService.listCanHo(tangChoiceBox.getValue());
+        soPhongChoiceBox.getItems().addAll(canHo);
+        soPhongChoiceBox.setValue(canHo.get(0));
         //Load dữ liệu ban đầu
         loadDataHK();
 
@@ -209,9 +306,9 @@ public class HoKhauController implements Initializable {
         BtnSave.setOnAction(this::handleSaveClicked);
         BtnDltHK.setOnAction(this::handleDeleteHoKhau);
         HokhauSear.setOnKeyReleased(event -> handleSearch());
-
+        BtnXemChiTiet.setOnAction(this::handleXemChiTiet);
         BtnAddTV.setOnAction(this::handleAddTV);
-
+        tangChoiceBox.setOnAction(this::handleChonPhong);
     }
 
     private void handleAddHoClicked(ActionEvent event){
@@ -251,7 +348,7 @@ public class HoKhauController implements Initializable {
     }
 
     private void loadDataTV() throws SQLException {
-        List<NhanKhauModel> datank = nhanKhauService.getTVtrongHK();
+        List<NhanKhauModel> datank = nhanKhauService.getTVtrongHK(laMotHocheckBox.isSelected());
 
         ObservableList<NhanKhauModel> danhSachThanhvien = FXCollections.observableArrayList(datank);
 
@@ -270,20 +367,24 @@ public class HoKhauController implements Initializable {
             String TenChuHo = TenCHtf.getText();
             Date NgaySinhChuHo = Date.from(NSinh1.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             String SDTChuHo = SdtCHtf.getText().trim();
-            int MaHoKhau = hoKhauService.getMaxMaHoKhau() + 100;
+            int MaHoKhau;
+            boolean laMotHo = laMotHocheckBox.isSelected();
+            if(laMotHo) MaHoKhau = hoKhauService.getMaxMaHoKhau() + 100;
+            else MaHoKhau = hoKhauService.getMaxMaHoKhauTamTru() + 100;
             String QuanHe = "Chủ Hộ";
             boolean Trangthai = TVangCheck.isSelected();
 
             HoKhauModel hoKhau = new HoKhauModel();
             NhanKhauModel chuHo = new NhanKhauModel(MaHoKhau, CCCDChuHo, TenChuHo, NgaySinhChuHo, SDTChuHo, QuanHe, Trangthai);
 
-            if (hoKhauService.addHoKhau(hoKhau)) {
+            if (hoKhauService.addHoKhau(hoKhau, laMotHo)) {
                 if(nhanKhauService.addChuHo(chuHo)) {
                     showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm hộ khẩu thành công!");
                 }
             } else {
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Thêm hộ khẩu thất bại!");
             }
+            hoKhauService.luuCanHo(soPhongChoiceBox.getValue(), MaHoKhau);
             loadDataHK();
             loadDataTV();
             clearFieldsHK();
@@ -294,15 +395,19 @@ public class HoKhauController implements Initializable {
 
 
     private void handleDeleteHoKhau(ActionEvent actionEvent) {
-
         NhanKhauModel selectedHoKhau = HoKhauTable.getSelectionModel().getSelectedItem();
-
+        int maHoKhau = hoKhauService.layMaHoKhauTuSoPhong(selectedHoKhau.getSoPhong());
+        System.out.println(maHoKhau);
         if(selectedHoKhau != null) {
-            if(hoKhauService.delHoKhau(selectedHoKhau.getMaHoKhau()) && nhanKhauService.delNhanKhauHoKhau(selectedHoKhau.getMaHoKhau())){
+            int maCanHo = hoKhauService.maCanHo(maHoKhau);
+            int tangCanHo = hoKhauService.TangCanHo(maHoKhau);
+            int soCanHo = hoKhauService.soCanHo(maHoKhau);
+            if(hoKhauService.delHoKhau(maHoKhau)){
+                hoKhauService.themCanHo(maCanHo, tangCanHo, soCanHo);
                 loadDataHK();
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Xóa hộ khẩu thành công!");
             } else{
-                    showAlert(Alert.AlertType.ERROR, "Thất bại", "Xóa hộ khẩu thất bại!");
+                showAlert(Alert.AlertType.ERROR, "Thất bại", "Xóa hộ khẩu thất bại!");
             }
         } else {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng 1 chọn hộ!");
@@ -364,6 +469,37 @@ public class HoKhauController implements Initializable {
         }
     }
 
+    private void loadChiTietHo(int maHoKhau) {
+        ObservableList<NhanKhauModel> danhSachThanhvien = FXCollections.observableArrayList(hoKhauService.getListNhanKhauTrongHo(maHoKhau));
+        ThanhVienXemChiTietTable.setItems(danhSachThanhvien);
+        canHoLable.setText(String.valueOf(hoKhauService.soCanHo(maHoKhau)));
+        dienTichLable.setText(String.valueOf(hoKhauService.dienTichCanHo(maHoKhau)));
+        xeMayLable.setText(String.valueOf(hoKhauService.soXeMayCuaHo(maHoKhau)) + " )");
+        oToLable.setText(String.valueOf(hoKhauService.soOToCuaHo(maHoKhau)) + " )");
+    }
+
+    private void handleXemChiTiet(ActionEvent event) {
+        NhanKhauModel selectedHoKhau = HoKhauTable.getSelectionModel().getSelectedItem();
+
+        if(selectedHoKhau != null) {
+            loadChiTietHo(hoKhauService.layMaHoKhauTuSoPhong(selectedHoKhau.getSoPhong()));
+            try {
+                switchForm(event);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng 1 chọn hộ!");
+        }
+    }
+
+    private void handleChonPhong(ActionEvent event) {
+        soPhongChoiceBox.getItems().clear();
+        List<Integer> canHo = hoKhauService.listCanHo(tangChoiceBox.getValue());
+        soPhongChoiceBox.getItems().addAll(canHo);
+        soPhongChoiceBox.setValue(canHo.get(0));
+    }
 
     public boolean validateInputCH() throws SQLException {
 

@@ -2,7 +2,7 @@ package Models;
 
 public class HoKhauModel {
     private int maHoKhau;
-
+    private int soPhong;
     public HoKhauModel() {
         // Default constructor
     }
@@ -18,5 +18,13 @@ public class HoKhauModel {
 
     public void setMaHoKhau(int maHoKhau) {
         this.maHoKhau = maHoKhau;
+    }
+
+    public int getSoPhong() {
+        return soPhong;
+    }
+
+    public void setSoPhong(int soPhong) {
+        this.soPhong = soPhong;
     }
 }
