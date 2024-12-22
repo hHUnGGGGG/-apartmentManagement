@@ -18,7 +18,7 @@
 
 
         // Lấy mã hộ lớn nhất
-        public int getMaxMaHoKhau() throws SQLException {
+        public int getMaxMaHoKhauThuongTru() throws SQLException {
             String query = "SELECT COALESCE(MAX(MAHOKHAU), 1000000) AS maxMaHoKhau FROM HOKHAU";
 
             try (Statement statement = connection.createStatement();
@@ -31,10 +31,11 @@
             return 1000000; // Trả về giá trị mặc định nếu bảng rỗng
         }
 
+
         public int getMaxMaHoKhauTamTru() throws SQLException {
             String query =  "SELECT COALESCE(MAX(MAHOKHAU), 100000) AS MaxMahokhauTamChu " +
-                            "FROM HOKHAU " +
-                            "WHERE MAHOKHAU BETWEEN 100000 AND 999999";
+                    "FROM HOKHAU " +
+                    "WHERE MAHOKHAU BETWEEN 100000 AND 999999";
 
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery(query)) {
@@ -46,15 +47,14 @@
             return 100000; // Trả về giá trị mặc định nếu bảng rỗng
         }
 
+
         // Thêm hộ khẩu
-        public boolean addHoKhau(HoKhauModel hokhauModel, boolean laMotHo) {
+        public boolean addHoKhau(HoKhauModel hokhauModel) {
             String insertQuery = "INSERT INTO HOKHAU (MAHOKHAU) VALUES (?)";
 
             try {
                 // Lấy mã hộ khẩu lớn nhất hiện tại
-                int maxMaHoKhau;
-                if(laMotHo) maxMaHoKhau = getMaxMaHoKhau();
-                else maxMaHoKhau = getMaxMaHoKhauTamTru();
+                int maxMaHoKhau = getMaxMaHoKhau();
                 int nextMaHoKhau = maxMaHoKhau + 100; // Tăng thêm 100
 
                 // Gán mã hộ khẩu mới vào đối tượng
@@ -96,9 +96,9 @@
         public List<NhanKhauModel> searchHoKhaubyId(String maHoKhau) {
 
             List<NhanKhauModel> listHoKhau = new ArrayList<>();
-            String query = "SELECT * FROM NHANKHAU WHERE QUANHEVOICHUHO = 'Chủ hộ' AND CAST(MAHOKHAU AS CHAR) LIKE ? LIMIT 12" ;
+            String query = "SELECT * FROM NHANKHAU WHERE QUANHEVOICHUHO = 'Chủ hộ' AND MAHOKHAU LIKE ?" ;
 
-            String searchPattern = "%" + maHoKhau.trim() + "%"; // Tìm kiếm chứa chuỗi con
+            String searchPattern = "%" + maHoKhau.trim() + "%";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 // Gán tham số cho câu lệnh SQL
@@ -123,7 +123,7 @@
         public List<NhanKhauModel> searchHoKhauByCCCD(String cccd) {
 
             List<NhanKhauModel> listNhanKhau = new ArrayList<>();
-            String query = "SELECT * FROM NHANKHAU WHERE QUANHEVOICHUHO = 'Chủ hộ' AND CAST(CCCD AS CHAR) LIKE ? LIMIT 12";
+            String query = "SELECT * FROM NHANKHAU WHERE QUANHEVOICHUHO = 'Chủ hộ' AND CCCD LIKE ?";
 
             String searchPattern = "%" + cccd.trim() + "%";
 
@@ -171,34 +171,20 @@
             List<NhanKhauModel> danhSachHoKhau = new ArrayList<>();
 
             String query =
-                    "SELECT \n" +
-                            "    NHANKHAU.MAHOKHAU, \n" +
-                            "    NHANKHAU.MANHANKHAU, \n" +
-                            "    NHANKHAU.HOTEN AS TENCHUHO, \n" +
-                            "    NHANKHAU.CCCD, \n" +
-                            "    NHANKHAU.SDT, \n" +
-                            "    CANHO.SOPHONG \n" +
-                            "FROM \n" +
-                            "    NHANKHAU \n" +
-                            "JOIN \n" +
-                            "    CANHO ON CANHO.MAHOKHAU = NHANKHAU.MAHOKHAU \n" +
-                            "WHERE \n" +
-                            "    NHANKHAU.QUANHEVOICHUHO = 'Chủ hộ'";
+                    "SELECT MAHOKHAU, MANHANKHAU, HOTEN AS TENCHUHO, CCCD, SDT " +
+                            "FROM NHANKHAU " +
+                            "WHERE QUANHEVOICHUHO = 'Chủ hộ'";
 
             try (Statement statement = connection.createStatement();
                  ResultSet rs = statement.executeQuery(query)) {
 
                 while (rs.next()) {
-                    int maHoKhau;
-                    if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
-                    else maHoKhau = 0;
                     NhanKhauModel hoKhauChuHo = new NhanKhauModel(
-                            maHoKhau,
+                            rs.getInt("MAHOKHAU"),
                             rs.getInt("MANHANKHAU"),
                             rs.getString("TENCHUHO"),
                             rs.getString("CCCD"),
-                            rs.getString("SDT"),
-                            rs.getInt("SOPHONG")
+                            rs.getString("SDT")
                     );
 
                     danhSachHoKhau.add(hoKhauChuHo);
@@ -214,8 +200,7 @@
 
         public boolean existsHoKhauId(int maHoKhau) throws SQLException {
             String query = "SELECT COUNT(*) FROM HOKHAU WHERE MAHOKHAU = ?";
-            try (Connection connection =DatabaseConnection.getInstance().getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, maHoKhau);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
@@ -242,211 +227,4 @@
             );
         }
 
-        public List<NhanKhauModel> getListNhanKhauTrongHo(int maHoKhau) {
-            List<NhanKhauModel> danhSachNhanKhauTrongHo = new ArrayList<>();
-
-            String query = "SELECT * FROM NHANKHAU WHERE MAHOKHAU = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, maHoKhau);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-
-                while (rs.next()) {
-                    NhanKhauModel nhanKhauTrongHo = new NhanKhauModel(
-                            rs.getInt("MAHOKHAU"),
-                            rs.getInt("MANHANKHAU"),
-                            rs.getString("CCCD"),
-                            rs.getString("HOTEN"),
-                            rs.getDate("NGAYSINH"),
-                            rs.getString("SDT"),
-                            rs.getString("QUANHEVOICHUHO"),
-                            rs.getBoolean("TRANGTHAI")
-                    );
-
-                    danhSachNhanKhauTrongHo.add(nhanKhauTrongHo);
-                }
-
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy danh sách hộ khẩu: " + e.getMessage());
-            }
-
-            return danhSachNhanKhauTrongHo;
-        }
-
-        public int soCanHo(int maHoKhau) {
-            String query = "SELECT SOPHONG FROM CANHO WHERE MAHOKHAU = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, maHoKhau);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                if(rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy Số căn hộ: " + e.getMessage());
-            }
-            return 0;
-        }
-
-        public List<Integer> listCanHo(int Tang) {
-            List<Integer> danhSachCanHo = new ArrayList<>();
-            String query = "SELECT SOPHONG FROM CANHO WHERE TANG = ? AND MAHOKHAU IS NULL";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, Tang);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    danhSachCanHo.add(rs.getInt(1));
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy Số căn hộ: " + e.getMessage());
-            }
-            return danhSachCanHo;
-        }
-
-        public int dienTichCanHo(int maHoKhau) {
-            String query = "SELECT DIENTICH FROM CANHO WHERE MAHOKHAU = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, maHoKhau);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                if(rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy diện tích căn hộ: " + e.getMessage());
-            }
-            return 0;
-        }
-
-        public int maCanHo(int maHoKhau) {
-            String query = "SELECT MACANHO FROM CANHO WHERE MAHOKHAU = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, maHoKhau);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                if(rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy diện tích căn hộ: " + e.getMessage());
-            }
-            return 0;
-        }
-
-        public int TangCanHo(int maHoKhau) {
-            String query = "SELECT TANG FROM CANHO WHERE MAHOKHAU = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, maHoKhau);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                if(rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy diện tích căn hộ: " + e.getMessage());
-            }
-            return 0;
-        }
-
-        public int soXeMayCuaHo(int maHoKhau) {
-            String query = "SELECT COUNT(BIENSO) FROM XE WHERE MAHOKHAU = ? AND LOAIXE = 'Xe máy'";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, maHoKhau);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                if(rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy số xe máy: " + e.getMessage());
-            }
-            return 0;
-        }
-
-        public int soOToCuaHo(int maHoKhau) {
-            String query = "SELECT COUNT(BIENSO) FROM XE WHERE MAHOKHAU = ? AND LOAIXE = 'Ô tô'";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, maHoKhau);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                if(rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy số ô tô: " + e.getMessage());
-            }
-            return 0;
-        }
-
-        public void luuCanHo(int soPhong, int maHoKhau) {
-            String query = "UPDATE CANHO SET MAHOKHAU = ? WHERE SOPHONG = ?" ;
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, maHoKhau);
-                preparedStatement.setInt(2, soPhong);
-                preparedStatement.executeUpdate();
-            }
-            catch (SQLException e) {
-                // Ghi log lỗi chi tiết
-                System.err.println("Lỗi" + e.getMessage());
-            }
-        }
-
-        public int layMaHoKhauTuSoPhong(int soPhong) {
-            String query = "SELECT MAHOKHAU FROM CANHO WHERE SOPHONG = ?" ;
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Thiết lập giá trị cho tham số
-                preparedStatement.setInt(1, soPhong);
-
-                // Thực hiện truy vấn
-                ResultSet rs = preparedStatement.executeQuery();
-                if(rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy số ô tô: " + e.getMessage());
-            }
-            return 0;
-        }
-        public void themCanHo(int maCanHo, int tangCanHo, int soCanHo) {
-            String query = "INSERT INTO CANHO (MACANHO, TANG, SOPHONG) VALUES (?, ?, ?)" ;
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1,maCanHo);
-                preparedStatement.setInt(2, tangCanHo);
-                preparedStatement.setInt(3, soCanHo);
-                preparedStatement.executeUpdate();
-            }
-
-            catch (SQLException e) {
-                // Ghi log lỗi chi tiết
-                System.err.println("Lỗi" + e.getMessage());
-            }
-        }
     }
