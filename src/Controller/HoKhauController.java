@@ -33,9 +33,6 @@ public class HoKhauController implements Initializable {
     private AnchorPane AddTVPane;
 
     @FXML
-    private Label AgeText;
-
-    @FXML
     private Button BtnAddHK;
 
     @FXML
@@ -84,16 +81,7 @@ public class HoKhauController implements Initializable {
     private TextField HokhauSear;
 
     @FXML
-    private Label MaCHlb;
-
-    @FXML
-    private Label MaCHlb1;
-
-    @FXML
     private TableColumn<?, ?> MaHKCol;
-
-    @FXML
-    private Label MaHKlb;
 
     @FXML
     private DatePicker NSinh;
@@ -102,16 +90,10 @@ public class HoKhauController implements Initializable {
     private DatePicker NSinh1;
 
     @FXML
-    private Label NSinh2;
-
-    @FXML
     private TableColumn<?, ?> NSinhTVCol;
 
     @FXML
     private TableColumn<?, ?> NSinhTVCol1;
-
-    @FXML
-    private Label QHeText;
 
     @FXML
     private TableColumn<?, ?> QheTVCol;
@@ -130,12 +112,6 @@ public class HoKhauController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> SdtTVCol1;
-
-    @FXML
-    private CheckBox TVangCheck;
-
-    @FXML
-    private TableColumn<?, ?> TVangCol;
 
     @FXML
     private TableColumn<?, ?> TVangCol1;
@@ -211,8 +187,10 @@ public class HoKhauController implements Initializable {
 
     private final HoKhauService hoKhauService = new HoKhauService();
     private final NhanKhauService nhanKhauService = new NhanKhauService();
-    private NhanKhauController nhanKhauController;
     private ObservableList<NhanKhauModel> danhSachHoKhau;
+    int MaHoKhau;
+    String Trangthai;
+    List<NhanKhauModel> filteredList;
 
     private boolean isAddHoClicked = false;
 
@@ -268,35 +246,46 @@ public class HoKhauController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Cấu hình các cột trong bảng TableView
+        // Thêm Chủ hộ
         MaHKCol.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
         TenCHCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
         CCCDCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
         SDTCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
         soCanHoCol.setCellValueFactory(new PropertyValueFactory<>("soPhong"));
 
+        // Thêm Thành viên
         TenTVCol.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
         CCTVCol.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
         NSinhTVCol.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
         SdtTVCol.setCellValueFactory(new PropertyValueFactory<>("SDT"));
         QheTVCol.setCellValueFactory(new PropertyValueFactory<>("quanHeVoiChuHo"));
 
+        // Xem chi tiết
+        MaNKTVCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
         TenTVCol1.setCellValueFactory(new PropertyValueFactory<>("hoTenNhanKhau"));
         CCTVCol1.setCellValueFactory(new PropertyValueFactory<>("CCCD"));
         NSinhTVCol1.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
         SdtTVCol1.setCellValueFactory(new PropertyValueFactory<>("SDT"));
         QheTVCol1.setCellValueFactory(new PropertyValueFactory<>("quanHeVoiChuHo"));
         TVangCol1.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
-        MaNKTVCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
+
 
         for (int i = 1; i <= 24; i++) {
             tangChoiceBox.getItems().add(i);
         }
-
         tangChoiceBox.setValue(1); // Chọn giá trị mặc định là 1
 
         List<Integer> canHo = hoKhauService.listCanHo(tangChoiceBox.getValue());
         soPhongChoiceBox.getItems().addAll(canHo);
-        soPhongChoiceBox.setValue(canHo.get(0));
+        soPhongChoiceBox.setValue(canHo.getFirst());
+
+        // Thiết lập giá trị cho trạng thái
+        ObservableList<String> trangThaiOptions = FXCollections.observableArrayList("Thường trú", "Tạm trú");
+        trangThaiChoiceBox.setItems(trangThaiOptions);
+
+        // Thiết lập giá trị mặc định
+        trangThaiChoiceBox.setValue("Thường trú");
+
         //Load dữ liệu ban đầu
         loadDataHK();
 
@@ -309,6 +298,7 @@ public class HoKhauController implements Initializable {
         BtnXemChiTiet.setOnAction(this::handleXemChiTiet);
         BtnAddTV.setOnAction(this::handleAddTV);
         tangChoiceBox.setOnAction(this::handleChonPhong);
+
     }
 
     private void handleAddHoClicked(ActionEvent event){
@@ -328,7 +318,7 @@ public class HoKhauController implements Initializable {
                 switchForm(event);
             }
         }catch (SQLException e){
-            e.printStackTrace();
+            System.err.println("Lỗi chuyển nút lưu hộ: "+e.getMessage());
         }finally {
             isAddHoClicked = false;
         }
@@ -340,10 +330,10 @@ public class HoKhauController implements Initializable {
         List<NhanKhauModel> datahk = hoKhauService.getListHoKhau();
 
         // Tạo ObservableList từ data
-        ObservableList<NhanKhauModel> danhSachChuHo = FXCollections.observableArrayList(datahk);
+        danhSachHoKhau = FXCollections.observableArrayList(datahk);
 
         // Đặt dữ liệu vào TableView
-        HoKhauTable.setItems(danhSachChuHo);
+        HoKhauTable.setItems(danhSachHoKhau);
 
     }
 
@@ -362,20 +352,18 @@ public class HoKhauController implements Initializable {
         try {
             if (validateInputCH()) return;
 
-
             String CCCDChuHo = cccdCHtf.getText().trim();
             String TenChuHo = TenCHtf.getText();
             Date NgaySinhChuHo = Date.from(NSinh1.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             String SDTChuHo = SdtCHtf.getText().trim();
-            int MaHoKhau;
             boolean laMotHo = laMotHocheckBox.isSelected();
             if(laMotHo) MaHoKhau = hoKhauService.getMaxMaHoKhau() + 100;
             else MaHoKhau = hoKhauService.getMaxMaHoKhauTamTru() + 100;
             String QuanHe = "Chủ Hộ";
-            boolean Trangthai = TVangCheck.isSelected();
+            Trangthai = trangThaiChoiceBox.getValue();
 
             HoKhauModel hoKhau = new HoKhauModel();
-            NhanKhauModel chuHo = new NhanKhauModel(MaHoKhau, CCCDChuHo, TenChuHo, NgaySinhChuHo, SDTChuHo, QuanHe, Trangthai);
+            NhanKhauModel chuHo = new NhanKhauModel(CCCDChuHo, TenChuHo, NgaySinhChuHo, SDTChuHo, MaHoKhau, QuanHe, Trangthai);
 
             if (hoKhauService.addHoKhau(hoKhau, laMotHo)) {
                 if(nhanKhauService.addChuHo(chuHo)) {
@@ -389,16 +377,15 @@ public class HoKhauController implements Initializable {
             loadDataTV();
             clearFieldsHK();
         } catch (NumberFormatException | SQLException e) {
-            e.printStackTrace();
+            System.err.println("Lỗi khi thêm hộ khẩu: "+e.getMessage());
         }
     }
 
 
     private void handleDeleteHoKhau(ActionEvent actionEvent) {
         NhanKhauModel selectedHoKhau = HoKhauTable.getSelectionModel().getSelectedItem();
-        int maHoKhau = hoKhauService.layMaHoKhauTuSoPhong(selectedHoKhau.getSoPhong());
-        System.out.println(maHoKhau);
         if(selectedHoKhau != null) {
+            int maHoKhau = hoKhauService.layMaHoKhauTuSoPhong(selectedHoKhau.getSoPhong());
             int maCanHo = hoKhauService.maCanHo(maHoKhau);
             int tangCanHo = hoKhauService.TangCanHo(maHoKhau);
             int soCanHo = hoKhauService.soCanHo(maHoKhau);
@@ -418,27 +405,22 @@ public class HoKhauController implements Initializable {
     private void handleSearch() {
         String keyword = HokhauSear.getText().toLowerCase();
 
-        List<NhanKhauModel> filteredList;
-
-        // Kiểm tra loại tìm kiếm dựa trên keyword
-        if (Pattern.matches("\\d{1,12}", keyword)) {
+        if(keyword.isEmpty()){
+            filteredList = hoKhauService.getListHoKhau();
+        } else if (Pattern.matches("\\d{1,12}", keyword)) {
             // Nếu từ khóa là số, tìm theo mã nhân khẩu hoặc CCCD
             if (keyword.length() <= 11) {
-                filteredList = hoKhauService.searchHoKhaubyId(keyword); // Tìm theo mã nhân khẩu
+                filteredList = hoKhauService.searchHoKhaubySoPhong(keyword); // Tìm theo mã hộ khẩu
             } else {
                 filteredList = hoKhauService.searchHoKhauByCCCD(keyword); // Tìm theo CCCD
             }
-        } else {
+        }else {
             // Nếu từ khóa là chữ, tìm theo tên
             filteredList = hoKhauService.searchHoKhauByTen(keyword);
         }
 
         //Hiển thị kết quả
         danhSachHoKhau.setAll(filteredList);
-
-        if (filteredList.isEmpty()) {
-            showAlert(Alert.AlertType.INFORMATION, "Thông báo", "Không tìm thấy hộ khẩu phù hợp!");
-        }
 
     }
 
@@ -451,11 +433,11 @@ public class HoKhauController implements Initializable {
             String TenTV = tfTen.getText();
             Date NgaySinhTV = Date.from(NSinh.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             String SDTTV = tfSDT.getText().trim();
-            int MaHK = hoKhauService.getMaxMaHoKhau();
+            int MaHK = MaHoKhau;
             String QuanHe = tfQHe.getText();
-            boolean Trangthai = TVangCheck.isSelected();
+            String TrangThai = Trangthai;
 
-            NhanKhauModel thanhVien = new NhanKhauModel(MaHK, CCCDTV, TenTV, NgaySinhTV, SDTTV, QuanHe, Trangthai);
+            NhanKhauModel thanhVien = new NhanKhauModel(CCCDTV, TenTV, NgaySinhTV, SDTTV, MaHK, QuanHe, TrangThai);
 
             if(nhanKhauService.addNhanKhau(thanhVien)) {
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm nhân khẩu thành công!");
@@ -465,7 +447,7 @@ public class HoKhauController implements Initializable {
             loadDataTV();
             clearFieldsTV();
         } catch (NumberFormatException | SQLException e) {
-            e.printStackTrace();
+            System.err.println("Lỗi khi thêm thành viên: "+e.getMessage());
         }
     }
 
@@ -474,8 +456,9 @@ public class HoKhauController implements Initializable {
         ThanhVienXemChiTietTable.setItems(danhSachThanhvien);
         canHoLable.setText(String.valueOf(hoKhauService.soCanHo(maHoKhau)));
         dienTichLable.setText(String.valueOf(hoKhauService.dienTichCanHo(maHoKhau)));
-        xeMayLable.setText(String.valueOf(hoKhauService.soXeMayCuaHo(maHoKhau)) + " )");
-        oToLable.setText(String.valueOf(hoKhauService.soOToCuaHo(maHoKhau)) + " )");
+        xeMayLable.setText(hoKhauService.soXeMayCuaHo(maHoKhau) + " )");
+        oToLable.setText(hoKhauService.soOToCuaHo(maHoKhau) + " )");
+        trangThaiLable.setText(Trangthai);
     }
 
     private void handleXemChiTiet(ActionEvent event) {
@@ -498,22 +481,21 @@ public class HoKhauController implements Initializable {
         soPhongChoiceBox.getItems().clear();
         List<Integer> canHo = hoKhauService.listCanHo(tangChoiceBox.getValue());
         soPhongChoiceBox.getItems().addAll(canHo);
-        soPhongChoiceBox.setValue(canHo.get(0));
+        soPhongChoiceBox.setValue(canHo.getFirst());
     }
 
+
     public boolean validateInputCH() throws SQLException {
-
-        if (!Pattern.matches("\\d{12}", cccdCHtf.getText().trim())) {
-            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập CCCD hợp lệ!");
-            return true;
-        }
-
 
         if (TenCHtf.getText().trim().length() < 2 || TenCHtf.getText().trim().length() > 60) {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập tên hợp lệ!");
             return true;
         }
 
+        if (!Pattern.matches("\\d{12}", cccdCHtf.getText().trim())) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập CCCD hợp lệ!");
+            return true;
+        }
 
         if (!Pattern.matches("\\d{10}", SdtCHtf.getText().trim())) {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập số điện thoại hợp lệ!");
@@ -572,11 +554,16 @@ public class HoKhauController implements Initializable {
     }
 
     private void clearFieldsHK() {
+        List<Integer> canHo = hoKhauService.listCanHo(tangChoiceBox.getValue());
+        soPhongChoiceBox.getItems().addAll(canHo);
+        soPhongChoiceBox.setValue(canHo.getFirst());
+        tangChoiceBox.setValue(1);
         TenCHtf.clear();
         cccdCHtf.clear();
         SdtCHtf.clear();
         NSinh1.setValue(null);
-        TVangCheck.setSelected(false);
+        trangThaiChoiceBox.setValue("Thường trú");
+
     }
 
     private void clearFieldsTV() {
@@ -585,32 +572,8 @@ public class HoKhauController implements Initializable {
         tfSDT.clear();
         tfQHe.clear();
         NSinh.setValue(null);
-        TVangCheck.setSelected(false);
     }
 
-    public ObservableList<NhanKhauModel> getDanhSachHoKhau() {
-        return danhSachHoKhau;
-    }
-
-    public void setDanhSachHoKhau(ObservableList<NhanKhauModel> danhSachHoKhau) {
-        this.danhSachHoKhau = danhSachHoKhau;
-    }
-
-    public TableView<NhanKhauModel> getHoKhauTable() {
-        return HoKhauTable;
-    }
-
-    public void setHoKhauTable(TableView<NhanKhauModel> hoKhauTable) {
-        HoKhauTable = hoKhauTable;
-    }
-
-    public TableView<NhanKhauModel> getThanhVienTable() {
-        return ThanhVienTable;
-    }
-
-    public void setThanhVienTable(TableView<NhanKhauModel> thanhVienTable) {
-        ThanhVienTable = thanhVienTable;
-    }
 }
 
 

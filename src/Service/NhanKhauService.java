@@ -1,10 +1,8 @@
 package Service;
 
 import Models.NhanKhauModel;
+import Models.TamVangModel;
 import database.DatabaseConnection;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -90,38 +88,13 @@ public class NhanKhauService {
 
         String query = "DELETE FROM NHANKHAU WHERE MANHANKHAU = ?";
 
-        try (//Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
             stmt.setInt(1, maNhanKhau);
 
-            int rowsDeleted = stmt.executeUpdate();
-            if (rowsDeleted > 0) {
-                System.out.println("Đã xóa nhân khẩu thành công!");
-                return true;
-            } else {
-                System.out.println("Không tìm thấy nhân khẩu    với mã: " + maNhanKhau);
-                return false;
-            }
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    //Xóa nhân khẩu khi xóa hộ khẩu
-    public boolean delNhanKhauHoKhau(int maHoKhau) {
-
-        String query = "DELETE FROM NHANKHAU WHERE MAHOKHAU = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, maHoKhau);
-
-            // Trả về kết quả trực tiếp từ executeUpdate
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            // Ghi log lỗi chi tiết
-            System.err.println("Lỗi khi xóa nhân khẩu trong hộ khẩu với (mã hộ khẩu: " + maHoKhau + "): " +e.getMessage());
+            System.err.println("Lỗi khi xóa nhân khẩu với (mã nhân khẩu: " + maNhanKhau + "): " + e.getMessage());
             return false;
         }
     }
@@ -130,18 +103,11 @@ public class NhanKhauService {
     // Sửa thông tin nhân khẩu
     public boolean updateNhanKhau(NhanKhauModel nhankhauModel) {
 
-        String query = "UPDATE NHANKHAU SET CCCD = ?, HOTEN = ?, NGAYSINH = ?, SDT = ?, MAHOKHAU = ?, QUANHEVOICHUHO = ?, TRANGTHAI = ? WHERE MANHANKHAU = ?";
+        String query = "UPDATE NHANKHAU SET CCCD = ?, HOTEN = ?, NGAYSINH = ?, SDT = ?, MAHOKHAU = ?, QUANHEVOICHUHO = ?, TRANGTHAI = ?, TRANGTHAITAMVANG = ? WHERE MANHANKHAU = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             setNhanKhauParamsUpdate(preparedStatement, nhankhauModel);
-            preparedStatement.setInt(8, nhankhauModel.getMaNhanKhau()); // Đảm bảo tham số cuối cùng là mã nhân khẩu
-            preparedStatement.setString(1, nhankhauModel.getCCCD());
-            preparedStatement.setString(2, nhankhauModel.getHoTenNhanKhau());
-            preparedStatement.setDate(3,new java.sql.Date(nhankhauModel.getNgaySinh().getTime()));
-            preparedStatement.setString(4, nhankhauModel.getSDT());
-            preparedStatement.setInt(5, nhankhauModel.getMaHoKhau());
-            preparedStatement.setString(6, nhankhauModel.getQuanHeVoiChuHo());
-            preparedStatement.setBoolean(7, nhankhauModel.isTrangThai());
             // Trả về kết quả trực tiếp từ executeUpdate
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -153,40 +119,78 @@ public class NhanKhauService {
 
 
     // Tìm kiếm nhân khẩu theo mã
-    public List<NhanKhauModel> searchNhanKhauById(int maNhanKhau) {
+    public List<NhanKhauModel> searchNhanKhauBySoPhong(String soPhong) {
         List<NhanKhauModel> listNhanKhau = new ArrayList<>();
-        String query = "SELECT * FROM NHANKHAU WHERE MANHANKHAU = ?";
+        String query =  "SELECT NK.MANHANKHAU, NK.CCCD, NK.HOTEN, NK.NGAYSINH, NK.SDT, NK.MAHOKHAU, NK.QUANHEVOICHUHO, NK.TRANGTHAI, NK.TRANGTHAITAMVANG, CH.SOPHONG " +
+                        "FROM NHANKHAU NK " +
+                        "JOIN CANHO CH ON CH.MAHOKHAU = NK.MAHOKHAU " +
+                        "WHERE CH.SOPHONG LIKE ?";
+        String searchPattern = "%" + soPhong.trim() + "%";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, maNhanKhau);
+            preparedStatement.setString(1, searchPattern);
             try (ResultSet rs = preparedStatement.executeQuery()) {
-                if (rs.next()) {
-                    listNhanKhau.add(createNhanKhauFromResultSet(rs)); // Trả về đối tượng nếu tìm thấy
+                while (rs.next()) {
+                    int maHoKhau;
+                    if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
+                    else maHoKhau = 0;
+                    NhanKhauModel nhanKhau = new NhanKhauModel(
+                            rs.getInt("MANHANKHAU"),
+                            rs.getString("CCCD"),
+                            rs.getString("HOTEN"),
+                            rs.getDate("NGAYSINH"),
+                            rs.getString("SDT"),
+                            maHoKhau,
+                            rs.getString("QUANHEVOICHUHO"),
+                            rs.getString("TRANGTHAI"),
+                            rs.getInt("SOPHONG"),
+                            rs.getBoolean("TRANGTHAITAMVANG")
+                    );
+                    listNhanKhau.add(nhanKhau);
                 }
             }
         } catch (SQLException e) {
             // Ghi log chi tiết lỗi
-            System.err.println("Lỗi khi tìm kiếm nhân khẩu với (mã nhân khẩu: " + maNhanKhau + "): " + e.getMessage());
+            System.err.println("Lỗi khi tìm kiếm nhân khẩu với (số phòng: " + soPhong + "): " + e.getMessage());
         }
         return listNhanKhau; // Trả về null nếu không tìm thấy
     }
 
 
     // Tìm kiếm nhân khẩu theo cccd
-    public List<NhanKhauModel> searchNhanKhauByCCCD(String cccd) {
+    public List<NhanKhauModel> searchNhanKhauByCCCD(String CCCD) {
         List<NhanKhauModel> listNhanKhau = new ArrayList<>();
-        String query = "SELECT * FROM NHANKHAU WHERE CCCD = ?";
+        String query =  "SELECT NK.MANHANKHAU, NK.CCCD, NK.HOTEN, NK.NGAYSINH, NK.SDT, NK.MAHOKHAU, NK.QUANHEVOICHUHO, NK.TRANGTHAI, NK.TRANGTHAITAMVANG, CH.SOPHONG " +
+                        "FROM NHANKHAU NK " +
+                        "JOIN CANHO CH ON CH.MAHOKHAU = NK.MAHOKHAU " +
+                        "WHERE NK.CCCD LIKE ?";
+        String searchPattern = "%" + CCCD.trim() + "%";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, cccd);
+            preparedStatement.setString(1, searchPattern);
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
-                if (rs.next()) {
-                    listNhanKhau.add(createNhanKhauFromResultSet(rs));  // Trả về đối tượng nếu tìm thấy
+                while (rs.next()) {
+                    int maHoKhau;
+                    if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
+                    else maHoKhau = 0;
+                    NhanKhauModel nhanKhau = new NhanKhauModel(
+                            rs.getInt("MANHANKHAU"),
+                            rs.getString("CCCD"),
+                            rs.getString("HOTEN"),
+                            rs.getDate("NGAYSINH"),
+                            rs.getString("SDT"),
+                            maHoKhau,
+                            rs.getString("QUANHEVOICHUHO"),
+                            rs.getString("TRANGTHAI"),
+                            rs.getInt("SOPHONG"),
+                            rs.getBoolean("TRANGTHAITAMVANG")
+                    );
+                    listNhanKhau.add(nhanKhau);
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Lỗi khi tìm kiếm nhân khẩu với (CCCD: " + cccd + "): " + e.getMessage());
+            System.err.println("Lỗi khi tìm kiếm nhân khẩu với (CCCD: " + CCCD + "): " + e.getMessage());
         }
         return listNhanKhau;  // Trả về null nếu không tìm thấy
     }
@@ -197,7 +201,10 @@ public class NhanKhauService {
 
         List<NhanKhauModel> listNhanKhau = new ArrayList<>();
 
-        String query = "SELECT * FROM NHANKHAU WHERE LOWER(HOTEN) LIKE LOWER(?)";
+        String query =  "SELECT NK.MANHANKHAU, NK.CCCD, NK.HOTEN, NK.NGAYSINH, NK.SDT, NK.MAHOKHAU, NK.QUANHEVOICHUHO, NK.TRANGTHAI, NK.TRANGTHAITAMVANG, CH.SOPHONG " +
+                        "FROM NHANKHAU NK " +
+                        "JOIN CANHO CH ON CH.MAHOKHAU = NK.MAHOKHAU " +
+                        "WHERE LOWER(HOTEN) LIKE LOWER(?)";
 
         String searchPattern = "%" + ten.trim() + "%";  // Cải thiện việc tạo chuỗi tìm kiếm
 
@@ -206,7 +213,22 @@ public class NhanKhauService {
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
-                    listNhanKhau.add(createNhanKhauFromResultSet(rs));
+                    int maHoKhau;
+                    if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
+                    else maHoKhau = 0;
+                    NhanKhauModel nhanKhau = new NhanKhauModel(
+                            rs.getInt("MANHANKHAU"),
+                            rs.getString("CCCD"),
+                            rs.getString("HOTEN"),
+                            rs.getDate("NGAYSINH"),
+                            rs.getString("SDT"),
+                            maHoKhau,
+                            rs.getString("QUANHEVOICHUHO"),
+                            rs.getString("TRANGTHAI"),
+                            rs.getInt("SOPHONG"),
+                            rs.getBoolean("TRANGTHAITAMVANG")
+                    );
+                    listNhanKhau.add(nhanKhau);
                 }
             }
         } catch (SQLException e) {
@@ -216,16 +238,80 @@ public class NhanKhauService {
     }
 
 
+    public void updateTamVangBatDau(int maNhanKhau, String liDo){
+        String query =  "INSERT INTO TAMVANG (MANHANKHAU, THOIGIANBATDAU, LYDO) " +
+                        "VALUES (?, NOW(), ?)";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            preparedStatement.setInt(1,maNhanKhau);
+            preparedStatement.setString(2,liDo);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            System.err.println("Lỗi khi cập nhật tạm vắng:" + e.getMessage());
+        }
+    }
+
+    public void updateTamVangKetThuc(int maNhanKhau){
+        String query =  "UPDATE TAMVANG SET THOIGIANKETTHUC = NOW() " +
+                        "WHERE THOIGIANBATDAU is not null AND THOIGIANKETTHUC is null AND MANHANKHAU = ?";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, maNhanKhau);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            System.err.println("Lỗi khi cập nhật tạm vắng:" + e.getMessage());
+        }
+    }
+
+
+    public List<TamVangModel> getListTamVang(int maNhanKhau){
+        List<TamVangModel> listTamVang = new ArrayList<>();
+        String query = "SELECT * FROM TAMVANG WHERE MANHANKHAU = ?";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            preparedStatement.setInt(1, maNhanKhau);
+
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                while (rs.next()){
+                    listTamVang.add(createTamVangFromResultSet(rs));
+                }
+            }
+        } catch (SQLException e){
+            System.err.println("Lỗi khi lấy lịch sử tạm vắng:" + e.getMessage());
+        }
+        return listTamVang;
+    }
+
+
     // Lấy danh sách nhân khẩu
     public List<NhanKhauModel> getListNhanKhau() {
         List<NhanKhauModel> listNhanKhau = new ArrayList<>();
-        String query = "SELECT * FROM NHANKHAU ";
+        String query =  "SELECT NK.MANHANKHAU, NK.CCCD, NK.HOTEN, NK.NGAYSINH, NK.SDT, NK.MAHOKHAU, NK.QUANHEVOICHUHO, NK.TRANGTHAI, NK.TRANGTHAITAMVANG, CH.SOPHONG " +
+                        "FROM NHANKHAU NK " +
+                        "JOIN CANHO CH ON CH.MAHOKHAU = NK.MAHOKHAU";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
-                listNhanKhau.add(createNhanKhauFromResultSet(rs));
+                int maHoKhau;
+                if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
+                else maHoKhau = 0;
+                NhanKhauModel nhanKhau = new NhanKhauModel(
+                        rs.getInt("MANHANKHAU"),
+                        rs.getString("CCCD"),
+                        rs.getString("HOTEN"),
+                        rs.getDate("NGAYSINH"),
+                        rs.getString("SDT"),
+                        maHoKhau,
+                        rs.getString("QUANHEVOICHUHO"),
+                        rs.getString("TRANGTHAI"),
+                        rs.getInt("SOPHONG"),
+                        rs.getBoolean("TRANGTHAITAMVANG")
+                );
+                listNhanKhau.add(nhanKhau);
             }
         } catch (SQLException e) {
             System.err.println("Lỗi khi lấy danh sách nhân khẩu: " + e.getMessage());
@@ -242,7 +328,8 @@ public class NhanKhauService {
         int maHoKhau;
         if(laMotHo) maHoKhau = hoKhauService.getMaxMaHoKhau();
         else maHoKhau = hoKhauService.getMaxMaHoKhauTamTru();
-         try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
              preparedStatement .setInt(1,maHoKhau);
 
              try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -260,14 +347,14 @@ public class NhanKhauService {
 
     // Helper: Gán tham số PreparedStatement
     public void setNhanKhauParamsAdd(PreparedStatement preparedStatement, NhanKhauModel nhankhauModel) throws SQLException {
-        preparedStatement.setInt(1, nhankhauModel.getMaNhanKhau());  // Mã nhân khẩu
+        preparedStatement.setInt(1, nhankhauModel.getMaNhanKhau());
         preparedStatement.setString(2, nhankhauModel.getCCCD());
         preparedStatement.setString(3, nhankhauModel.getHoTenNhanKhau());
         preparedStatement.setDate(4, new java.sql.Date(nhankhauModel.getNgaySinh().getTime()));
         preparedStatement.setString(5, nhankhauModel.getSDT());
         preparedStatement.setInt(6, nhankhauModel.getMaHoKhau());
         preparedStatement.setString(7, nhankhauModel.getQuanHeVoiChuHo());
-        preparedStatement.setBoolean(8, nhankhauModel.isTrangThai());  // Trang thái (tick vào hay không)
+        preparedStatement.setString(8, nhankhauModel.getTrangThai());
     }
 
 
@@ -278,27 +365,33 @@ public class NhanKhauService {
         preparedStatement.setString(4, nhankhauModel.getSDT());
         preparedStatement.setInt(5, nhankhauModel.getMaHoKhau());
         preparedStatement.setString(6, nhankhauModel.getQuanHeVoiChuHo());
-        preparedStatement.setBoolean(7, nhankhauModel.isTrangThai());  // Trang thái (tick vào hay không)
+        preparedStatement.setString(7, nhankhauModel.getTrangThai());
+        preparedStatement.setBoolean(8,nhankhauModel.isTamVang());
+        preparedStatement.setInt(9,nhankhauModel.getMaNhanKhau());
     }
 
 
     // Helper: Tạo đối tượng NhanKhauModel từ ResultSet
     private NhanKhauModel createNhanKhauFromResultSet(ResultSet rs) throws SQLException {
         return new NhanKhauModel(
-                rs.getInt("MAHOKHAU"),
                 rs.getInt("MANHANKHAU"),
                 rs.getString("CCCD"),
                 rs.getString("HOTEN"),
                 rs.getDate("NGAYSINH"),
                 rs.getString("SDT"),
+                rs.getInt("MAHOKHAU"),
                 rs.getString("QUANHEVOICHUHO"),
-                rs.getBoolean("TRANGTHAI")
+                rs.getString("TRANGTHAI"),
+                rs.getBoolean("TRANGTHAITAMVANG")
         );
     }
 
-    public void loadData(TableView<NhanKhauModel> NhanKhauTable, ObservableList<NhanKhauModel> danhSachNhanKhau) {
-        List<NhanKhauModel> listNhanKhau = getListNhanKhau();
-        danhSachNhanKhau = FXCollections.observableArrayList(listNhanKhau);
-        NhanKhauTable.setItems(danhSachNhanKhau);
+    private  TamVangModel createTamVangFromResultSet(ResultSet rs) throws SQLException {
+        return new TamVangModel(
+                rs.getString("LYDO"),
+                rs.getDate("THOIGIANBATDAU"),
+                rs.getDate("THOIGIANKETTHUC")
+        );
     }
+
 }

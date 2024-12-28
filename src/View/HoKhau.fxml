@@ -19,7 +19,7 @@
             <children>
                 <TextField fx:id="HokhauSear" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
                 <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
-                <TableView fx:id="HoKhauTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                <TableView fx:id="HoKhauTable" layoutX="7.0" layoutY="60.0" prefHeight="400.0" prefWidth="860.0">
                     <columns>
                         <TableColumn fx:id="MaHKCol" prefWidth="99.33334636688232" text="Mã Hộ Khẩu" />
                   <TableColumn fx:id="soCanHoCol" prefWidth="93.60000610351562" text="Số căn hộ" />
@@ -28,14 +28,14 @@
                         <TableColumn fx:id="SDTCol" prefWidth="312.7999267578125" text="SĐT" />
                     </columns>
                 </TableView>
-                <Button fx:id="BtnAddHK" layoutX="710.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
-                <Button fx:id="BtnDltHK" layoutX="622.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
-            <Button fx:id="BtnXemChiTiet" layoutX="493.0" layoutY="467.0" mnemonicParsing="false" styleClass="update-btn" text="Xem chi tiết" />
+                <Button fx:id="BtnAddHK" layoutX="640.0" layoutY="470.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
+                <Button fx:id="BtnDltHK" layoutX="710.0" layoutY="470.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
+            <Button fx:id="BtnXemChiTiet" layoutX="524.0" layoutY="470.0" mnemonicParsing="false" styleClass="update-btn" text="Xem chi tiết" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">
             <children>
-                <Button fx:id="BtnSave" layoutX="314.0" layoutY="478.0" mnemonicParsing="false" styleClass="update-btn" text="Lưu" />
+                <Button fx:id="BtnSave" layoutX="397.0" layoutY="478.0" mnemonicParsing="false" styleClass="update-btn" text="Lưu" />
                 <AnchorPane fx:id="AddHKPane" prefHeight="260.0" prefWidth="870.0">
                     <children>
                         <Label fx:id="MaHKlb" layoutX="200.0" layoutY="70.0" />
@@ -46,14 +46,14 @@
                         <TextField fx:id="SdtCHtf" layoutX="199.0" layoutY="121.0" promptText="Nhập sđt chủ hộ" styleClass="shadow" />
                         <Label layoutX="510.0" layoutY="80.0" text="Mã CCCD chủ hộ:" />
                         <TextField fx:id="cccdCHtf" layoutX="619.0" layoutY="76.0" promptText="Nhập mã CCCD chủ hộ" styleClass="shadow" />
-                        <Button fx:id="BtnAddHo" layoutX="708.0" layoutY="218.0" mnemonicParsing="false" styleClass="add-btn" text="Lưu hộ" />
-                        <DatePicker fx:id="NSinh1" layoutX="620.0" layoutY="121.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+                        <Button fx:id="BtnAddHo" layoutX="403.0" layoutY="205.0" mnemonicParsing="false" styleClass="add-btn" text="Lưu hộ" />
+                        <DatePicker fx:id="NSinh1" layoutX="620.0" layoutY="121.0" prefHeight="26.0" prefWidth="150.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
                         <Label fx:id="NSinh2" layoutX="547.0" layoutY="125.0" text="Ngày Sinh:" />
-                        <Button fx:id="BtnThoat" layoutX="800.0" layoutY="218.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" text="Thoát" />
+                        <Button fx:id="BtnThoat" layoutX="676.0" layoutY="218.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" text="Thoát" />
                   <Label layoutX="90.0" layoutY="36.0" text="Căn hộ:" />
                   <Label layoutX="144.0" layoutY="36.0" text="Tầng:" />
                   <Label layoutX="548.0" layoutY="36.0" text="Số Phòng:" />
-                  <ChoiceBox fx:id="tangChoiceBox" layoutX="199.0" layoutY="32.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="tangChoiceBox" layoutX="198.0" layoutY="32.0" prefWidth="150.0" />
                   <ChoiceBox fx:id="soPhongChoiceBox" layoutX="619.0" layoutY="32.0" prefWidth="150.0" />
                   <CheckBox fx:id="laMotHocheckBox" layoutX="90.0" layoutY="231.0" mnemonicParsing="false" text="Là một hộ gia đình" />
                   <ChoiceBox fx:id="trangThaiChoiceBox" layoutX="619.0" layoutY="172.0" prefWidth="150.0" />
@@ -86,7 +86,6 @@
                             </font>
                         </Label>
                         <DatePicker fx:id="NSinh" layoutX="660.0" layoutY="40.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
-                        <CheckBox fx:id="TVangCheck" layoutX="550.0" layoutY="164.0" mnemonicParsing="false" text="Tạm Vắng" />
                         <Button fx:id="BtnAddTV" layoutX="407.0" layoutY="220.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
                         <Label fx:id="QHeText" layoutX="550.0" layoutY="104.0" text="Quan Hệ">
                             <font>
@@ -97,7 +96,7 @@
                         <Button fx:id="BtnThoat1" layoutX="509.0" layoutY="220.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thoát" />
                     </children>
                 </AnchorPane>
-                <TableView fx:id="ThanhVienTable" layoutX="14.0" layoutY="269.0" prefHeight="200.0" prefWidth="855.0">
+                <TableView fx:id="ThanhVienTable" layoutX="6.0" layoutY="269.0" prefHeight="200.0" prefWidth="870.0">
                     <columns>
                         <TableColumn fx:id="TenTVCol" prefWidth="240.0" text="Tên" />
                         <TableColumn fx:id="SdtTVCol" prefWidth="180.0" text="SĐT" />
@@ -106,7 +105,7 @@
                         <TableColumn fx:id="NSinhTVCol" prefWidth="147.19989013671875" text="Ngày Sinh" />
                     </columns>
                 </TableView>
-                <Button fx:id="BtnAddTV1" layoutX="490.0" layoutY="478.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="clear-btn" text="Thêm thành viên" />
+                <Button fx:id="BtnAddTV1" layoutX="588.0" layoutY="478.0" mnemonicParsing="false" onAction="#switchForm2" styleClass="clear-btn" text="Thêm thành viên" />
             </children>
         </AnchorPane>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="870.0" visible="false" fx:id="xemChiTietPane">
