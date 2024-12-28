@@ -92,98 +92,136 @@
         }
 
 
-        // Tìm kiếm hộ khẩu theo mã hộ khẩu
-        public List<NhanKhauModel> searchHoKhaubyId(String maHoKhau) {
+        // Tìm kiếm nhân khẩu theo cccd
+        public List<NhanKhauModel> searchHoKhauByCCCD(String CCCD) {
 
             List<NhanKhauModel> listHoKhau = new ArrayList<>();
-            String query = "SELECT * FROM NHANKHAU WHERE QUANHEVOICHUHO = 'Chủ hộ' AND CAST(MAHOKHAU AS CHAR) LIKE ? LIMIT 12" ;
+            String query =  "SELECT NK.MAHOKHAU, NK.HOTEN, NK.CCCD, NK.SDT, CH.SOPHONG " +
+                            "FROM NHANKHAU NK " +
+                            "JOIN CANHO CH ON NK.MAHOKHAU = CH.MAHOKHAU " +
+                            "WHERE NK.QUANHEVOICHUHO = 'Chủ hộ' AND NK.CCCD LIKE ?";
 
-            String searchPattern = "%" + maHoKhau.trim() + "%"; // Tìm kiếm chứa chuỗi con
+            String searchPattern = "%" + CCCD.trim() + "%";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Gán tham số cho câu lệnh SQL
+
                 preparedStatement.setString(1, searchPattern);
 
-                // Thực thi câu lệnh và xử lý kết quả
                 try (ResultSet rs = preparedStatement.executeQuery()) {
                     while (rs.next()) {
-                        listHoKhau.add(createNhanKhauFromResultSet(rs));
+                        int maHoKhau;
+                        if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
+                        else maHoKhau = 0;
+                        NhanKhauModel hoKhauChuHo = new NhanKhauModel(
+                                maHoKhau,
+                                rs.getString("TENCHUHO"),
+                                rs.getString("CCCD"),
+                                rs.getString("SDT"),
+                                rs.getInt("SOPHONG")
+                        );
+
+                        listHoKhau.add(hoKhauChuHo);
                     }
                 }
             } catch (SQLException e) {
-                // Ghi log lỗi chi tiết
-                System.err.println("Lỗi khi tìm kiếm hộ khẩu (mã hộ khẩu: " + maHoKhau + "): " + e.getMessage());
+                System.err.println("Lỗi khi tìm kiếm hộ khẩu với (CCCD: " + CCCD + "): " + e.getMessage());
+            }
+            return listHoKhau;
+        }
+
+
+        // Tìm kiếm nhân khẩu theo tên
+        public List<NhanKhauModel> searchHoKhauByTen(String Ten) {
+
+            List<NhanKhauModel> listHoKhau = new ArrayList<>();
+
+            String query =  "SELECT NK.MAHOKHAU, NK.HOTEN, NK.CCCD, NK.SDT, CH.SOPHONG " +
+                            "FROM NHANKHAU NK " +
+                            "JOIN CANHO CH ON NK.MAHOKHAU = CH.MAHOKHAU " +
+                            "WHERE QUANHEVOICHUHO = 'Chủ hộ' AND LOWER(HOTEN) LIKE LOWER(?)";
+
+            String searchPattern = "%" + Ten.trim() + "%";  // Cải thiện việc tạo chuỗi tìm kiếm
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, searchPattern);
+
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    while (rs.next()) {
+                        int maHoKhau;
+                        if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
+                        else maHoKhau = 0;
+                        NhanKhauModel hoKhauChuHo = new NhanKhauModel(
+                                maHoKhau,
+                                rs.getString("TENCHUHO"),
+                                rs.getString("CCCD"),
+                                rs.getString("SDT"),
+                                rs.getInt("SOPHONG")
+                        );
+
+                        listHoKhau.add(hoKhauChuHo);
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println("Lỗi khi tìm kiếm hộ khẩu với (tên: " + Ten + "): " + e.getMessage());
+            }
+            return listHoKhau;
+        }
+
+        // Tìm kiếm hộ khẩu theo số phòng
+        public List<NhanKhauModel> searchHoKhaubySoPhong(String soPhong){
+            List<NhanKhauModel> listHoKhau = new ArrayList<>();
+
+            String query =  "SELECT NK.MAHOKHAU, NK.HOTEN, NK.CCCD, NK.SDT, CH.SOPHONG " +
+                            "FROM NHANKHAU NK " +
+                            "JOIN CANHO CH ON NK.MAHOKHAU = CH.MAHOKHAU " +
+                            "WHERE QUANHEVOICHUHO = 'Chủ hộ' AND CH.SOPHONG LIKE ?";
+            String serachPattern = "%" + soPhong.trim() + "%";
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+                preparedStatement.setString(1,serachPattern);
+
+                try(ResultSet rs = preparedStatement.executeQuery()){
+                    while (rs.next()){
+                        int maHoKhau;
+                        if(rs.getInt("MAHOKHAU")/1000000 != 0) maHoKhau = rs.getInt("MAHOKHAU");
+                        else maHoKhau = 0;
+                        NhanKhauModel hoKhauChuHo = new NhanKhauModel(
+                                maHoKhau,
+                                rs.getString("TENCHUHO"),
+                                rs.getString("CCCD"),
+                                rs.getString("SDT"),
+                                rs.getInt("SOPHONG")
+                        );
+
+                        listHoKhau.add(hoKhauChuHo);
+                    }
+                }
+            }catch (SQLException e){
+                System.err.println("Lỗi khi tìm kiếm hộ khẩu với (số phòng: " + soPhong + "): " + e.getMessage());
             }
 
             return listHoKhau;
         }
 
 
-        // Tìm kiếm nhân khẩu theo cccd
-        public List<NhanKhauModel> searchHoKhauByCCCD(String cccd) {
-
-            List<NhanKhauModel> listNhanKhau = new ArrayList<>();
-            String query = "SELECT * FROM NHANKHAU WHERE QUANHEVOICHUHO = 'Chủ hộ' AND CAST(CCCD AS CHAR) LIKE ? LIMIT 12";
-
-            String searchPattern = "%" + cccd.trim() + "%";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-                preparedStatement.setString(1, searchPattern);
-
-                try (ResultSet rs = preparedStatement.executeQuery()) {
-                    if (rs.next()) {
-                        listNhanKhau.add(createNhanKhauFromResultSet(rs));  // Trả về đối tượng nếu tìm thấy
-                    }
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi tìm kiếm chủ hộ với (CCCD: " + cccd + "): " + e.getMessage());
-            }
-            return listNhanKhau;  // Trả về null nếu không tìm thấy
-        }
-
-
-        // Tìm kiếm nhân khẩu theo tên
-        public List<NhanKhauModel> searchHoKhauByTen(String ten) {
-
-            List<NhanKhauModel> listNhanKhau = new ArrayList<>();
-            String query = "SELECT * FROM NHANKHAU WHERE LOWER(HOTEN) LIKE LOWER(?) AND QUANHEVOICHUHO = 'Chủ hộ'";
-
-            String searchPattern = "%" + ten.trim() + "%";  // Cải thiện việc tạo chuỗi tìm kiếm
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, searchPattern);
-
-                try (ResultSet rs = preparedStatement.executeQuery()) {
-                    while (rs.next()) {
-                        listNhanKhau.add(createNhanKhauFromResultSet(rs));
-                    }
-                }
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi tìm kiếm chủ hộ với (tên: " + ten + "): " + e.getMessage());
-            }
-            return listNhanKhau;
-        }
-
-
         // Lấy danh sách hộ khẩu
         public List<NhanKhauModel> getListHoKhau() {
-            List<NhanKhauModel> danhSachHoKhau = new ArrayList<>();
+            List<NhanKhauModel> listHoKhau = new ArrayList<>();
 
             String query =
-                    "SELECT \n" +
-                            "    NHANKHAU.MAHOKHAU, \n" +
-                            "    NHANKHAU.MANHANKHAU, \n" +
-                            "    NHANKHAU.HOTEN AS TENCHUHO, \n" +
-                            "    NHANKHAU.CCCD, \n" +
-                            "    NHANKHAU.SDT, \n" +
-                            "    CANHO.SOPHONG \n" +
-                            "FROM \n" +
-                            "    NHANKHAU \n" +
-                            "JOIN \n" +
-                            "    CANHO ON CANHO.MAHOKHAU = NHANKHAU.MAHOKHAU \n" +
-                            "WHERE \n" +
-                            "    NHANKHAU.QUANHEVOICHUHO = 'Chủ hộ'";
+                    """
+                            SELECT\s
+                                NHANKHAU.MAHOKHAU,\s
+                                NHANKHAU.HOTEN AS TENCHUHO,\s
+                                NHANKHAU.CCCD,\s
+                                NHANKHAU.SDT,\s
+                                CANHO.SOPHONG\s
+                            FROM\s
+                                NHANKHAU\s
+                            JOIN\s
+                                CANHO ON CANHO.MAHOKHAU = NHANKHAU.MAHOKHAU\s
+                            WHERE\s
+                                NHANKHAU.QUANHEVOICHUHO = 'Chủ hộ'""";
 
             try (Statement statement = connection.createStatement();
                  ResultSet rs = statement.executeQuery(query)) {
@@ -194,53 +232,23 @@
                     else maHoKhau = 0;
                     NhanKhauModel hoKhauChuHo = new NhanKhauModel(
                             maHoKhau,
-                            rs.getInt("MANHANKHAU"),
                             rs.getString("TENCHUHO"),
                             rs.getString("CCCD"),
                             rs.getString("SDT"),
                             rs.getInt("SOPHONG")
                     );
 
-                    danhSachHoKhau.add(hoKhauChuHo);
+                    listHoKhau.add(hoKhauChuHo);
                 }
 
             } catch (SQLException e) {
                 System.err.println("Lỗi khi lấy danh sách hộ khẩu: " + e.getMessage());
             }
 
-            return danhSachHoKhau;
+            return listHoKhau;
 
         }
 
-        public boolean existsHoKhauId(int maHoKhau) throws SQLException {
-            String query = "SELECT COUNT(*) FROM HOKHAU WHERE MAHOKHAU = ?";
-            try (Connection connection =DatabaseConnection.getInstance().getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, maHoKhau);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    return resultSet.getInt(1) > 0; // Trả về true nếu có ít nhất 1 bản ghi
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-
-        // Helper: Tạo đối tượng NhanKhauModel từ ResultSet
-        private NhanKhauModel createNhanKhauFromResultSet(ResultSet rs) throws SQLException {
-            return new NhanKhauModel(
-                    rs.getInt("MAHOKHAU"),
-                    rs.getInt("MANHANKHAU"),
-                    rs.getString("CCCD"),
-                    rs.getString("HOTEN"),
-                    rs.getDate("NGAYSINH"),
-                    rs.getString("SDT"),
-                    rs.getString("QUANHEVOICHUHO"),
-                    rs.getBoolean("TRANGTHAI")
-            );
-        }
 
         public List<NhanKhauModel> getListNhanKhauTrongHo(int maHoKhau) {
             List<NhanKhauModel> danhSachNhanKhauTrongHo = new ArrayList<>();
@@ -256,14 +264,14 @@
 
                 while (rs.next()) {
                     NhanKhauModel nhanKhauTrongHo = new NhanKhauModel(
-                            rs.getInt("MAHOKHAU"),
                             rs.getInt("MANHANKHAU"),
                             rs.getString("CCCD"),
                             rs.getString("HOTEN"),
                             rs.getDate("NGAYSINH"),
                             rs.getString("SDT"),
+                            rs.getInt("MAHOKHAU"),
                             rs.getString("QUANHEVOICHUHO"),
-                            rs.getBoolean("TRANGTHAI")
+                            rs.getString("TRANGTHAI")
                     );
 
                     danhSachNhanKhauTrongHo.add(nhanKhauTrongHo);
@@ -344,7 +352,7 @@
                     return rs.getInt(1);
                 }
             } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy diện tích căn hộ: " + e.getMessage());
+                System.err.println("Lỗi khi lấy mã căn hộ: " + e.getMessage());
             }
             return 0;
         }
@@ -362,7 +370,7 @@
                     return rs.getInt(1);
                 }
             } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy diện tích căn hộ: " + e.getMessage());
+                System.err.println("Lỗi khi lấy tầng căn hộ: " + e.getMessage());
             }
             return 0;
         }
@@ -413,7 +421,7 @@
             }
             catch (SQLException e) {
                 // Ghi log lỗi chi tiết
-                System.err.println("Lỗi" + e.getMessage());
+                System.err.println("Lỗi khi lưu căn hộ:" + e.getMessage());
             }
         }
 
@@ -430,10 +438,12 @@
                     return rs.getInt(1);
                 }
             } catch (SQLException e) {
-                System.err.println("Lỗi khi lấy số ô tô: " + e.getMessage());
+                System.err.println("Lỗi khi lấy mã hộ khẩu: " + e.getMessage());
             }
             return 0;
         }
+
+
         public void themCanHo(int maCanHo, int tangCanHo, int soCanHo) {
             String query = "INSERT INTO CANHO (MACANHO, TANG, SOPHONG) VALUES (?, ?, ?)" ;
 
@@ -446,7 +456,7 @@
 
             catch (SQLException e) {
                 // Ghi log lỗi chi tiết
-                System.err.println("Lỗi" + e.getMessage());
+                System.err.println("Lỗi khi thêm căn hộ:" + e.getMessage());
             }
         }
     }
