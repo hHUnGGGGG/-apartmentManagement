@@ -1,7 +1,7 @@
 package Controller;
 
-import Models.ThanhToanModel;
-import Service.ThanhToanService;
+//import Models.ThanhToanModel;
+//import Service.ThanhToanService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,70 +50,70 @@ public class ThanhToanController implements Initializable {
     private TableColumn<?, ?> TenCHCol;
 
     @FXML
-    private TableView<ThanhToanModel> ThanhToanTable;
+//    private TableView<ThanhToanModel> ThanhToanTable;
 
-    private ThanhToanService thanhToanService = new ThanhToanService(); // Service để làm việc với dữ liệu
+//    private ThanhToanService thanhToanService = new ThanhToanService(); // Service để làm việc với dữ liệu
 
-    private ObservableList<ThanhToanModel> danhSachThanhToan; // Dữ liệu hiển thị trên bảng
+//    private ObservableList<ThanhToanModel> danhSachThanhToan; // Dữ liệu hiển thị trên bảng
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ObservableList<String> searChoi = FXCollections.observableArrayList();
-        searChoi.addAll("Mã Phí", "Tên Phí", "Mã HK", "Tên Chủ Hộ", "Loại Phí", "Số Tiền", "Thời Gian", "Trạng Thái");
-        CbSear.setItems(searChoi);
-        // Gán dữ liệu cột
-        MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
-        TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
-        DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("soTien"));
-        TenCHCol.setCellValueFactory(new PropertyValueFactory<>("tenChuHo"));
-        LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
-        MaHK3Col.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-        NgayNopCol.setCellValueFactory(new PropertyValueFactory<>("thoiGianThanhToan"));
-        TThaiCol.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
-
-        loadData();
-
-        BtnCf.setOnAction(this::handleCf);
-        NopSear.setOnKeyReleased(event -> handleSearch());
-
-    }
-
-    private void loadData() {
-        thanhToanService.themPhiQuanLyChungCu();
-        thanhToanService.themPhiDichVuChungCu();
-        thanhToanService.themPhiGuiXe();
-        List<ThanhToanModel> danhSach = thanhToanService.layDanhSachThanhToan(); // Lấy dữ liệu từ DAO
-        danhSachThanhToan = FXCollections.observableArrayList(danhSach);
-        ThanhToanTable.setItems(danhSachThanhToan); // Gán dữ liệu cho bảng
-    }
-
-    private  void handleCf(ActionEvent event) {
-
-        ThanhToanModel selected = ThanhToanTable.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            if (thanhToanService.xacNhanThanhToan(selected)) {
-                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Xác nhận thanh toán thành công!");
-                loadData();
-            } else {
-                showAlert(Alert.AlertType.INFORMATION, "Thất bại", "Xác nhận thanh toán thất bại!");
-            }
-        } else {
-            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn thanh toán cần xác nhận!");
-        }
-
-    }
-
-    // Xử lý tìm kiếm
-    private void handleSearch() {
-        String keyword = NopSear.getText().toLowerCase();
-        List<ThanhToanModel> ketQua = thanhToanService.timThanhToanTenPhi(keyword);
-        danhSachThanhToan.setAll(ketQua); // Cập nhật danh sách hiển thị
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.show();
+//        ObservableList<String> searChoi = FXCollections.observableArrayList();
+//        searChoi.addAll("Mã Phí", "Tên Phí", "Mã HK", "Tên Chủ Hộ", "Loại Phí", "Số Tiền", "Thời Gian", "Trạng Thái");
+//        CbSear.setItems(searChoi);
+//        // Gán dữ liệu cột
+//        MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
+//        TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
+//        DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("soTien"));
+//        TenCHCol.setCellValueFactory(new PropertyValueFactory<>("tenChuHo"));
+//        LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
+//        MaHK3Col.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
+//        NgayNopCol.setCellValueFactory(new PropertyValueFactory<>("thoiGianThanhToan"));
+//        TThaiCol.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
+//
+//        loadData();
+//
+//        BtnCf.setOnAction(this::handleCf);
+//        NopSear.setOnKeyReleased(event -> handleSearch());
+//
+//    }
+//
+//    private void loadData() {
+//        thanhToanService.themPhiQuanLyChungCu();
+//        thanhToanService.themPhiDichVuChungCu();
+//        thanhToanService.themPhiGuiXe();
+//        List<ThanhToanModel> danhSach = thanhToanService.layDanhSachThanhToan(); // Lấy dữ liệu từ DAO
+//        danhSachThanhToan = FXCollections.observableArrayList(danhSach);
+//        ThanhToanTable.setItems(danhSachThanhToan); // Gán dữ liệu cho bảng
+//    }
+//
+//    private  void handleCf(ActionEvent event) {
+//
+//        ThanhToanModel selected = ThanhToanTable.getSelectionModel().getSelectedItem();
+//        if (selected != null) {
+//            if (thanhToanService.xacNhanThanhToan(selected)) {
+//                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Xác nhận thanh toán thành công!");
+//                loadData();
+//            } else {
+//                showAlert(Alert.AlertType.INFORMATION, "Thất bại", "Xác nhận thanh toán thất bại!");
+//            }
+//        } else {
+//            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn thanh toán cần xác nhận!");
+//        }
+//
+//    }
+//
+//    // Xử lý tìm kiếm
+//    private void handleSearch() {
+//        String keyword = NopSear.getText().toLowerCase();
+//        List<ThanhToanModel> ketQua = thanhToanService.timThanhToanTenPhi(keyword);
+//        danhSachThanhToan.setAll(ketQua); // Cập nhật danh sách hiển thị
+//    }
+//
+//    private void showAlert(Alert.AlertType alertType, String title, String message) {
+//        Alert alert = new Alert(alertType);
+//        alert.setTitle(title);
+//        alert.setContentText(message);
+//        alert.show();
     }
 }

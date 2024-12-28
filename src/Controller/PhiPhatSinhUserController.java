@@ -51,29 +51,29 @@ public class PhiPhatSinhUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Gán dữ liệu cột
-        MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
-        TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
-        DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("soTien"));
-        HanNopCol.setCellValueFactory(new PropertyValueFactory<>("hanNop"));
-        LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
-//        MaHKCol2.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-//        ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
-
-        loadData();
-
-        KTSear.setOnKeyReleased(event -> handleSearch());
-    }
-
-    private void loadData() {
-        List<KhoanThuModel> danhSach = khoanThuService.layDanhSachKhoanThu(); // Lấy dữ liệu từ DAO
-        danhSachKhoanPhi = FXCollections.observableArrayList(danhSach);
-        PhiTable.setItems(danhSachKhoanPhi); // Gán dữ liệu cho bảng
-    }
-
-    private void handleSearch() {
-        String keyword = KTSear.getText().toLowerCase();
-        List<KhoanThuModel> ketQua = khoanThuService.timKhoanThuTen(keyword);
-        danhSachKhoanPhi.setAll(ketQua); // Cập nhật danh sách hiển thị
+//        // Gán dữ liệu cột
+//        MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
+//        TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
+//        DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("soTien"));
+//        HanNopCol.setCellValueFactory(new PropertyValueFactory<>("hanNop"));
+//        LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
+////        MaHKCol2.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
+////        ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
+//
+//        loadData();
+//
+//        KTSear.setOnKeyReleased(event -> handleSearch());
+//    }
+//
+//    private void loadData() {
+//        List<KhoanThuModel> danhSach = khoanThuService.layDanhSachKhoanThu(); // Lấy dữ liệu từ DAO
+//        danhSachKhoanPhi = FXCollections.observableArrayList(danhSach);
+//        PhiTable.setItems(danhSachKhoanPhi); // Gán dữ liệu cho bảng
+//    }
+//
+//    private void handleSearch() {
+//        String keyword = KTSear.getText().toLowerCase();
+//        List<KhoanThuModel> ketQua = khoanThuService.timKhoanThuTen(keyword);
+//        danhSachKhoanPhi.setAll(ketQua); // Cập nhật danh sách hiển thị
     }
 }

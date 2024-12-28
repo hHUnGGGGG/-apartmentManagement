@@ -71,18 +71,13 @@
                                  <fx:include source="HoKhau-user.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="KhoanPhi" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
-                                 <fx:include source="KhoanPhi-user.fxml" />
+                                 <fx:include source="PhiPhatSinh-user.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="Xe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include source="Xe-user.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="ThanhToan" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include source="ThanhToan-user.fxml" />
-                              </AnchorPane>
-                              <AnchorPane fx:id="KhoanPhiTuNguyen" layoutX="21.0" layoutY="21.0" prefHeight="533.0" prefWidth="880.0">
-                                 <children>
-                                    <fx:include source="KhoanPhiTuNguyen.fxml" />
-                                 </children>
                               </AnchorPane>
                            </children>
                            <styleClass>
