@@ -53,10 +53,10 @@
                   <Label layoutX="90.0" layoutY="36.0" text="Căn hộ:" />
                   <Label layoutX="144.0" layoutY="36.0" text="Tầng:" />
                   <Label layoutX="548.0" layoutY="36.0" text="Số Phòng:" />
-                  <ChoiceBox fx:id="tangChoiceBox" layoutX="198.0" layoutY="32.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="soPhongChoiceBox" layoutX="619.0" layoutY="32.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="tangChoiceBox" layoutX="198.0" layoutY="32.0" prefWidth="150.0" styleClass="shadow" />
+                  <ChoiceBox fx:id="soPhongChoiceBox" layoutX="619.0" layoutY="32.0" prefWidth="150.0" styleClass="shadow" />
                   <CheckBox fx:id="laMotHocheckBox" layoutX="90.0" layoutY="231.0" mnemonicParsing="false" text="Là một hộ gia đình" />
-                  <ChoiceBox fx:id="trangThaiChoiceBox" layoutX="619.0" layoutY="172.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="trangThaiChoiceBox" layoutX="619.0" layoutY="172.0" prefWidth="150.0" styleClass="shadow" />
                   <Label layoutX="547.0" layoutY="176.0" text="Trạng Thái:" />
                     </children>
                 </AnchorPane>
