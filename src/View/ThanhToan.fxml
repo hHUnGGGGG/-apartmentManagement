@@ -13,7 +13,7 @@
     <children>
         <AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css">
             <children>
-                <TableView fx:id="ThanhToanTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                <TableView fx:id="KhoanThuTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
                         <TableColumn fx:id="MaPhiCol" prefWidth="57.333346366882324" text="Mã Phí" />
                   <TableColumn fx:id="TenPhiCol" prefWidth="107.33330535888672" text="Tên Phí" />

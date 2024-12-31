@@ -34,7 +34,7 @@ public class PhiThuongNienService {
     public static List<LoaiPhiModel> layDanhSachPhiThuongNien(){
         List<LoaiPhiModel> danhSach = new ArrayList<>();
         Connection connection = DatabaseConnection.getInstance().getConnection();
-        String query = "SELECT * FROM LOAIPHI WHERE LOAITHU='Phí thường niên'";
+        String query = "SELECT * FROM LOAIPHI WHERE LOAITHU='Phí thường niên' AND MALOAIPHI!=0";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
@@ -57,7 +57,7 @@ public class PhiThuongNienService {
         List<LoaiPhiModel> result= new ArrayList<>();
         Connection connection = DatabaseConnection.getInstance().getConnection();
         tenPhi="%"+tenPhi+"%";
-        String sql="SELECT * FROM LOAIPHI WHERE LOWER(TENLOAIPHI) LIKE LOWER(?) AND LOAITHU='Phí thường niên'";
+        String sql="SELECT * FROM LOAIPHI WHERE LOWER(TENLOAIPHI) LIKE LOWER(?) AND LOAITHU='Phí thường niên' AND MALOAIPHI!=0";
 
         try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
 

@@ -16,7 +16,31 @@
             this.connection = DatabaseConnection.getInstance().getConnection();
         }
 
+        public static String layTenChuHo(int maHoKhau) {
+            String sql = """
+        SELECT nk.HOTEN
+        FROM NHANKHAU nk
+        JOIN HOKHAU hk ON nk.MAHOKHAU = hk.MAHOKHAU
+        WHERE nk.QUANHEVOICHUHO = 'Chủ Hộ' AND hk.MAHOKHAU = ?
+        """;
 
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+            try ( PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+                preparedStatement.setInt(1, maHoKhau);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    return resultSet.getString("HOTEN");
+                } else {
+                    return "Không tìm thấy chủ hộ";
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "Lỗi khi lấy tên chủ hộ";
+            }
+        }
         // Lấy mã hộ lớn nhất
         public int getMaxMaHoKhau() throws SQLException {
             String query = "SELECT COALESCE(MAX(MAHOKHAU), 1000000) AS maxMaHoKhau FROM HOKHAU";

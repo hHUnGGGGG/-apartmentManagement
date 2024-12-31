@@ -1,7 +1,9 @@
 package Controller;
 
 import Models.KhoanThuModel;
-import Service.KhoanThuService;
+import Models.LoaiPhiModel;
+import Service.KhoanThu1Service;
+import Service.PhiPhatSinhService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +39,7 @@ public class PhiPhatSinhUserController implements Initializable {
     private TableColumn<?, ?> MaPhiCol;
 
     @FXML
-    private TableView<KhoanThuModel> PhiTable;
+    private TableView<LoaiPhiModel> PhiTable;
 
     @FXML
     private TableColumn<?, ?> TenPhiCol;
@@ -45,35 +47,58 @@ public class PhiPhatSinhUserController implements Initializable {
     @FXML
     private TableColumn<?, ?> ThangNopCol;
 
-    private KhoanThuService khoanThuService = new KhoanThuService(); // Service để làm việc với dữ liệu
+
 
     private ObservableList<KhoanThuModel> danhSachKhoanPhi; // Dữ liệu hiển thị trên bảng
-
+    private List<LoaiPhiModel> danhSachPhiPhatSinh;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        // Gán dữ liệu cột
-//        MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
-//        TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
-//        DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("soTien"));
-//        HanNopCol.setCellValueFactory(new PropertyValueFactory<>("hanNop"));
-//        LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
-////        MaHKCol2.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-////        ThangNopCol.setCellValueFactory(new PropertyValueFactory<>("thangNop"));
+        // Gán dữ liệu cột
+        MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maLoaiPhi"));
+        TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenLoaiPhi"));
+        DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+        HanNopCol.setCellValueFactory(new PropertyValueFactory<>("hanNop"));
+        LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiThu"));
+
 //
-//        loadData();
+        // Tải dữ liệu từ DAO
+        loadData();
 //
-//        KTSear.setOnKeyReleased(event -> handleSearch());
-//    }
-//
-//    private void loadData() {
-//        List<KhoanThuModel> danhSach = khoanThuService.layDanhSachKhoanThu(); // Lấy dữ liệu từ DAO
+//        // Thêm sự kiện cho nút
+
+//        BtnDltPhi.setOnAction(this::handleDeletePhi);
+//        //BtnEditPhi.setOnAction(this::handleEditPhi);
+
+        KTSear.textProperty().addListener((observable, oldValue, newValue) -> {
+            timKiemTheoTenPhi(newValue); // Gọi phương thức tìm kiếm
+        });
+        //        KTSear.setOnKeyReleased(event -> handleSearch());
+    }
+
+    private void loadData() {
+//        List<LoaiPhiModel> danhSach = PhiPhatSinhService.layDanhSachPhiSauKhiThem();// Lấy dữ liệu từ DAO
 //        danhSachKhoanPhi = FXCollections.observableArrayList(danhSach);
 //        PhiTable.setItems(danhSachKhoanPhi); // Gán dữ liệu cho bảng
-//    }
-//
-//    private void handleSearch() {
-//        String keyword = KTSear.getText().toLowerCase();
-//        List<KhoanThuModel> ketQua = khoanThuService.timKhoanThuTen(keyword);
-//        danhSachKhoanPhi.setAll(ketQua); // Cập nhật danh sách hiển thị
+        danhSachPhiPhatSinh = PhiPhatSinhService.layDanhSachPhiSauKhiThem(); // Lấy danh sách từ service
+        hienThiDuLieu(danhSachPhiPhatSinh); // Hiển thị lên bảng
+    }
+
+    private void hienThiDuLieu(List<LoaiPhiModel> danhSach) {
+        ObservableList<LoaiPhiModel> observableList = FXCollections.observableArrayList(danhSach);
+        PhiTable.setItems(observableList); // Cập nhật dữ liệu cho bảng
+    }
+
+    private void timKiemTheoTenPhi(String tuKhoa) {
+        if (tuKhoa == null || tuKhoa.trim().isEmpty()) {
+            hienThiDuLieu(danhSachPhiPhatSinh); // Hiển thị toàn bộ dữ liệu nếu không nhập gì
+            return;
+        }
+
+        String tuKhoaLower = tuKhoa.toLowerCase(); // Chuyển về chữ thường để không phân biệt hoa/thường
+        List<LoaiPhiModel> ketQua = danhSachPhiPhatSinh.stream()
+                .filter(phi -> phi.getTenLoaiPhi().toLowerCase().contains(tuKhoaLower)) // Lọc danh sách
+                .toList();
+
+        hienThiDuLieu(ketQua); // Hiển thị kết quả lọc
     }
 }

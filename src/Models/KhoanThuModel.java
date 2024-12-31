@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class KhoanThuModel {
     private int maKhoanThu;
-    private String tenPhi;
+
     private HoKhauModel hoKhauModel;
     private LoaiPhiModel loaiPhiModel;
     private int soTien;
@@ -13,12 +13,16 @@ public class KhoanThuModel {
     private String trangThai;
     private String phuongThucThanhToan;
 
-    public String getTenPhi() {
-        return tenPhi;
-    }
 
-    public void setTenPhi(String tenPhi) {
-        this.tenPhi = tenPhi;
+
+    public KhoanThuModel(int maKhoanThu, HoKhauModel hoKhauModel, LoaiPhiModel loaiPhiModel, int soTien, Date thoiGianThanhToan, String trangThai, String phuongThucThanhToan) {
+        this.maKhoanThu = maKhoanThu;
+        this.hoKhauModel = hoKhauModel;
+        this.loaiPhiModel = loaiPhiModel;
+        this.soTien = soTien;
+        this.thoiGianThanhToan = thoiGianThanhToan;
+        this.trangThai = trangThai;
+        this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
     public int getMaKhoanThu() {

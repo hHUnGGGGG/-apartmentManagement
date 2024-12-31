@@ -16,7 +16,7 @@
     <children>
         <AnchorPane fx:id="anchorPaneThanhToan" prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css">
             <children>
-                <TableView fx:id="ThanhToanTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
+                <TableView fx:id="KhoanThuTable" layoutX="14.0" layoutY="57.0" prefHeight="400.0" prefWidth="855.0">
                     <columns>
                         <TableColumn fx:id="MaPhiCol" prefWidth="57.333346366882324" text="Mã Phí" />
                   <TableColumn fx:id="TenPhiCol" prefWidth="107.33330535888672" text="Tên Phí" />
@@ -36,7 +36,7 @@
         </AnchorPane>
       <AnchorPane fx:id="anchorPaneThanhToan1" layoutY="1.0" prefHeight="540.0" prefWidth="890.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" visible="false">
          <children>
-            <TableView fx:id="ThanhToanTable1" layoutX="14.0" layoutY="160.0" prefHeight="297.0" prefWidth="855.0">
+            <TableView fx:id="KhoanThuTable1" layoutX="14.0" layoutY="160.0" prefHeight="297.0" prefWidth="855.0">
                <columns>
                   <TableColumn fx:id="MaPhiCol1" prefWidth="57.333346366882324" text="Mã Phí" />
                   <TableColumn fx:id="TenPhiCol1" prefWidth="151.20004272460938" text="Tên Phí" />
@@ -50,8 +50,8 @@
             <TextField fx:id="NopSear1" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" styleClass="search" stylesheets="@dashboardDesign.css" />
             <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
             <Button fx:id="BtnThoat" layoutX="746.0" layoutY="469.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Thoát" />
-            <DatePicker layoutX="70.0" layoutY="76.0" />
-            <DatePicker layoutX="301.0" layoutY="76.0" />
+             <DatePicker fx:id="batDauDate" layoutX="70.0" layoutY="76.0" />
+             <DatePicker fx:id="ketThucDate" layoutX="301.0" layoutY="76.0" />
             <Label layoutX="14.0" layoutY="51.0" text="Lịch sử thanh toán" />
             <Label layoutX="17.0" layoutY="80.0" text="Từ ngày" />
             <Label layoutX="265.0" layoutY="80.0" text="đến" />

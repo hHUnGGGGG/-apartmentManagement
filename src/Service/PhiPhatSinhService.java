@@ -108,8 +108,8 @@ public class PhiPhatSinhService {
         String sqlLayHoKhau = "SELECT MAHOKHAU FROM HOKHAU";
         String sqlThemKhoanThu = "INSERT INTO KHOANTHU (MAHOKHAU, MALOAIPHI, HANNOP, SOTIEN, TRANGTHAI, MAKHOANTHU) VALUES (?, ?, ?, ?, ?, ?)";
         String sqlLayMaxKhoanThu = "SELECT MAX(MAKHOANTHU) AS MAX FROM KHOANTHU";
-
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement psInsertPhi = connection.prepareStatement(sqlInsertPhi);
              PreparedStatement psSelectLoaiPhi = connection.prepareStatement(sqlSelectLoaiPhi);
              PreparedStatement psLayHoKhau = connection.prepareStatement(sqlLayHoKhau);
@@ -171,7 +171,7 @@ public class PhiPhatSinhService {
 
     public static boolean suaLoaiPhiVaKhoanThu(int maLoaiPhi, String tenPhi, String loaiPhi, int soTien, Date hanNop){
         String sqlSuaLoaiPhi = "UPDATE LOAIPHI SET TENLOAIPHI = ?, LOAITHU = ?, DONGIA = ? WHERE MALOAIPHI = ?";
-        String sqlSuaKhoanThu = "UPDATE KHOANTHU SET SOTIEN = ?, HANNOP = ? WHERE MALOAIPHI = ?";
+        String sqlSuaKhoanThu = "UPDATE KHOANTHU SET SOTIEN = ?, HANNOP = ? WHERE MALOAIPHI = ? AND TRANGTHAI='Chưa thanh toán'";
         Connection connection = DatabaseConnection.getInstance().getConnection();
         try (
              PreparedStatement psSuaLoaiPhi = connection.prepareStatement(sqlSuaLoaiPhi);
