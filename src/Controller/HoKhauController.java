@@ -271,6 +271,7 @@ public class HoKhauController implements Initializable {
 
 
         for (int i = 1; i <= 24; i++) {
+
             tangChoiceBox.getItems().add(i);
         }
         tangChoiceBox.setValue(1); // Chọn giá trị mặc định là 1

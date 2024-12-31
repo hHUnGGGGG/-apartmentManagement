@@ -463,7 +463,7 @@ public class NhanKhauController implements Initializable {
             List<TamVangModel> listTamVang = nhanKhauService.getListTamVang(selectedNK.getMaNhanKhau());
             ObservableList<TamVangModel> danhSachTamVang = FXCollections.observableArrayList(listTamVang);
             LichSuTVTable.setItems(danhSachTamVang);
-        }else{
+        } else{
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn nhân khẩu cần xem lịch sử tạm vắng!");
         }
     }

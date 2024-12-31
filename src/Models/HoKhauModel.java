@@ -8,10 +8,6 @@ public class HoKhauModel {
         // Default constructor
     }
 
-    public HoKhauModel(int maHoKhau) {
-        this.maHoKhau = maHoKhau;
-    }
-
     // Getter và Setter
     public int getMaHoKhau() {
         return maHoKhau;
