@@ -85,6 +85,9 @@ public class NhanKhauModel {
         this.tamVang = tamVang;
     }
 
+    public NhanKhauModel(int mahokhau, int manhankhau, String cccd, String hoten, java.sql.Date ngaysinh, String sdt, String quanhevoichuho, boolean trangthai) {
+    }
+
     public int getMaNhanKhau() {
         return maNhanKhau;
     }

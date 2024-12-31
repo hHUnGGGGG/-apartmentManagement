@@ -70,15 +70,25 @@
                               <AnchorPane fx:id="HoKhau" layoutX="10.0" layoutY="10.0" prefHeight="535.0" prefWidth="880.0">
                                   <fx:include source="HoKhau-user.fxml" />
                               </AnchorPane>
+<<<<<<< HEAD
                               <AnchorPane fx:id="KhoanPhi" layoutX="10.0" layoutY="10.0" prefHeight="535.0" prefWidth="880.0" visible="false">
                                       <fx:include source="KhoanPhi-user.fxml" />
+=======
+                              <AnchorPane fx:id="KhoanPhi" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
+                                 <fx:include source="PhiPhatSinh-user.fxml" />
+>>>>>>> 133515e490ac2841313d1a6b974aaf6a6d716d19
                               </AnchorPane>
                               <AnchorPane fx:id="KhoanPhiTuNguyen" layoutX="10.0" layoutY="10.0" prefHeight="535.0" prefWidth="880.0" visible="false" />
                               <AnchorPane fx:id="Xe" layoutX="10.0" layoutY="10.0" prefHeight="535.0" prefWidth="880.0" visible="false">
                                       <fx:include source="Xe-user.fxml" />
                               </AnchorPane>
+<<<<<<< HEAD
                               <AnchorPane fx:id="ThanhToan" layoutX="10.0" layoutY="10.0" prefHeight="535.0" prefWidth="880.0" visible="false">
                                       <fx:include source="ThanhToan-user.fxml" />
+=======
+                              <AnchorPane fx:id="ThanhToan" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
+                                 <fx:include source="ThanhToan-user.fxml" />
+>>>>>>> 133515e490ac2841313d1a6b974aaf6a6d716d19
                               </AnchorPane>
                            </children>
                         </AnchorPane>

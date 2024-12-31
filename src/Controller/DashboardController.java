@@ -19,7 +19,10 @@ public class DashboardController implements Initializable {
     private Button BtnHokhau;
 
     @FXML
-    private Button BtnKhoanphi;
+    private Button BtnPPS;
+
+    @FXML
+    private Button BtnPTN;
 
     @FXML
     private Button BtnNhankhau;
@@ -37,7 +40,10 @@ public class DashboardController implements Initializable {
     private AnchorPane HoKhau;
 
     @FXML
-    private AnchorPane KhoanPhi;
+    private AnchorPane PPS;
+
+    @FXML
+    private AnchorPane PTN;
 
     @FXML
     private AnchorPane NhanKhau;
@@ -59,42 +65,56 @@ public class DashboardController implements Initializable {
         if (event.getSource()==BtnHokhau){
             HoKhau.setVisible(true);
             NhanKhau.setVisible(false);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             ThanhToan.setVisible(false);
             Xe.setVisible(false);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnNhankhau){
             HoKhau.setVisible(false);
             NhanKhau.setVisible(true);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             ThanhToan.setVisible(false);
             Xe.setVisible(false);
             ThongKe.setVisible(false);
-        }else if (event.getSource()==BtnKhoanphi){
+        }else if (event.getSource()== BtnPPS){
             HoKhau.setVisible(false);
             NhanKhau.setVisible(false);
-            KhoanPhi.setVisible(true);
+            PPS.setVisible(true);
+            PTN.setVisible(false);
+            ThanhToan.setVisible(false);
+            Xe.setVisible(false);
+            ThongKe.setVisible(false);
+        }else if (event.getSource()== BtnPTN){
+            HoKhau.setVisible(false);
+            NhanKhau.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(true);
             ThanhToan.setVisible(false);
             Xe.setVisible(false);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnThanhToan){
             HoKhau.setVisible(false);
             NhanKhau.setVisible(false);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             ThanhToan.setVisible(true);
             Xe.setVisible(false);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnXe){
             HoKhau.setVisible(false);
             NhanKhau.setVisible(false);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             ThanhToan.setVisible(false);
             Xe.setVisible(true);
             ThongKe.setVisible(false);
         }else if (event.getSource()==BtnThongke) {
             HoKhau.setVisible(false);
             NhanKhau.setVisible(false);
-            KhoanPhi.setVisible(false);
+            PPS.setVisible(false);
+            PTN.setVisible(false);
             ThanhToan.setVisible(false);
             Xe.setVisible(false);
             ThongKe.setVisible(true);
