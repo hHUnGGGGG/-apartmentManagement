@@ -78,7 +78,7 @@
                 </Label>
                 <TextField fx:id="tfQHe" layoutX="659.0" layoutY="191.0" prefHeight="25.0" prefWidth="175.0" promptText="Nhập quan hệ với chủ hộ" styleClass="shadow" />
                 <CheckBox fx:id="laTVHoCheck" layoutX="146.0" layoutY="261.0" mnemonicParsing="false" text="Là Thành Viên Trong Một Hộ Gia Đình" />
-                <ChoiceBox fx:id="trangThaiChoiceBox" layoutX="659.0" layoutY="259.0" prefHeight="28.0" prefWidth="175.0" />
+                <ChoiceBox fx:id="trangThaiChoiceBox" layoutX="659.0" layoutY="259.0" prefHeight="28.0" prefWidth="175.0" styleClass="shadow" />
                 <Label fx:id="canHoLable" layoutX="530.0" layoutY="66.0" text="Căn Hộ">
                     <font>
                         <Font name="Tahoma" size="14.0" />
@@ -134,7 +134,7 @@
                 </Label>
                 <TextField fx:id="tfQHe1" layoutX="642.0" layoutY="190.0" prefHeight="26.0" prefWidth="175.0" promptText="Nhập quan hệ với chủ hộ" styleClass="shadow" />
                 <CheckBox fx:id="laTVHoCheck1" layoutX="184.0" layoutY="251.0" mnemonicParsing="false" text="Là Thành Viên Trong Một Hộ Gia Đình" />
-                <ChoiceBox fx:id="trangThaiChoiceBox1" layoutX="641.0" layoutY="246.0" prefHeight="28.0" prefWidth="175.0" />
+                <ChoiceBox fx:id="trangThaiChoiceBox1" layoutX="641.0" layoutY="246.0" prefHeight="28.0" prefWidth="175.0" styleClass="shadow" />
                 <Label fx:id="canHoLable1" layoutX="505.0" layoutY="66.0" text="Căn Hộ">
                     <font>
                         <Font name="Tahoma" size="14.0" />
