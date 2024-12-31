@@ -13,8 +13,8 @@
             <children>
                 <AnchorPane layoutY="1.0" prefHeight="400.0" prefWidth="300.0" styleClass="left-form" stylesheets="@loginDesign.css">
                     <children>
-                        <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="99.0" layoutY="153.0" size="8em" />
-                        <Label layoutX="26.0" layoutY="177.0" text="Phần mềm quản lý chung cư" textFill="WHITE">
+                        <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="105.0" layoutY="150.0" size="8em" />
+                        <Label layoutX="36.0" layoutY="176.0" text="Phần mềm quản lý chung cư" textFill="WHITE">
                             <font>
                                 <Font name="Tahoma" size="18.0" />
                             </font>

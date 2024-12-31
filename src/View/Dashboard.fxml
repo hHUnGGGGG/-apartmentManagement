@@ -24,11 +24,11 @@
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="BtnClose" layoutX="1034.0" layoutY="10.0" mnemonicParsing="false" onAction="#Close" prefHeight="24.0" prefWidth="54.0" styleClass="close" stylesheets="@dashboardDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                              <Button fx:id="BtnClose" layoutX="1042.0" layoutY="10.0" mnemonicParsing="false" onAction="#Close" prefHeight="24.0" prefWidth="54.0" styleClass="close" stylesheets="@dashboardDesign.css">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="CLOSE" size="1.2em" wrappingWidth="14.09532117843628" />
                                  </graphic></Button>
-                              <Button fx:id="BtnMin" layoutX="987.0" layoutY="2.0" mnemonicParsing="false" onAction="#Minimize" prefHeight="24.0" prefWidth="54.0" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                              <Button fx:id="BtnMin" layoutX="988.0" layoutY="10.0" mnemonicParsing="false" onAction="#Minimize" prefHeight="24.0" prefWidth="54.0" styleClass="minimize" stylesheets="@dashboardDesign.css">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                                  </graphic></Button>
@@ -80,7 +80,7 @@
                               <AnchorPane fx:id="ThanhToan" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
                                  <fx:include source="ThanhToan.fxml" />
                               </AnchorPane>
-                              <AnchorPane fx:id="Xe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false" >
+                              <AnchorPane fx:id="Xe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false">
                                  <fx:include source="Xe.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="ThongKe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false">

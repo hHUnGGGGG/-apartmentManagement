@@ -63,7 +63,7 @@
                     </font>
                 </Label>
                 <TextField fx:id="tfMaHK" layoutX="659.0" layoutY="62.0" prefWidth="175.0" promptText="Nhập mã hộ khẩu" styleClass="shadow" stylesheets="@dashboardDesign.css" visible="false" />
-                <Label fx:id="AgeText" layoutX="523.0" layoutY="126.0" text="Ngày Sinh">
+                <Label fx:id="AgeText" layoutX="530.0" layoutY="127.0" text="Ngày Sinh">
                     <font>
                         <Font name="Tahoma" size="14.0" />
                     </font>
@@ -71,7 +71,7 @@
                 <DatePicker fx:id="NSinh" layoutX="659.0" layoutY="123.0" prefHeight="26.0" prefWidth="175.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
                 <Button fx:id="BtnAdd" layoutX="446.0" layoutY="316.0" mnemonicParsing="false" styleClass="add-btn" text="Thêm" />
                 <Button fx:id="BtnThoat" layoutX="757.0" layoutY="461.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" text="Thoát" />
-                <Label layoutX="526.0" layoutY="195.0" text="Quan Hệ">
+                <Label layoutX="530.0" layoutY="195.0" text="Quan Hệ">
                     <font>
                         <Font name="Tahoma" size="14.0" />
                     </font>
@@ -79,12 +79,17 @@
                 <TextField fx:id="tfQHe" layoutX="659.0" layoutY="191.0" prefHeight="25.0" prefWidth="175.0" promptText="Nhập quan hệ với chủ hộ" styleClass="shadow" />
                 <CheckBox fx:id="laTVHoCheck" layoutX="146.0" layoutY="261.0" mnemonicParsing="false" text="Là Thành Viên Trong Một Hộ Gia Đình" />
                 <ChoiceBox fx:id="trangThaiChoiceBox" layoutX="659.0" layoutY="259.0" prefHeight="28.0" prefWidth="175.0" />
-                <Label fx:id="canHoLable" layoutX="531.0" layoutY="66.0" text="Căn Hộ">
+                <Label fx:id="canHoLable" layoutX="530.0" layoutY="66.0" text="Căn Hộ">
                     <font>
                         <Font name="Tahoma" size="14.0" />
                     </font>
                 </Label>
                 <TextField fx:id="canHotextField" layoutX="659.0" layoutY="62.0" prefWidth="175.0" promptText="Nhập số căn hộ" styleClass="shadow" stylesheets="@dashboardDesign.css" />
+            <Label layoutX="530.0" layoutY="264.0" text="Trạng thái">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="AddPane1" prefHeight="520.0" prefWidth="870.0" visible="false">

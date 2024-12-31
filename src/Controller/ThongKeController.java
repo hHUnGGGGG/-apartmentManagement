@@ -10,13 +10,13 @@ import java.util.ResourceBundle;
 public class ThongKeController implements Initializable {
 
     @FXML
-    private Label CacPhiLb;
+    private Label HKLb;
 
     @FXML
-    private Label SoHKLb;
+    private Label NKLb;
 
     @FXML
-    private Label SoNKLb;
+    private Label PTLb;
 
 
     @Override
