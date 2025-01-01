@@ -2,6 +2,7 @@ package Controller;
 
 import Models.HoKhauModel;
 import Models.NhanKhauModel;
+import Service.DataSharingService;
 import Service.DataSharingServiceNK;
 import Service.HoKhauService;
 import Service.NhanKhauService;
@@ -364,6 +365,7 @@ public class HoKhauController implements Initializable {
             if (hoKhauService.addHoKhau(hoKhau, laMotHo)) {
                 if(nhanKhauService.addChuHo(chuHo)) {
                     DataSharingServiceNK.getInstance().notifyDataChanged();
+                    DataSharingService.getInstance().notifyDataChanged();
                     showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm hộ khẩu thành công!");
                 }
             } else {
@@ -440,6 +442,7 @@ public class HoKhauController implements Initializable {
 
             if(nhanKhauService.addNhanKhau(thanhVien)) {
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm nhân khẩu thành công!");
+                DataSharingServiceNK.getInstance().notifyDataChanged();
             } else{
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Thêm nhân khẩu thất bại!");
             }

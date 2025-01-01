@@ -76,8 +76,7 @@ public class ThanhToanController implements Initializable {
         NgayNopCol.setCellValueFactory(new PropertyValueFactory<>("thoiGianThanhToan"));
         TThaiCol.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
 
-        KhoanThuService.themPhiGuiXe();
-        KhoanThuService.themPhiChungCu();
+
         loadData();
 
         KhoanThuTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -95,6 +94,8 @@ public class ThanhToanController implements Initializable {
     }
 
     public void loadData() {
+        KhoanThuService.themPhiGuiXe();
+        KhoanThuService.themPhiChungCu();
         List<KhoanThuModel> danhSach = KhoanThuService.layThongTinThanhToan(); // Lấy dữ liệu từ DAO
         danhSachThanhToan = FXCollections.observableArrayList(danhSach);
         KhoanThuTable.setItems(danhSachThanhToan); // Gán dữ liệu cho bảng

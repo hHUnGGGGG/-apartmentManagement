@@ -2,6 +2,7 @@ package Controller;
 
 import Models.KhoanThuModel;
 import Models.XeModel;
+import Service.DataSharingService;
 import Service.XeService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -121,6 +122,7 @@ public class XeController implements Initializable {
                 loadData();
                 clearField();
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm xe thành công!");
+                DataSharingService.getInstance().notifyDataChanged();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Thêm xe tồn tại!");
             }

@@ -30,6 +30,6 @@ public class ThongKeController implements Initializable {
         PTLb.setText(xeService.layDanhSachXe().size()+"");
         NKLb.setText(nhanKhauService.getListNhanKhau().size()+"");
         HKLb.setText(hoKhauService.getListHoKhau().size()+"");
-        
+
     }
 }
