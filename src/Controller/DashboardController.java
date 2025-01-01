@@ -118,6 +118,7 @@ public class DashboardController implements Initializable {
             ThanhToan.setVisible(false);
             Xe.setVisible(false);
             ThongKe.setVisible(true);
+            ThongKeController.loadDataTK();
         }
     }
 
