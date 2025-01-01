@@ -2,6 +2,7 @@ package Controller;
 
 import Models.NhanKhauModel;
 import Models.TamVangModel;
+import Service.DataSharingServiceNK;
 import Service.HoKhauService;
 import Service.NhanKhauService;
 import javafx.collections.FXCollections;
@@ -230,7 +231,7 @@ public class NhanKhauController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        DataSharingServiceNK.getInstance().setOnDataChanged(this::loadData);
 
         MaNKCol.setCellValueFactory(new PropertyValueFactory<>("maNhanKhau"));
         CanHoCol.setCellValueFactory(new PropertyValueFactory<>("soPhong"));
@@ -315,6 +316,8 @@ public class NhanKhauController implements Initializable {
     private void handleAddNhanKhau(ActionEvent actionEvent) {
         try{
 
+            if(!validateInputAdd()) return;
+
             String CCCD = tfCCCD.getText().trim();
             String Ten = tfTen.getText();
             Date NgaySinh = Date.from(NSinh.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -326,6 +329,7 @@ public class NhanKhauController implements Initializable {
             } else{
                 String SoPhong = canHotextField.getText().trim();
                 MaHoKhau = String.valueOf(hoKhauService.layMaHoKhauTuSoPhong(Integer.parseInt(SoPhong)));
+
             }
             String Quanhe = tfQHe.getText();
             String Trangthai = trangThaiChoiceBox.getValue();
@@ -410,6 +414,8 @@ public class NhanKhauController implements Initializable {
     private void update(ActionEvent actionEvent, NhanKhauModel nhankhau) {
         try{
 
+            if(!validateInputUpdate()) return;
+
             String CCCD = tfCCCD1.getText().trim();
             String Ten = tfTen1.getText();
             Date NgaySinh = Date.from(NSinh1.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -463,7 +469,7 @@ public class NhanKhauController implements Initializable {
             List<TamVangModel> listTamVang = nhanKhauService.getListTamVang(selectedNK.getMaNhanKhau());
             ObservableList<TamVangModel> danhSachTamVang = FXCollections.observableArrayList(listTamVang);
             LichSuTVTable.setItems(danhSachTamVang);
-        }else{
+        } else{
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn nhân khẩu cần xem lịch sử tạm vắng!");
         }
     }
@@ -530,7 +536,7 @@ public class NhanKhauController implements Initializable {
 
     public boolean validateInputAdd(){
 
-        if (!Pattern.matches("\\d{7}", tfMaHK.getText().trim())) {
+        if (!Pattern.matches("\\d{0,7}", tfMaHK.getText().trim())) {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập mã hộ khẩu hợp lệ!");
             return false;
         }
@@ -568,7 +574,7 @@ public class NhanKhauController implements Initializable {
 
     public boolean validateInputUpdate(){
 
-        if (!Pattern.matches("\\d{7}", tfMaHK1.getText().trim())) {
+        if (!Pattern.matches("\\d{0,7}", tfMaHK1.getText().trim())) {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Hãy nhập mã hộ khẩu hợp lệ!");
             return false;
         }

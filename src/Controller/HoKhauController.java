@@ -2,6 +2,7 @@ package Controller;
 
 import Models.HoKhauModel;
 import Models.NhanKhauModel;
+import Service.DataSharingServiceNK;
 import Service.HoKhauService;
 import Service.NhanKhauService;
 import javafx.collections.FXCollections;
@@ -230,12 +231,6 @@ public class HoKhauController implements Initializable {
         if (event.getSource() == BtnAddTV1){
             AddTVPane.setVisible(true);
             AddHKPane.setVisible(false);
-        }else if (event.getSource() == BtnAddTV && validateInputTV()){
-            AddTVPane.setVisible(true);
-            AddHKPane.setVisible(false);
-        }else if(event.getSource() == BtnAddTV && !validateInputTV()){
-            AddTVPane.setVisible(false);
-            AddHKPane.setVisible(true);
         } else if (event.getSource() == BtnThoat1) {
             AddTVPane.setVisible(false);
             AddHKPane.setVisible(true);
@@ -271,13 +266,14 @@ public class HoKhauController implements Initializable {
 
 
         for (int i = 1; i <= 24; i++) {
+
             tangChoiceBox.getItems().add(i);
         }
         tangChoiceBox.setValue(1); // Chọn giá trị mặc định là 1
 
         List<Integer> canHo = hoKhauService.listCanHo(tangChoiceBox.getValue());
         soPhongChoiceBox.getItems().addAll(canHo);
-        soPhongChoiceBox.setValue(canHo.getFirst());
+        //soPhongChoiceBox.setValue(canHo.getFirst());
 
         // Thiết lập giá trị cho trạng thái
         ObservableList<String> trangThaiOptions = FXCollections.observableArrayList("Thường trú", "Tạm trú");
@@ -325,7 +321,7 @@ public class HoKhauController implements Initializable {
     }
 
 
-    private void loadDataHK() {
+    public void loadDataHK() {
         // Lấy dữ liệu từ getListHoKhau
         List<NhanKhauModel> datahk = hoKhauService.getListHoKhau();
 
@@ -337,7 +333,7 @@ public class HoKhauController implements Initializable {
 
     }
 
-    private void loadDataTV() throws SQLException {
+    public void loadDataTV() throws SQLException {
         List<NhanKhauModel> datank = nhanKhauService.getTVtrongHK(laMotHocheckBox.isSelected());
 
         ObservableList<NhanKhauModel> danhSachThanhvien = FXCollections.observableArrayList(datank);
@@ -367,6 +363,7 @@ public class HoKhauController implements Initializable {
 
             if (hoKhauService.addHoKhau(hoKhau, laMotHo)) {
                 if(nhanKhauService.addChuHo(chuHo)) {
+                    DataSharingServiceNK.getInstance().notifyDataChanged();
                     showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm hộ khẩu thành công!");
                 }
             } else {
@@ -429,6 +426,8 @@ public class HoKhauController implements Initializable {
 
         try {
 
+            if(validateInputTV()) return;
+
             String CCCDTV = tfCCCD.getText().trim();
             String TenTV = tfTen.getText();
             Date NgaySinhTV = Date.from(NSinh.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -451,7 +450,7 @@ public class HoKhauController implements Initializable {
         }
     }
 
-    private void loadChiTietHo(int maHoKhau) {
+    public void loadChiTietHo(int maHoKhau) {
         ObservableList<NhanKhauModel> danhSachThanhvien = FXCollections.observableArrayList(hoKhauService.getListNhanKhauTrongHo(maHoKhau));
         ThanhVienXemChiTietTable.setItems(danhSachThanhvien);
         canHoLable.setText(String.valueOf(hoKhauService.soCanHo(maHoKhau)));
@@ -481,7 +480,7 @@ public class HoKhauController implements Initializable {
         soPhongChoiceBox.getItems().clear();
         List<Integer> canHo = hoKhauService.listCanHo(tangChoiceBox.getValue());
         soPhongChoiceBox.getItems().addAll(canHo);
-        soPhongChoiceBox.setValue(canHo.getFirst());
+        //soPhongChoiceBox.setValue(canHo.getFirst());
     }
 
 
