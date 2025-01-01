@@ -3,6 +3,7 @@ package Controller;
 import Service.HoKhauService;
 import Service.NhanKhauService;
 import Service.XeService;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -11,7 +12,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ThongKeController implements Initializable {
-
+    private static StringProperty HKProperty;
+    private static StringProperty NKProperty;
+    private static StringProperty PTProperty;
     @FXML
     private Label HKLb;
 
@@ -24,12 +27,19 @@ public class ThongKeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        HKLb.textProperty().bindBidirectional(HKProperty);
+        NKLb.textProperty().bindBidirectional(NKProperty);
+        PTLb.textProperty().bindBidirectional(PTProperty);
+        loadDataTK();
+    }
+    public static void loadDataTK(){
         XeService xeService = new XeService();
         NhanKhauService nhanKhauService = new NhanKhauService();
         HoKhauService hoKhauService = new HoKhauService();
-        PTLb.setText(xeService.layDanhSachXe().size()+"");
-        NKLb.setText(nhanKhauService.getListNhanKhau().size()+"");
-        HKLb.setText(hoKhauService.getListHoKhau().size()+"");
-        
+
+        PTProperty.setValue(xeService.layDanhSachXe().size()+"");
+        NKProperty.setValue(nhanKhauService.getListNhanKhau().size()+"");
+        HKProperty.setValue(hoKhauService.getListHoKhau().size()+"");
+
     }
 }
