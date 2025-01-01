@@ -3,6 +3,7 @@ package Controller;
 //import Models.ThanhToanModel;
 //import Service.ThanhToanService;
 import Models.KhoanThuModel;
+import Service.DataSharingService;
 import Service.KhoanThuService;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -57,13 +58,11 @@ public class ThanhToanController implements Initializable {
     @FXML
     private TableView<KhoanThuModel> KhoanThuTable;
 
-//    private ThanhToanService thanhToanService = new ThanhToanService(); // Service để làm việc với dữ liệu
-
     private ObservableList<KhoanThuModel> danhSachThanhToan; // Dữ liệu hiển thị trên bảng
     private List<KhoanThuModel> danhSachKhoanThu = new ArrayList<>();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        DataSharingService.getInstance().setOnDataChanged(this::loadData);
         ObservableList<String> searChoi = FXCollections.observableArrayList();
         searChoi.addAll("Mã Phí", "Tên Phí", "Mã HK", "Tên Chủ Hộ", "Loại Phí", "Số Tiền", "Thời Gian", "Trạng Thái");
         CbSear.setItems(searChoi);
@@ -81,6 +80,7 @@ public class ThanhToanController implements Initializable {
         KhoanThuService.themPhiChungCu();
         loadData();
 
+        KhoanThuTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         BtnCf.setOnAction(this::handleCf);
 //        NopSear.setOnKeyReleased(event -> handleSearch());
         danhSachKhoanThu = KhoanThuService.layThongTinThanhToan();
@@ -101,29 +101,29 @@ public class ThanhToanController implements Initializable {
         System.out.println("a");
     }
 
-    private  void handleCf(ActionEvent event) {
+    private void handleCf(ActionEvent event) {
+        // Lấy danh sách các khoản thu được chọn
+        ObservableList<KhoanThuModel> selectedItems = KhoanThuTable.getSelectionModel().getSelectedItems();
 
-        KhoanThuModel selected = KhoanThuTable.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            if (KhoanThuService.xacNhanThanhToan(selected)) {
-                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Xác nhận thanh toán thành công!");
-                loadData();
-            } else {
-                showAlert(Alert.AlertType.INFORMATION, "Thất bại", "Xác nhận thanh toán thất bại!");
+        if (selectedItems != null && !selectedItems.isEmpty()) {
+            boolean allSuccess = true; // Biến theo dõi trạng thái
+            for (KhoanThuModel selected : selectedItems) {
+                // Gọi dịch vụ để xác nhận thanh toán từng khoản
+                if (!KhoanThuService.xacNhanThanhToan(selected)) {
+                    allSuccess = false; // Nếu có khoản thất bại, đánh dấu
+                }
             }
-        } else {
-            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn thanh toán cần xác nhận!");
-        }
 
+            if (allSuccess) {
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Xác nhận thanh toán thành công cho tất cả các khoản!");
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Hoàn thành một phần", "Một số khoản thanh toán không thể xác nhận.");
+            }
+            loadData(); // Làm mới bảng sau khi xử lý
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn các khoản thanh toán cần xác nhận!");
+        }
     }
-//
-//    // Xử lý tìm kiếm
-//    private void handleSearch() {
-//        String keyword = NopSear.getText().toLowerCase();
-//        List<ThanhToanModel> ketQua = thanhToanService.timThanhToanTenPhi(keyword);
-//        danhSachThanhToan.setAll(ketQua); // Cập nhật danh sách hiển thị
-//    }
-//
 
     private void handleLiveSearch(String selectedCriteria, String searchValue) {
 

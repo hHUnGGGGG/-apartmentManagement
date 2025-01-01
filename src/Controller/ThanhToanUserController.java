@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -158,28 +159,11 @@ public class ThanhToanUserController implements Initializable {
         MaHK3Col1.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getHoKhauModel().getMaHoKhau()));
         NgayNopCol1.setCellValueFactory(new PropertyValueFactory<>("thoiGianThanhToan"));
 
-//        MaPhiCol.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
-//        TenPhiCol.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
-//        LoaiPhiCol.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
-//        DonGiaCol.setCellValueFactory(new PropertyValueFactory<>("soTien"));
-//        TThaiCol.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
-//        NgayNopCol.setCellValueFactory(new PropertyValueFactory<>("thoiGianThanhToan"));
-//        MaHK3Col.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-//        TenCHCol.setCellValueFactory(new PropertyValueFactory<>("tenChuHo"));
-//
-//        MaPhiCol1.setCellValueFactory(new PropertyValueFactory<>("maKhoanThu"));
-//        TenPhiCol1.setCellValueFactory(new PropertyValueFactory<>("tenKhoanThu"));
-//        LoaiPhiCol1.setCellValueFactory(new PropertyValueFactory<>("loaiKhoanThu"));
-//        DonGiaCol1.setCellValueFactory(new PropertyValueFactory<>("soTien"));
-//        NgayNopCol1.setCellValueFactory(new PropertyValueFactory<>("thoiGianThanhToan"));
-//        MaHK3Col1.setCellValueFactory(new PropertyValueFactory<>("maHoKhau"));
-//        TenCHCol1.setCellValueFactory(new PropertyValueFactory<>("tenChuHo"));
-//
         BtnCf.setOnAction(e -> {
             switchForm(e);
             handleCf(e);
         });
-//        NopSear.setOnKeyReleased(event -> handleSearch());
+        NopSear.setOnKeyReleased(event -> handleSearch(event));
 //        NopSear1.setOnKeyReleased(event -> handleHistorySearch());
 //
         KhoanThuTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -195,16 +179,6 @@ public class ThanhToanUserController implements Initializable {
         List<KhoanThuModel> lichSuTT = KhoanThuService.layLichSuThanhToanUser(loginController.getMaHoKhauUser());
         danhSachLichSuThanhToan = FXCollections.observableArrayList(lichSuTT);
         KhoanThuTable1.setItems(danhSachLichSuThanhToan);
-//        List<ThanhToanModel> listThanhToanRieng = thanhToanService.layDanhSachPhiTheoHoKhau(loginController.getMaHoKhauUser());
-//        List<ThanhToanModel> listThanhToanChung = thanhToanService.layDanhSachThanhToanUser();
-//        List<ThanhToanModel> listLichSuThanhToan = thanhToanService.layDanhSachLichSuPhiTheoHoKhau(loginController.getMaHoKhauUser());
-//        for(ThanhToanModel t : listThanhToanChung) {
-//            listThanhToanRieng.add(t);
-//        }
-//        danhSachThanhToan = FXCollections.observableArrayList(listThanhToanRieng);
-//        ThanhToanTable.setItems(danhSachThanhToan);
-//        danhSachLichSuThanhToan = FXCollections.observableArrayList(listLichSuThanhToan);
-//        ThanhToanTable1.setItems(danhSachLichSuThanhToan);
     }
 //
     private  void handleCf(ActionEvent event) {
@@ -256,20 +230,21 @@ public class ThanhToanUserController implements Initializable {
             showAlert(Alert.AlertType.INFORMATION, "Thông báo", "Không có khoản thu nào trong khoảng thời gian đã chọn.");
         }
     }
-//
-//    private void handleSearch() {
-//        String keyword = NopSear.getText().toLowerCase();
-//        List<ThanhToanModel> ketQua = thanhToanService.timThanhToanTenPhiUser(keyword, loginController.getMaHoKhauUser());
-//        danhSachThanhToan.setAll(ketQua); // Cập nhật danh sách hiển thị
-//    }
-//
-//    private void handleHistorySearch() {
-//        String keyword = NopSear1.getText().toLowerCase();
-//        List<ThanhToanModel> ketQua = thanhToanService.timThanhToanTenPhiUser(keyword, loginController.getMaHoKhauUser());
-//        danhSachLichSuThanhToan.setAll(ketQua); // Cập nhật danh sách hiển thị
-//
-//    }
-//
+
+    private void handleSearch(KeyEvent event) {
+        String keyword = NopSear.getText().toLowerCase(); // Lấy từ khóa tìm kiếm và chuyển về chữ thường
+
+        if (keyword.isEmpty()) {
+            KhoanThuTable.setItems(danhSachThanhToan); // Hiển thị lại danh sách ban đầu nếu TextField trống
+        } else {
+            // Lọc danh sách dựa trên từ khóa tìm kiếm
+            ObservableList<KhoanThuModel> filteredList = danhSachThanhToan.filtered(khoanThu ->
+                    khoanThu.getLoaiPhiModel().getTenLoaiPhi().toLowerCase().contains(keyword)
+            );
+            KhoanThuTable.setItems(filteredList); // Hiển thị danh sách đã lọc
+        }
+    }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

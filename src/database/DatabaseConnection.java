@@ -8,9 +8,9 @@ public class DatabaseConnection {
 
 
 	private static DatabaseConnection instance = null;//thuộc tính có kiểu dữ liệu là chính nó
-	private static final String URL = "jdbc:mysql://autorack.proxy.rlwy.net:28844/railway";
+	private static final String URL = "jdbc:mysql://localhost:3306/railway";
 	private static final String USER ="root";
-	private static final String PASSWORD = "CHOasqDOqrpsAmSZLrzoHgCjFbYqLpir";
+	private static final String PASSWORD = "1111";
 
 	//kết nối csdl
 	private Connection connection;//

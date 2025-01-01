@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.LoaiPhiModel;
+import Service.DataSharingService;
 import Service.PhiPhatSinhService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -192,6 +193,7 @@ public class PhiPhatSinhController implements Initializable {
             if(PhiPhatSinhService.themPhiVaKhoanThu(tenPhi,loaiPhi,donGia,hanNop)){
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm khoản phí thành công!");
                 loadData();
+                DataSharingService.getInstance().notifyDataChanged();
             }else {
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Có lỗi xảy ra");
             }
@@ -265,15 +267,7 @@ public class PhiPhatSinhController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Dữ liệu nhập không hợp lệ!");
         }
     }
-//
-//    // Xử lý tìm kiếm
-//    private void handleSearch() {
-//        String keyword = KTSear.getText().toLowerCase();
-//        List<KhoanThuModel> ketQua = khoanThuService.timKhoanThuTen(keyword);
-//        danhSachKhoanPhi.setAll(ketQua); // Cập nhật danh sách hiển thị
-//    }
-//
-//    // Xóa dữ liệu nhập
+
 //    private void clearFields() {
 //    //    MaPhitf.clear();
 //        TenPhitf.clear();
