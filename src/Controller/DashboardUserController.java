@@ -30,9 +30,6 @@ public class DashboardUserController implements Initializable {
     private Button BtnThanhToan;
 
     @FXML
-    private Button BtnKhoanPhiTuNguyen;
-
-    @FXML
     private AnchorPane HoKhau;
 
     @FXML
@@ -45,9 +42,6 @@ public class DashboardUserController implements Initializable {
     private AnchorPane ThanhToan;
 
     @FXML
-    private AnchorPane KhoanPhiTuNguyen;
-
-    @FXML
     private AnchorPane main_form;
     private LoginController loginController = new LoginController();
 
@@ -55,34 +49,23 @@ public class DashboardUserController implements Initializable {
         if (event.getSource()==BtnHokhau){
             HoKhau.setVisible(true);
             KhoanPhi.setVisible(false);
-        //    KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnKhoanPhi){
             HoKhau.setVisible(false);
             KhoanPhi.setVisible(true);
-        //    KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnXe){
             HoKhau.setVisible(false);
             KhoanPhi.setVisible(false);
-        //    KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(true);
             ThanhToan.setVisible(false);
         }else if (event.getSource()==BtnThanhToan){
             HoKhau.setVisible(false);
             KhoanPhi.setVisible(false);
-        //    KhoanPhiTuNguyen.setVisible(false);
             Xe.setVisible(false);
             ThanhToan.setVisible(true);
-        }
-        else if (event.getSource()==BtnKhoanPhiTuNguyen){
-            HoKhau.setVisible(false);
-            KhoanPhi.setVisible(false);
-        //    KhoanPhiTuNguyen.setVisible(true);
-            Xe.setVisible(false);
-            ThanhToan.setVisible(false);
         }
     }
 

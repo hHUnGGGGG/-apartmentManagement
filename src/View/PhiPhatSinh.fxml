@@ -27,7 +27,6 @@
             <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="33.0" size="1.5em" />
               <Button fx:id="BtnAddPhi" layoutX="711.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Thêm" />
               <Button fx:id="BtnEditPhi" layoutX="640.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Sửa" />
-              <Button fx:id="BtnDltPhi" layoutX="562.0" layoutY="467.0" mnemonicParsing="false" onAction="#switchForm" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Xóa" />
             </children>
         </AnchorPane>
       <AnchorPane fx:id="AddPane" prefHeight="520.0" prefWidth="870.0" visible="false">

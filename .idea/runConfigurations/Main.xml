@@ -1,10 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="Application" factoryName="Application">
-    <option name="ALTERNATIVE_JRE_PATH" value="openjdk-23" />
-    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="ALTERNATIVE_JRE_PATH" value="22" />
     <option name="MAIN_CLASS_NAME" value="Run.Main" />
     <module name="apartmentManagement" />
-    <option name="VM_PARAMETERS" value="--module-path &quot;D:\java\test\src\Libs\javafx-sdk-23.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml " />
+    <option name="VM_PARAMETERS" value="--module-path &quot;D:\CONG_NGHE_PHAN_MEM\github\-apartmentManagement\src\Libs\javafx-sdk-23.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml " />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

@@ -1,40 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ThongKeController">
+<AnchorPane prefHeight="520.0" prefWidth="870.0" styleClass="white-bg" stylesheets="@dashboardDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ThongKeController">
     <children>
-        <Label layoutX="122.0" layoutY="89.0" text="Số nhân khẩu">
-            <font>
-                <Font name="Tahoma" size="17.0" />
-            </font>
-        </Label>
-        <Label layoutX="122.0" layoutY="168.0" text="Số hộ khẩu">
-            <font>
-                <Font name="Tahoma" size="17.0" />
-            </font>
-        </Label>
-        <Label layoutX="122.0" layoutY="254.0" text="Các loại phí">
-            <font>
-                <Font name="Tahoma" size="17.0" />
-            </font>
-        </Label>
-      <Label fx:id="SoNKLb" layoutX="317.0" layoutY="89.0" stylesheets="@dashboardDesign.css" text="Số nhân khẩu">
-         <font>
-            <Font name="Tahoma" size="17.0" />
-         </font>
-      </Label>
-      <Label fx:id="SoHKLb" layoutX="317.0" layoutY="168.0" text="Số hộ khẩu">
-         <font>
-            <Font name="Tahoma" size="17.0" />
-         </font>
-      </Label>
-      <Label fx:id="CacPhiLb" layoutX="316.0" layoutY="254.0" text="Các loại phí">
-         <font>
-            <Font name="Tahoma" size="17.0" />
-         </font>
-      </Label>
+        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="175.0" prefWidth="850.0">
+            <styleClass>
+                <String fx:value="shadow" />
+                <String fx:value="white-bg" />
+            </styleClass>
+            <children>
+                <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="250.0" styleClass="card">
+                    <children>
+                        <FontAwesomeIcon fill="WHITE" glyphName="HOME" layoutX="25.0" layoutY="100.0" size="5em" />
+                        <Label layoutX="114.0" layoutY="113.0" text="Số Hộ Khẩu" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="HKLb" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="35.0" prefHeight="27.0" prefWidth="150.0" text="0" textFill="WHITE">
+                            <font>
+                                <Font name="Arial" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane layoutX="300.0" layoutY="10.0" prefHeight="155.0" prefWidth="250.0" styleClass="card">
+                    <children>
+                        <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="25.0" layoutY="100.0" size="5em" />
+                        <Label layoutX="111.0" layoutY="109.0" text="Số Nhân Khẩu" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="NKLb" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="35.0" prefWidth="150.0" text="0" textFill="WHITE">
+                            <font>
+                                <Font name="Arial" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane layoutX="590.0" layoutY="10.0" prefHeight="155.0" prefWidth="250.0" styleClass="card">
+                    <children>
+                        <FontAwesomeIcon fill="WHITE" glyphName="CAR" layoutX="25.0" layoutY="100.0" size="5em" />
+                        <Label layoutX="105.0" layoutY="109.0" text="Số Phương Tiện" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="PTLb" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="35.0" prefWidth="150.0" text="0" textFill="WHITE">
+                            <font>
+                                <Font name="Arial" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>
