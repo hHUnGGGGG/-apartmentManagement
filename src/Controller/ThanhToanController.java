@@ -94,12 +94,7 @@ public class ThanhToanController implements Initializable {
 
     }
 
-    private void loadData() {
-//        thanhToanService.themPhiQuanLyChungCu();
-//        thanhToanService.themPhiDichVuChungCu();
-//        thanhToanService.themPhiGuiXe();
-
-//        KhoanThuService.themPhiGuiXeGop();
+    public void loadData() {
         List<KhoanThuModel> danhSach = KhoanThuService.layThongTinThanhToan(); // Lấy dữ liệu từ DAO
         danhSachThanhToan = FXCollections.observableArrayList(danhSach);
         KhoanThuTable.setItems(danhSachThanhToan); // Gán dữ liệu cho bảng

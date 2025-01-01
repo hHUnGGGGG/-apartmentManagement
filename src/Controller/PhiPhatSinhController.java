@@ -159,6 +159,7 @@ public class PhiPhatSinhController implements Initializable {
 //        PhiTable.setItems(danhSachKhoanPhi); // Gán dữ liệu cho bảng
         danhSachPhiPhatSinh = PhiPhatSinhService.layDanhSachPhiSauKhiThem(); // Lấy danh sách từ service
         hienThiDuLieu(danhSachPhiPhatSinh); // Hiển thị lên bảng
+
     }
 
     private void hienThiDuLieu(List<LoaiPhiModel> danhSach) {

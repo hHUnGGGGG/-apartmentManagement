@@ -590,8 +590,11 @@ public class KhoanThuService {
                 // Cập nhật trạng thái dựa trên hạn nộp và thời gian thanh toán
             //    java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
                 // Chuyển đổi hạn nộp thành java.util.Date để so sánh
-                java.util.Date utilHanNop = new java.util.Date(hanNop.getTime());
-                java.util.Date now = new java.util.Date();
+            //    java.util.Date utilHanNop = new java.util.Date(hanNop.getTime());
+            //    java.util.Date now = new java.util.Date();
+
+                LocalDate localDate = LocalDate.now();
+                Date now = Date.valueOf(localDate);
 //                if ("Chưa thanh toán".equals(trangThai) && now.after(hanNop)) {
 //                    trangThai = "Chưa thanh toán (quá hạn)";
 //                } else if ("Đã thanh toán".equals(trangThai) && thoiGianThanhToan != null && thoiGianThanhToan.after(hanNop)) {
@@ -601,7 +604,7 @@ public class KhoanThuService {
 //                }
 
                 // So sánh và cập nhật trạng thái
-                if ("Chưa thanh toán".equals(trangThai) && now.after(utilHanNop)) {
+                if ("Chưa thanh toán".equals(trangThai) && now.after(hanNop)) {
                     trangThai = "Chưa thanh toán (quá hạn)";
                 } else if ("Đã thanh toán".equals(trangThai) && thoiGianThanhToan != null && thoiGianThanhToan.after(hanNop)) {
                     trangThai = "Đã thanh toán (nộp muộn)";
@@ -827,30 +830,53 @@ public class KhoanThuService {
     }
 
     public static boolean xacNhanThanhToan(KhoanThuModel khoanThu) {
-        String sql = """
+        String checkSql = """
+        SELECT THOIGIANTHANHTOAN
+        FROM KHOANTHU
+        WHERE MAKHOANTHU = ?
+    """;
+
+        String updateSqlWithTime = """
         UPDATE KHOANTHU
         SET TRANGTHAI = 'Đã thanh toán',
             THOIGIANTHANHTOAN = ?
         WHERE MAKHOANTHU = ?
     """;
 
+        String updateSqlWithoutTime = """
+        UPDATE KHOANTHU
+        SET TRANGTHAI = 'Đã thanh toán'
+        WHERE MAKHOANTHU = ?
+    """;
+
         Connection connection = DatabaseConnection.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            // Gán giá trị cho các tham số trong câu lệnh SQL
-            preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis())); // Thời gian thanh toán hiện tại
-            preparedStatement.setInt(2, khoanThu.getMaKhoanThu()); // Mã khoản thu cần cập nhật
+        try (
+                PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+                PreparedStatement updateWithTimeStmt = connection.prepareStatement(updateSqlWithTime);
+                PreparedStatement updateWithoutTimeStmt = connection.prepareStatement(updateSqlWithoutTime)
+        ) {
+            // Kiểm tra nếu thời gian thanh toán đã tồn tại
+            checkStmt.setInt(1, khoanThu.getMaKhoanThu());
+            try (ResultSet resultSet = checkStmt.executeQuery()) {
+                if (resultSet.next()) {
+                    Timestamp thoiGianThanhToan = resultSet.getTimestamp("THOIGIANTHANHTOAN");
+                    if (thoiGianThanhToan != null) {
+                        // Nếu đã có thời gian thanh toán, chỉ cập nhật trạng thái
+                        updateWithoutTimeStmt.setInt(1, khoanThu.getMaKhoanThu());
+                        return updateWithoutTimeStmt.executeUpdate() > 0;
+                    }
+                }
+            }
 
-            // Thực thi câu lệnh SQL
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            // Nếu cập nhật thành công ít nhất một dòng, trả về true
-            return rowsAffected > 0;
+            // Nếu chưa có thời gian thanh toán, cập nhật cả trạng thái và thời gian
+            updateWithTimeStmt.setTimestamp(1, new Timestamp(System.currentTimeMillis())); // Thời gian hiện tại
+            updateWithTimeStmt.setInt(2, khoanThu.getMaKhoanThu());
+            return updateWithTimeStmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Nếu có lỗi hoặc không cập nhật được, trả về false
-        return false;
+        return false; // Trả về false nếu có lỗi
     }
 
     public static boolean guiThanhToan(KhoanThuModel khoanThu) {
