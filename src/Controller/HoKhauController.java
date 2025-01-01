@@ -392,6 +392,8 @@ public class HoKhauController implements Initializable {
                 hoKhauService.themCanHo(maCanHo, tangCanHo, soCanHo);
                 loadDataHK();
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Xóa hộ khẩu thành công!");
+                DataSharingService.getInstance().notifyDataChanged();
+                DataSharingServiceNK.getInstance().notifyDataChanged();
             } else{
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Xóa hộ khẩu thất bại!");
             }

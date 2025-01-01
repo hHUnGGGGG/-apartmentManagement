@@ -3,6 +3,7 @@ package Controller;
 import Service.HoKhauService;
 import Service.NhanKhauService;
 import Service.XeService;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,9 +13,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ThongKeController implements Initializable {
-    private static StringProperty HKProperty;
-    private static StringProperty NKProperty;
-    private static StringProperty PTProperty;
+    private static StringProperty HKProperty=new SimpleStringProperty();
+    private static StringProperty NKProperty=new SimpleStringProperty();
+    private static StringProperty PTProperty=new SimpleStringProperty();
     @FXML
     private Label HKLb;
 

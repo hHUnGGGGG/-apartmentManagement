@@ -242,7 +242,7 @@
                                 CANHO.SOPHONG\s
                             FROM\s
                                 NHANKHAU\s
-                            LEFT JOIN\s
+                             JOIN\s
                                 CANHO ON CANHO.MAHOKHAU = NHANKHAU.MAHOKHAU\s
                             WHERE\s
                                 NHANKHAU.QUANHEVOICHUHO = 'Chủ hộ'""";
