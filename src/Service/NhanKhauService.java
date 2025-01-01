@@ -290,7 +290,7 @@ public class NhanKhauService {
         List<NhanKhauModel> listNhanKhau = new ArrayList<>();
         String query =  "SELECT NK.MANHANKHAU, NK.CCCD, NK.HOTEN, NK.NGAYSINH, NK.SDT, NK.MAHOKHAU, NK.QUANHEVOICHUHO, NK.TRANGTHAI, NK.TRANGTHAITAMVANG, CH.SOPHONG " +
                         "FROM NHANKHAU NK " +
-                        "JOIN CANHO CH ON CH.MAHOKHAU = NK.MAHOKHAU";
+                        "LEFT JOIN CANHO CH ON CH.MAHOKHAU = NK.MAHOKHAU";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {

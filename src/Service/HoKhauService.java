@@ -211,7 +211,7 @@
                         else maHoKhau = 0;
                         NhanKhauModel hoKhauChuHo = new NhanKhauModel(
                                 maHoKhau,
-                                rs.getString("TENCHUHO"),
+                                rs.getString("HOTEN"),
                                 rs.getString("CCCD"),
                                 rs.getString("SDT"),
                                 rs.getInt("SOPHONG")
@@ -234,7 +234,7 @@
 
             String query =
                     """
-                            SELECT\s
+                            SELECT DISTINCT\s
                                 NHANKHAU.MAHOKHAU,\s
                                 NHANKHAU.HOTEN AS TENCHUHO,\s
                                 NHANKHAU.CCCD,\s
@@ -242,7 +242,7 @@
                                 CANHO.SOPHONG\s
                             FROM\s
                                 NHANKHAU\s
-                            JOIN\s
+                            LEFT JOIN\s
                                 CANHO ON CANHO.MAHOKHAU = NHANKHAU.MAHOKHAU\s
                             WHERE\s
                                 NHANKHAU.QUANHEVOICHUHO = 'Chủ hộ'""";

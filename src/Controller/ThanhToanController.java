@@ -106,7 +106,7 @@ public class ThanhToanController implements Initializable {
         System.out.println("a");
     }
 
-    private  void handleCf(ActionEvent event) {
+    private void handleCf(ActionEvent event) {
 
         KhoanThuModel selected = KhoanThuTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
