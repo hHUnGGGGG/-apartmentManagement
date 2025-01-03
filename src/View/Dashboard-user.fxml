@@ -66,7 +66,7 @@
                      <children>
                         <AnchorPane prefHeight="554.6666666666666" prefWidth="900.0" styleClass="white-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane fx:id="HoKhau" layoutX="10.0" layoutY="10.0" prefHeight="535.0" prefWidth="880.0">
+                              <AnchorPane fx:id="HoKhau" layoutX="10.0" layoutY="10.0" prefHeight="535.0" prefWidth="880.0" visible="true">
                                   <fx:include source="HoKhau-user.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="KhoanPhi" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">

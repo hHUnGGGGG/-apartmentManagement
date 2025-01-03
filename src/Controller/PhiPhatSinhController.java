@@ -112,11 +112,12 @@ public class PhiPhatSinhController implements Initializable {
             EditPane.setVisible(false);
         }else if (event.getSource()==BtnEditPhi){
             LoaiPhiModel selectedPhi = PhiTable.getSelectionModel().getSelectedItem();
-            TenPhitf1.setText(selectedPhi.getTenLoaiPhi());
-            DonGiatf1.setText(String.valueOf(selectedPhi.getDonGia()));
-            LoaiPhitf1.setText(selectedPhi.getLoaiThu());
-            HanNoptf1.setValue(new java.sql.Date(selectedPhi.getHanNop().getTime()).toLocalDate());
+
             if (selectedPhi != null) {
+                TenPhitf1.setText(selectedPhi.getTenLoaiPhi());
+                DonGiatf1.setText(String.valueOf(selectedPhi.getDonGia()));
+                LoaiPhitf1.setText(selectedPhi.getLoaiThu());
+                HanNoptf1.setValue(new java.sql.Date(selectedPhi.getHanNop().getTime()).toLocalDate());
                 AddPane.setVisible(false);
                 KPTablePane.setVisible(false);
                 EditPane.setVisible(true);
@@ -257,6 +258,7 @@ public class PhiPhatSinhController implements Initializable {
             if (PhiPhatSinhService.suaLoaiPhiVaKhoanThu(selectedPhi.getMaLoaiPhi(), selectedPhi.getTenLoaiPhi(), selectedPhi.getLoaiThu(), selectedPhi.getDonGia(), selectedPhi.getHanNop())) {
                 loadData(); // Làm mới bảng
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Sửa khoản phí thành công!");
+                DataSharingService.getInstance().notifyDataChanged();
                 AddPane.setVisible(false);
                 KPTablePane.setVisible(true);
                 EditPane.setVisible(false);

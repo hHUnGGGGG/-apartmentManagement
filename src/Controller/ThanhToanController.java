@@ -100,6 +100,8 @@ public class ThanhToanController implements Initializable {
         danhSachThanhToan = FXCollections.observableArrayList(danhSach);
         KhoanThuTable.setItems(danhSachThanhToan); // Gán dữ liệu cho bảng
         System.out.println("a");
+        danhSachKhoanThu = KhoanThuService.layThongTinThanhToan();
+        KhoanThuTable.getItems().setAll(danhSachKhoanThu);
     }
 
     private void handleCf(ActionEvent event) {

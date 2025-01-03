@@ -69,7 +69,7 @@
                      <children>
                         <AnchorPane layoutX="8.0" layoutY="7.333333333333333" prefHeight="545.0" prefWidth="893.0" stylesheets="@dashboardDesign.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="7.0">
                            <children>
-                              <AnchorPane fx:id="HoKhau" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="875.0">
+                              <AnchorPane fx:id="HoKhau" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="875.0" visible="false">
                                  <fx:include source="HoKhau.fxml" />
                               </AnchorPane>
                               <AnchorPane fx:id="NhanKhau" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="880.0" visible="false">
@@ -87,7 +87,7 @@
                               <AnchorPane fx:id="Xe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false">
                                  <fx:include source="Xe.fxml" />
                               </AnchorPane>
-                              <AnchorPane fx:id="ThongKe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="false">
+                              <AnchorPane fx:id="ThongKe" layoutX="11.0" layoutY="11.0" prefHeight="533.0" prefWidth="873.0" visible="true">
                                  <fx:include source="ThongKe.fxml" />
                               </AnchorPane>
                            </children>

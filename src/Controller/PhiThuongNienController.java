@@ -57,8 +57,9 @@ public class PhiThuongNienController implements Initializable {
     void switchForm(ActionEvent event) {
         if (event.getSource()==BtnEditPhi){
             LoaiPhiModel selectedPhi = PTNTable.getSelectionModel().getSelectedItem();
-            tfSoTien.setText(String.valueOf(selectedPhi.getDonGia()));
+
             if(selectedPhi!=null){
+                tfSoTien.setText(String.valueOf(selectedPhi.getDonGia()));
                 PTNTablePane.setVisible(false);
                 EditPane.setVisible(true);
             } else {

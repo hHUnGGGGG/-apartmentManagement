@@ -124,7 +124,7 @@ public class XeController implements Initializable {
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm xe thành công!");
                 DataSharingService.getInstance().notifyDataChanged();
             } else {
-                showAlert(Alert.AlertType.ERROR, "Thất bại", "Thêm xe tồn tại!");
+                showAlert(Alert.AlertType.ERROR, "Thất bại", "Thêm xe thất bại, dữ liệu nhập không hợp lệ");
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
